@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Twitter, Linkedin } from 'lucide-react';
 
@@ -46,7 +45,7 @@ const Footer = () => {
               <span className="text-lg font-display font-medium">Brad Daiber</span>
             </Link>
             <p className="text-light-100/60 max-w-md">
-              Providing high-quality content, SEO consulting, and web design services to help businesses grow online.
+              Providing the best content, SEO strategy, and web design services to grow your business online.
             </p>
           </div>
           
