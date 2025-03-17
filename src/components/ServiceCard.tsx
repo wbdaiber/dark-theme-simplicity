@@ -6,8 +6,8 @@ interface ServiceCardProps extends HTMLAttributes<HTMLDivElement> {
   title: string;
   description: string;
   icon: JSX.Element;
-  ctaText: string;
-  ctaLink: string;
+  ctaText?: string;
+  ctaLink?: string;
 }
 
 const ServiceCard: FC<ServiceCardProps> = ({
@@ -40,12 +40,14 @@ const ServiceCard: FC<ServiceCardProps> = ({
         <p className="text-light-100/70 mb-6">{description}</p>
       </div>
       
-      <a
-        href={ctaLink}
-        className="inline-block text-blue-300 hover:text-blue-200 font-medium transition-colors duration-200 hover-underline"
-      >
-        {ctaText}
-      </a>
+      {ctaText && ctaLink && (
+        <a
+          href={ctaLink}
+          className="inline-block text-blue-300 hover:text-blue-200 font-medium transition-colors duration-200 hover-underline"
+        >
+          {ctaText}
+        </a>
+      )}
       
       {isHovered && (
         <div className="absolute inset-0 rounded-2xl pointer-events-none ring-1 ring-blue-300/30 transition-opacity duration-300" />

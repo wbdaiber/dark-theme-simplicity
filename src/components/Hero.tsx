@@ -57,7 +57,7 @@ const Hero = () => {
             ref={subheadingRef}
             className="text-xl md:text-2xl text-light-100/80 max-w-3xl mx-auto leading-relaxed mb-10"
           >
-            Content that your customers will find insightful, valuable, and worthwhile.
+            Digital assets that drive outsized return on investment.
           </p>
           
           {/* Scroll Indicator */}
