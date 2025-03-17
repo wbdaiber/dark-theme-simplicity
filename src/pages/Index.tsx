@@ -66,8 +66,6 @@ const Index = () => {
                   <circle cx="12" cy="12" r="3" />
                 </svg>
               }
-              ctaText="Learn More"
-              ctaLink="/services#seo"
               className="animate-fade-in"
             />
             
@@ -91,8 +89,6 @@ const Index = () => {
                   <circle cx="11" cy="11" r="2" />
                 </svg>
               }
-              ctaText="See Samples"
-              ctaLink="/services#copywriting"
               className="animate-fade-in animation-delay-200"
             />
             
@@ -115,8 +111,6 @@ const Index = () => {
                   <path d="M9 21V9" />
                 </svg>
               }
-              ctaText="View Portfolio"
-              ctaLink="/portfolio"
               className="animate-fade-in animation-delay-400"
             />
           </div>
