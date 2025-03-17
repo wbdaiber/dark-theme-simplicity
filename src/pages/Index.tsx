@@ -122,10 +122,10 @@ const Index = () => {
         <div className="container mx-auto">
           <div className="max-w-4xl mx-auto text-center">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 reveal-text">
-              Ready to elevate your online presence?
+              Your customers are looking for you, are you ready to be found?
             </h2>
             <p className="text-xl text-light-100/70 mb-8 max-w-2xl mx-auto reveal-text">
-              Let's discuss how we can work together to achieve your goals.
+              Let's discuss how we can elevate your online presence.
             </p>
             <a
               href="/contact"
