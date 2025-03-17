@@ -1,5 +1,6 @@
+
 import { Link } from 'react-router-dom';
-import { Twitter, Linkedin } from 'lucide-react';
+import { X, Linkedin } from 'lucide-react';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -75,9 +76,9 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-light-100/70 hover:text-blue-300 transition-colors duration-200"
-                aria-label="Twitter"
+                aria-label="X (formerly Twitter)"
               >
-                <Twitter size={20} />
+                <X size={20} />
               </a>
               <a
                 href="https://linkedin.com"
