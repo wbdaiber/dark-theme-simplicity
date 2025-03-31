@@ -1,6 +1,6 @@
 
 import { motion } from "framer-motion";
-import { Book, Award, Clock, Users, ArrowRight } from "lucide-react";
+import { Book, Award, Clock, Users, ArrowRight, Briefcase, Lightbulb, Heart } from "lucide-react";
 import Layout from "@/components/Layout";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -14,14 +14,14 @@ const About = () => {
         <section className="container mx-auto px-4 pt-12 pb-16">
           <div className="max-w-3xl mx-auto text-center">
             <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
-              About Us
+              About Me
             </Badge>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 tracking-tight">
-              We help <span className="text-blue-300">businesses grow</span> through strategic content
+              I help <span className="text-blue-300">businesses grow</span> through strategic content
             </h1>
             <p className="text-lg md:text-xl text-light-100/70 mb-8 max-w-2xl mx-auto">
-              Our team of experts is dedicated to helping businesses improve their online presence
-              and reach their target audience through strategic content marketing.
+              As an independent content strategist, I'm dedicated to helping businesses improve their online presence
+              and reach their target audience through personalized content marketing.
             </p>
           </div>
         </section>
@@ -31,17 +31,17 @@ const About = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
-                Our Mission
+                My Mission
               </Badge>
               <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 tracking-tight">
-                Empower businesses to thrive online
+                Empowering businesses to thrive online
               </h2>
               <p className="text-light-100/70 mb-6">
-                We believe that great content is the foundation of a successful online presence. Our mission is to help businesses create content that engages their audience, ranks well in search engines, and converts visitors into customers.
+                I believe that great content is the foundation of a successful online presence. My mission is to help businesses create content that engages their audience, ranks well in search engines, and converts visitors into customers.
               </p>
               <div className="space-y-4">
                 {[
-                  "Strategic content planning that aligns with business goals",
+                  "Strategic content planning that aligns with your business goals",
                   "SEO-driven content that ranks well and drives traffic",
                   "Engaging writing that connects with your target audience",
                   "Data-driven approach to optimize performance"
@@ -58,8 +58,8 @@ const About = () => {
             <div className="glass-card p-1 rounded-xl">
               <div className="relative w-full h-80 md:h-96 overflow-hidden rounded-lg">
                 <img 
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80" 
-                  alt="Team working together" 
+                  src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+                  alt="Workspace with laptop" 
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -72,10 +72,10 @@ const About = () => {
           <div className="glass-card bg-dark-100/50 p-8 rounded-xl">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {[
-                { number: "200+", label: "Clients", icon: Users },
-                { number: "1200+", label: "Articles", icon: Book },
-                { number: "15+", label: "Awards", icon: Award },
-                { number: "24/7", label: "Support", icon: Clock },
+                { number: "50+", label: "Clients", icon: Users },
+                { number: "300+", label: "Articles", icon: Book },
+                { number: "5+", label: "Industry Awards", icon: Award },
+                { number: "7+", label: "Years Experience", icon: Clock },
               ].map((stat, index) => (
                 <div key={index} className="text-center">
                   <div className="flex justify-center mb-4">
@@ -91,56 +91,116 @@ const About = () => {
           </div>
         </section>
         
-        {/* Team */}
+        {/* My Story/Journey */}
         <section className="container mx-auto px-4 py-16">
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
-              Our Team
+              My Journey
             </Badge>
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 tracking-tight">
-              Meet the experts behind our success
+              How I got here
             </h2>
             <p className="text-light-100/70 max-w-2xl mx-auto">
-              Our talented team of content strategists, SEO specialists, and writers are dedicated to helping your business grow through strategic content marketing.
+              My path to becoming a content strategist has been shaped by a passion for storytelling and a dedication to helping businesses find their voice.
             </p>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="max-w-3xl mx-auto space-y-12">
             {[
               {
-                name: "Brad Daiber",
-                role: "Founder & CEO",
-                image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80",
-                bio: "10+ years of experience in content marketing and SEO. Passionate about helping businesses grow online."
+                year: "2016",
+                title: "The Beginning",
+                icon: Briefcase,
+                description: "After working in corporate marketing for 5 years, I took the leap to start my own content strategy business, focusing on helping small businesses gain visibility online."
               },
               {
-                name: "Sarah Johnson",
-                role: "Content Strategist",
-                image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
-                bio: "SEO expert with a background in journalism. Specializes in creating content strategies that drive results."
+                year: "2018",
+                title: "Finding My Niche",
+                icon: Lightbulb,
+                description: "I discovered my passion for helping tech startups and SaaS companies communicate complex ideas in simple, engaging ways that convert visitors into customers."
               },
               {
-                name: "Michael Chen",
-                role: "Lead Developer",
-                image: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=774&q=80",
-                bio: "Full-stack developer with expertise in creating seamless digital experiences that convert."
+                year: "2020",
+                title: "Expanding Services",
+                icon: Heart,
+                description: "As my business grew, I expanded my service offerings to include comprehensive content strategies, SEO, and brand storytelling for businesses across various industries."
+              },
+              {
+                year: "Present",
+                title: "Where I Am Today",
+                icon: Award,
+                description: "Today, I work with businesses of all sizes to create content strategies that drive results. I'm passionate about helping my clients tell their stories in ways that resonate with their audience."
               }
-            ].map((member, index) => (
-              <Card key={index} className="bg-dark-100/50 border-0 overflow-hidden hover:transform hover:scale-[1.02] transition-all duration-300">
-                <div className="h-64 overflow-hidden">
-                  <img 
-                    src={member.image} 
-                    alt={member.name} 
-                    className="w-full h-full object-cover"
-                  />
+            ].map((milestone, index) => (
+              <div key={index} className="flex">
+                <div className="mr-6">
+                  <div className="w-12 h-12 rounded-full bg-blue-300/20 flex items-center justify-center text-blue-300">
+                    <milestone.icon size={24} />
+                  </div>
+                  {index < 3 && (
+                    <div className="h-full w-0.5 bg-blue-300/20 mx-auto mt-2"></div>
+                  )}
                 </div>
-                <CardContent className="p-6">
-                  <h3 className="text-xl font-bold mb-1">{member.name}</h3>
-                  <p className="text-blue-300 mb-3">{member.role}</p>
-                  <p className="text-light-100/70">{member.bio}</p>
-                </CardContent>
-              </Card>
+                <div className="flex-1">
+                  <div className="flex items-center mb-2">
+                    <span className="text-blue-300 font-medium mr-3">{milestone.year}</span>
+                    <h3 className="text-xl font-bold">{milestone.title}</h3>
+                  </div>
+                  <p className="text-light-100/70">{milestone.description}</p>
+                </div>
+              </div>
             ))}
+          </div>
+        </section>
+        
+        {/* My Approach */}
+        <section className="container mx-auto px-4 py-16">
+          <div className="grid md:grid-cols-2 gap-12 items-center">
+            <div className="glass-card p-1 rounded-xl order-2 md:order-1">
+              <div className="relative w-full h-80 md:h-96 overflow-hidden rounded-lg">
+                <img 
+                  src="https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" 
+                  alt="Working on laptop" 
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+            <div className="order-1 md:order-2">
+              <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
+                My Approach
+              </Badge>
+              <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 tracking-tight">
+                How I work with clients
+              </h2>
+              <p className="text-light-100/70 mb-6">
+                I believe in a collaborative approach to content strategy. Your business is unique, and your content strategy should be too. Here's how I work:
+              </p>
+              <div className="space-y-6">
+                {[
+                  {
+                    title: "1. Discovery",
+                    description: "I start by understanding your business, audience, and goals to create a tailored strategy."
+                  },
+                  {
+                    title: "2. Strategy Development",
+                    description: "Based on research and your goals, I develop a content strategy aligned with your business objectives."
+                  },
+                  {
+                    title: "3. Implementation",
+                    description: "I create content that engages your audience and drives the results you're looking for."
+                  },
+                  {
+                    title: "4. Analysis & Optimization",
+                    description: "I continuously monitor performance and optimize your content strategy for better results."
+                  }
+                ].map((step, index) => (
+                  <div key={index}>
+                    <h3 className="text-xl font-bold mb-2">{step.title}</h3>
+                    <p className="text-light-100/70">{step.description}</p>
+                  </div>
+                ))}
+              </div>
+            </div>
           </div>
         </section>
 
