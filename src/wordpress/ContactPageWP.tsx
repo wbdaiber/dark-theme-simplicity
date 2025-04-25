@@ -1,4 +1,5 @@
-import { useState } from 'react';
+
+import { useState, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -34,7 +35,16 @@ const formSchema = z.object({
 
 const ContactPageWP = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [wpNonce, setWpNonce] = useState('');
   
+  useEffect(() => {
+    // Check if wp_localize_script was used to pass the nonce
+    const wpApiSettings = (window as any).wpApiSettings;
+    if (wpApiSettings && wpApiSettings.nonce) {
+      setWpNonce(wpApiSettings.nonce);
+    }
+  }, []);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -52,7 +62,7 @@ const ContactPageWP = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'X-WP-Nonce': wpApiSettings.nonce
+        'X-WP-Nonce': wpNonce
       },
       body: JSON.stringify(values),
     })
