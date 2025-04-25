@@ -28,6 +28,22 @@ export default defineConfig(({ mode }) => ({
       fileName: () => 'contact-form.js'
     } : undefined,
     outDir: mode === 'wordpress' ? 'wp-content/plugins/oxygen/component-framework/components/dist' : 'dist',
+    rollupOptions: {
+      output: {
+        // Ensure the CSS file is generated alongside the JS
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name.endsWith('.css')) return 'contact-form.css';
+          return assetInfo.name;
+        },
+        // Externalize React and ReactDOM for WordPress
+        globals: {
+          'react': 'React',
+          'react-dom': 'ReactDOM',
+          'zod': 'z',
+          '@hookform/resolvers/zod': 'ZodResolver'
+        }
+      },
+      external: ['react', 'react-dom', 'zod', '@hookform/resolvers/zod']
+    }
   }
 }));
-
