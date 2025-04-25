@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -33,7 +32,6 @@ const formSchema = z.object({
   }),
 });
 
-// WordPress-friendly contact component
 const ContactPageWP = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   
@@ -50,18 +48,18 @@ const ContactPageWP = () => {
   function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     
-    // WordPress form submission - adjust the URL to match your WordPress setup
     fetch('/wp-json/contact-form/v1/submit', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'X-WP-Nonce': wpApiSettings.nonce
       },
       body: JSON.stringify(values),
     })
       .then(response => response.json())
       .then(data => {
         setIsSubmitting(false);
-        toast.success("Message sent successfully! I'll get back to you soon.");
+        toast.success("Message sent successfully! We'll get back to you soon.");
         form.reset();
       })
       .catch(error => {
@@ -73,7 +71,6 @@ const ContactPageWP = () => {
   return (
     <div className="py-24 px-4 sm:px-6 lg:px-8 bg-dark-200">
       <div className="container mx-auto max-w-5xl">
-        {/* Header */}
         <div className="text-center mb-16 animate-fade-in">
           <Badge variant="outline" className="mb-3 py-1.5 px-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
             Get in Touch
@@ -88,7 +85,6 @@ const ContactPageWP = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
-          {/* Contact Info */}
           <div className="space-y-8 md:space-y-10">
             <div className="glass-card p-6 rounded-xl animate-fade-in">
               <div className="flex items-start space-x-4">
@@ -127,7 +123,6 @@ const ContactPageWP = () => {
             </div>
           </div>
           
-          {/* Contact Form */}
           <div className="col-span-1 md:col-span-2 animate-fade-in animation-delay-200">
             <div className="glass-card p-8 rounded-xl">
               <Form {...form}>
@@ -220,7 +215,6 @@ const ContactPageWP = () => {
           </div>
         </div>
         
-        {/* FAQ Section */}
         <div className="mt-24">
           <div className="text-center mb-12 animate-fade-in">
             <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
