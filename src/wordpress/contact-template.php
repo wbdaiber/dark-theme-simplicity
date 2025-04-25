@@ -10,13 +10,9 @@ get_header();
 <div id="contact-page-root"></div>
 
 <script>
-// Initialize necessary dependencies (React, shadcn, etc)
-// You'll need to properly include these in your WordPress setup
-</script>
-
-<script>
-// Include your bundled React component
-// This will be generated from your build process
+// Initialize React
+const root = ReactDOM.createRoot(document.getElementById('contact-page-root'));
+root.render(React.createElement(ContactPageWP));
 </script>
 
 <?php
