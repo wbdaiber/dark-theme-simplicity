@@ -21,12 +21,6 @@ export default defineConfig(({ mode }) => ({
     },
   },
   build: {
-    lib: mode === 'wordpress' ? {
-      entry: path.resolve(__dirname, 'src/wordpress/ContactPageWP.tsx'),
-      name: 'ContactPageWP',
-      formats: ['iife'],
-      fileName: () => 'contact-form.js'
-    } : undefined,
-    outDir: mode === 'wordpress' ? 'wp-content/plugins/oxygen/component-framework/components/dist' : 'dist',
+    outDir: 'dist',
   }
 }));
