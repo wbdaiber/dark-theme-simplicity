@@ -68,7 +68,7 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            {['Blog', 'Portfolio', 'Contact', 'About'].map((item) => (
+            {['Blog', 'Contact', 'About'].map((item) => (
               <Link
                 key={item}
                 to={item === 'Blog' ? '/blog' : `/${item.toLowerCase()}`}
@@ -105,7 +105,7 @@ const Navbar = () => {
         }`}
       >
         <div className="bg-dark-100 backdrop-blur-lg shadow-lg px-4 py-6 space-y-1">
-          {['Blog', 'Portfolio', 'Contact', 'About'].map((item) => (
+          {['Blog', 'Contact', 'About'].map((item) => (
             <Link
               key={item}
               to={item === 'Blog' ? '/blog' : `/${item.toLowerCase()}`}
