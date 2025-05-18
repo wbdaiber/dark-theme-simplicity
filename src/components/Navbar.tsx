@@ -72,7 +72,7 @@ const Navbar = () => {
               <Link
                 key={item}
                 to={item === 'Blog' ? '/blog' : `/${item.toLowerCase()}`}
-                className="text-sm font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
+                className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
               >
                 {item}
               </Link>
