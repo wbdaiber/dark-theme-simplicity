@@ -23,11 +23,11 @@ const Navbar = () => {
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+        <div className="flex items-center justify-between h-8 md:h-10">
           {/* Logo */}
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 group">
-              <div className="w-8 h-8 md:w-10 md:h-10 relative flex items-center justify-center">
+              <div className="w-6 h-6 md:w-7 md:h-7 relative flex items-center justify-center">
                 <svg
                   viewBox="0 0 100 100"
                   fill="none"
@@ -60,7 +60,7 @@ const Navbar = () => {
                   />
                 </svg>
               </div>
-              <span className="text-lg md:text-xl font-display font-medium tracking-tight">
+              <span className="text-sm md:text-base font-display font-medium tracking-tight">
                 Brad Daiber
               </span>
             </Link>
@@ -72,7 +72,7 @@ const Navbar = () => {
               <Link
                 key={item}
                 to={item === 'Blog' ? '/blog' : `/${item.toLowerCase()}`}
-                className="text-sm font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
+                className="text-xs font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
               >
                 {item}
               </Link>
@@ -88,9 +88,9 @@ const Navbar = () => {
           >
             <span className="sr-only">Open main menu</span>
             {mobileMenuOpen ? (
-              <X className="h-6 w-6" aria-hidden="true" />
+              <X className="h-4 w-4" aria-hidden="true" />
             ) : (
-              <Menu className="h-6 w-6" aria-hidden="true" />
+              <Menu className="h-4 w-4" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -109,7 +109,7 @@ const Navbar = () => {
             <Link
               key={item}
               to={item === 'Blog' ? '/blog' : `/${item.toLowerCase()}`}
-              className="block py-3 px-4 text-base font-medium rounded-md hover:bg-dark-300 transition-colors"
+              className="block py-2 px-4 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item}
