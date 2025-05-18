@@ -19,7 +19,7 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-dark-100/90 backdrop-blur-md shadow-md' : 'bg-transparent'
+        isScrolled ? 'bg-dark-100/90 backdrop-blur-md shadow-md py-0' : 'bg-transparent py-2 md:py-4'
       }`}
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
