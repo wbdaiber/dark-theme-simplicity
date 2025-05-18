@@ -40,7 +40,7 @@ const Hero = () => {
   return (
     <section className="relative min-h-screen flex items-center justify-center pt-16 overflow-hidden">
       {/* Background Image with Overlay */}
-      <div className="absolute inset-0 bg-city-night bg-cover bg-center bg-no-repeat">
+      <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: 'url("/lovable-uploads/8244d6b5-8fc6-455a-b22e-469f57c70874.png")' }}>
         <div className="absolute inset-0 bg-gradient-to-b from-dark-200/80 via-dark-200/70 to-dark-200"></div>
       </div>
       
