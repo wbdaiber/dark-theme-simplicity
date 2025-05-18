@@ -31,11 +31,11 @@ const Index = () => {
     <Layout>
       <Hero />
       
-      {/* Services Section */}
+      {/* Services Section - Reduced top padding from py-24 to py-12 */}
       <section
         ref={sectionRef}
         id="services"
-        className="py-24 px-4 sm:px-6 lg:px-8 relative"
+        className="py-12 px-4 sm:px-6 lg:px-8 relative"
       >
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-16">
