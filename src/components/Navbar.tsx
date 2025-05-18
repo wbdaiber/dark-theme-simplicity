@@ -96,20 +96,20 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu - Changed to fixed position with limited height */}
+      {/* Mobile Menu - Compact floating menu */}
       <div
-        className={`md:hidden fixed top-[32px] left-0 right-0 bg-dark-100/95 backdrop-blur-md shadow-lg transition-all duration-300 ${
+        className={`md:hidden absolute top-[32px] right-4 w-36 bg-dark-100/95 backdrop-blur-md shadow-lg rounded-md transition-all duration-300 ${
           mobileMenuOpen
-            ? 'opacity-100 translate-y-0'
-            : 'opacity-0 -translate-y-2 pointer-events-none'
+            ? 'opacity-100 scale-100'
+            : 'opacity-0 scale-95 pointer-events-none'
         }`}
       >
-        <div className="px-4 py-3 space-y-1 max-h-[40vh] overflow-y-auto">
+        <div className="px-2 py-1 space-y-0">
           {['Blog', 'Contact', 'About'].map((item) => (
             <Link
               key={item}
               to={item === 'Blog' ? '/blog' : `/${item.toLowerCase()}`}
-              className="block py-2 px-3 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
+              className="block py-1 px-2 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
               onClick={() => setMobileMenuOpen(false)}
             >
               {item}
