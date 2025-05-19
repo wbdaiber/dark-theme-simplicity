@@ -62,50 +62,50 @@ const Hero = () => {
             Digital assets that drive outsized return on investment.
           </p>
           
-          {/* Navigation Buttons - updated to match homepage sections order */}
+          {/* Navigation Buttons - updated text and icon colors to white for better legibility */}
           <div className="flex flex-wrap justify-center gap-4 mt-12 animate-fade-in">
             <Button 
               variant="outline" 
-              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
+              className="bg-blue-300 text-white hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('what-we-do')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Briefcase className="mr-2 text-dark-200" size={18} />
+              <Briefcase className="mr-2 text-white" size={18} />
               Services
             </Button>
             
             <Button 
               variant="outline" 
-              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
+              className="bg-blue-300 text-white hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Award className="mr-2 text-dark-200" size={18} />
+              <Award className="mr-2 text-white" size={18} />
               Benefits
             </Button>
             
             <Button 
               variant="outline" 
-              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
+              className="bg-blue-300 text-white hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('approach')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Settings className="mr-2 text-dark-200" size={18} />
+              <Settings className="mr-2 text-white" size={18} />
               Approach
             </Button>
             
             <Button 
               variant="outline" 
-              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
+              className="bg-blue-300 text-white hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <User className="mr-2 text-dark-200" size={18} />
+              <User className="mr-2 text-white" size={18} />
               About
             </Button>
             
             <Button 
               variant="outline" 
-              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
+              className="bg-blue-300 text-white hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Mail className="mr-2 text-dark-200" size={18} />
+              <Mail className="mr-2 text-white" size={18} />
               Contact
             </Button>
           </div>
