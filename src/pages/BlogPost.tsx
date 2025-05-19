@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { ArrowLeft, Calendar, Clock, Share2, BookmarkPlus, Facebook, Twitter, Linkedin } from 'lucide-react';
+import { ArrowLeft, Share2, BookmarkPlus, Facebook, Twitter, Linkedin } from 'lucide-react';
 import Layout from '@/components/Layout';
 import { Separator } from '@/components/ui/separator';
 import { Button } from '@/components/ui/button';
@@ -195,16 +195,7 @@ const BlogPost = () => {
                 {post.title}
               </h1>
               
-              <div className="flex flex-wrap items-center text-sm text-light-100/70 mb-8 gap-6">
-                <span className="flex items-center gap-1">
-                  <Calendar size={16} />
-                  {post.date}
-                </span>
-                <span className="flex items-center gap-1">
-                  <Clock size={16} />
-                  {post.readTime} read
-                </span>
-              </div>
+              {/* Removed date and read time from here */}
             </div>
             
             {/* Featured Image as Thumbnail - Display on the right */}
