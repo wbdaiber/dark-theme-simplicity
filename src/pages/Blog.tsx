@@ -78,7 +78,7 @@ const Blog = () => {
                 </div>
                 <CardContent className="p-6">
                   <h3 className="text-xl font-bold mb-3 line-clamp-2">
-                    <a href={`/blog/${index}`} className="hover:text-blue-300 transition-colors">
+                    <a href={`/blog/${index}`} className="text-white hover:text-blue-300 transition-colors">
                       {index === 0 ? 'How AI is Transforming Digital Marketing' : 
                        index === 1 ? 'Top 10 AI Tools for Content Creation' : 
                        'Essential Analytics Tools for 2025'}
@@ -125,7 +125,7 @@ const Blog = () => {
                     <span className="text-xs text-light-100/50 mt-0.5">May 12, 2024</span>
                   </div>
                   <h3 className="text-xl font-bold mb-2 line-clamp-2">
-                    <a href={`/blog/${index}`} className="hover:text-blue-300 transition-colors">
+                    <a href={`/blog/${index}`} className="text-white hover:text-blue-300 transition-colors">
                       The Ultimate Guide to Digital Marketing in {2024 + index}
                     </a>
                   </h3>
