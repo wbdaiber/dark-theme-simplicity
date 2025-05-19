@@ -132,12 +132,6 @@ const Blog = () => {
                   <p className="text-light-100/70 line-clamp-3 mb-4">
                     Learn the latest strategies and techniques to boost your online presence and drive more traffic to your website.
                   </p>
-                  <div className="flex items-center">
-                    <div className="w-8 h-8 rounded-full bg-blue-300/20 mr-2"></div>
-                    <span className="text-sm font-medium">
-                      Brad Daiber
-                    </span>
-                  </div>
                 </CardContent>
               </Card>
             ))}
