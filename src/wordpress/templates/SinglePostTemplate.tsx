@@ -3,6 +3,14 @@ import React from 'react';
 import Layout from '../static/Layout';
 import { Badge } from '@/components/ui/badge';
 import { ArrowLeft } from 'lucide-react';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
 
 // This component would map to single.php in WordPress
 // It displays a single blog post
@@ -28,6 +36,25 @@ const SinglePostTemplate: React.FC<SinglePostTemplateProps> = ({
     <Layout>
       <article className="pt-24 md:pt-32">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Breadcrumbs - added with proper spacing */}
+          <div className="mb-8">
+            <Breadcrumb>
+              <BreadcrumbList>
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/">Home</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbLink href="/blog">Blog</BreadcrumbLink>
+                </BreadcrumbItem>
+                <BreadcrumbSeparator />
+                <BreadcrumbItem>
+                  <BreadcrumbPage>{title}</BreadcrumbPage>
+                </BreadcrumbItem>
+              </BreadcrumbList>
+            </Breadcrumb>
+          </div>
+          
           {/* Back button */}
           <div className="mb-8">
             <a

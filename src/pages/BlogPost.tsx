@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2, BookmarkPlus, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -8,6 +7,14 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+  BreadcrumbPage,
+  BreadcrumbSeparator
+} from "@/components/ui/breadcrumb";
 
 const BlogPost = () => {
   const { id } = useParams<{ id: string }>();
@@ -150,8 +157,31 @@ const BlogPost = () => {
   
   return (
     <Layout>
-      {/* Back Button */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-8">
+      {/* Breadcrumbs - positioned with proper spacing */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8 pt-24 pb-4">
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/">Home</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbLink asChild>
+                <Link to="/blog">Blog</Link>
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+            <BreadcrumbSeparator />
+            <BreadcrumbItem>
+              <BreadcrumbPage>{post.title}</BreadcrumbPage>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
+      </div>
+      
+      {/* Back Button - moved below breadcrumbs */}
+      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <Link to="/blog" className="inline-flex items-center text-blue-300 hover:text-blue-400 transition-colors gap-1 mb-6">
           <ArrowLeft size={18} />
           <span>Back to All Articles</span>
