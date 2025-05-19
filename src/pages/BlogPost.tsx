@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2, BookmarkPlus, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -233,8 +232,6 @@ const BlogPost = () => {
         </div>
       </header>
       
-      {/* Remove the large featured image section since we already have it in the header */}
-      
       {/* Post Content */}
       <article className="container mx-auto px-4 sm:px-6 lg:px-8 mb-16">
         <div className="max-w-3xl mx-auto">
@@ -243,20 +240,6 @@ const BlogPost = () => {
             className="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-medium prose-headings:text-light-100 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-light-100/80 prose-p:my-4 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline prose-strong:text-light-100 prose-strong:font-medium prose-ul:my-4 prose-ul:list-disc prose-ul:pl-5 prose-li:text-light-100/80 prose-li:my-1"
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
-          
-          {/* Tags */}
-          <div className="mt-12 mb-8">
-            <h4 className="text-lg font-medium mb-3">Tags:</h4>
-            <div className="flex flex-wrap gap-2">
-              {post.tags.map((tag, index) => (
-                <Link key={index} to={`/blog/tag/${tag.toLowerCase()}`}>
-                  <Badge variant="outline" className="bg-dark-100/20 hover:bg-dark-100/40 border-white/10">
-                    {tag}
-                  </Badge>
-                </Link>
-              ))}
-            </div>
-          </div>
           
           {/* Share Buttons */}
           <div className="border-t border-b border-white/10 py-6 mt-8 mb-12">
