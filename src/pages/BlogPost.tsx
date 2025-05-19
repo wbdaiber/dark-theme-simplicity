@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Share2, BookmarkPlus, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -272,7 +273,7 @@ const BlogPost = () => {
                     </div>
                   </div>
                   <CardContent className="pt-5 flex flex-col flex-grow">
-                    <h3 className="text-lg font-display font-medium mb-2 group-hover:text-blue-300 transition-colors line-clamp-2">
+                    <h3 className="text-lg font-display font-medium mb-2 group-hover:text-blue-300 transition-colors line-clamp-2 text-white">
                       {relatedPost.title}
                     </h3>
                     <p className="text-light-100/70 text-sm mb-3 line-clamp-2">
