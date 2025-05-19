@@ -19,7 +19,6 @@ interface SinglePostTemplateProps {
   title: string;
   content: string;
   date: string;
-  author: string;
   featuredImage?: string;
   categories?: string[];
 }
@@ -28,7 +27,6 @@ const SinglePostTemplate: React.FC<SinglePostTemplateProps> = ({
   title,
   content,
   date,
-  author,
   featuredImage,
   categories = []
 }) => {
@@ -82,10 +80,8 @@ const SinglePostTemplate: React.FC<SinglePostTemplateProps> = ({
                 {title}
               </h1>
               
-              <div className="flex items-center text-light-100/60 text-sm">
+              <div className="text-light-100/60 text-sm">
                 <time>{date}</time>
-                <span className="mx-2">•</span>
-                <span>By {author}</span>
               </div>
             </header>
             

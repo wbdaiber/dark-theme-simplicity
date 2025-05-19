@@ -88,12 +88,6 @@ const BlogPost = () => {
     readTime: '8 min',
     imageUrl: '/placeholder.svg',
     featured: true,
-    author: {
-      name: 'Alex Morgan',
-      role: 'SEO Specialist',
-      avatarUrl: '/placeholder.svg',
-      bio: 'Alex has over 10 years of experience in digital marketing and SEO optimization, helping businesses improve their online visibility and organic traffic.',
-    },
     tags: ['SEO', 'Content Marketing', 'Digital Strategy'],
     relatedPosts: [
       {
@@ -210,18 +204,7 @@ const BlogPost = () => {
             </span>
           </div>
           
-          <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
-              <Avatar className="h-10 w-10 border border-white/10">
-                <AvatarImage src={post.author.avatarUrl} alt={post.author.name} />
-                <AvatarFallback className="bg-blue-300/20 text-blue-300">{post.author.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-medium">{post.author.name}</p>
-                <p className="text-sm text-light-100/70">{post.author.role}</p>
-              </div>
-            </div>
-            
+          <div className="flex justify-end">
             <div className="flex items-center gap-3">
               <Button variant="outline" size="sm" className="text-light-100/70 border-white/10 hover:bg-dark-100/50">
                 <BookmarkPlus size={16} className="mr-1" />
@@ -284,22 +267,6 @@ const BlogPost = () => {
                 <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
                   <Linkedin size={18} />
                 </Button>
-              </div>
-            </div>
-          </div>
-          
-          {/* Author Bio */}
-          <div className="glass-card p-6 rounded-xl mb-12">
-            <h3 className="text-xl font-display font-medium mb-4">About the Author</h3>
-            <div className="flex items-center gap-4">
-              <Avatar className="h-16 w-16 border border-white/10">
-                <AvatarImage src={post.author.avatarUrl} alt={post.author.name} />
-                <AvatarFallback className="bg-blue-300/20 text-blue-300">{post.author.name.charAt(0)}</AvatarFallback>
-              </Avatar>
-              <div>
-                <h4 className="font-medium text-lg">{post.author.name}</h4>
-                <p className="text-light-100/70 mb-2">{post.author.role}</p>
-                <p className="text-sm text-light-100/80">{post.author.bio}</p>
               </div>
             </div>
           </div>
