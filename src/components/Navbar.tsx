@@ -16,6 +16,15 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Define navigation links in the same order as homepage sections
+  const navLinks = [
+    { name: 'Services', path: '/#what-we-do' },
+    { name: 'Benefits', path: '/#benefits' },
+    { name: 'Approach', path: '/#approach' },
+    { name: 'About', path: '/about' },
+    { name: 'Blog', path: '/blog' },
+  ];
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -67,19 +76,16 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/blog"
-              className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
-            >
-              Blog
-            </Link>
-            <Link
-              to="/about"
-              className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
-            >
-              About
-            </Link>
+          <nav className="hidden md:flex items-center space-x-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
+              >
+                {link.name}
+              </Link>
+            ))}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -107,21 +113,17 @@ const Navbar = () => {
             : 'opacity-0 scale-95 pointer-events-none'
         }`}
       >
-        <div className="px-2 py-1 space-y-0">
-          <Link
-            to="/blog"
-            className="block py-1 px-2 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Blog
-          </Link>
-          <Link
-            to="/about"
-            className="block py-1 px-2 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            About
-          </Link>
+        <div className="px-2 py-2 space-y-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              className="block py-2 px-3 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {link.name}
+            </Link>
+          ))}
         </div>
       </div>
     </header>
