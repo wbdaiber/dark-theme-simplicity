@@ -64,37 +64,39 @@ const SinglePostTemplate: React.FC<SinglePostTemplateProps> = ({
           </div>
           
           <div className="max-w-4xl mx-auto">
-            {/* Post Header */}
-            <header className="mb-8">
-              {categories.length > 0 && (
-                <div className="flex flex-wrap gap-2 mb-4">
-                  {categories.map((category, index) => (
-                    <Badge key={index} variant="outline" className="bg-blue-300/10 text-blue-300">
-                      {category}
-                    </Badge>
-                  ))}
+            {/* Post Header with Featured Image on right */}
+            <header className="mb-12 flex flex-col md:flex-row justify-between items-start gap-8">
+              <div className="flex-1">
+                {categories.length > 0 && (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {categories.map((category, index) => (
+                      <Badge key={index} variant="outline" className="bg-blue-300/10 text-blue-300">
+                        {category}
+                      </Badge>
+                    ))}
+                  </div>
+                )}
+                
+                <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
+                  {title}
+                </h1>
+                
+                <div className="text-light-100/60 text-sm">
+                  <time>{date}</time>
+                </div>
+              </div>
+              
+              {/* Featured Image as Thumbnail */}
+              {featuredImage && (
+                <div className="w-full md:w-48 lg:w-64 flex-shrink-0 rounded-lg overflow-hidden">
+                  <img 
+                    src={featuredImage} 
+                    alt={title} 
+                    className="w-full h-auto object-cover"
+                  />
                 </div>
               )}
-              
-              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
-                {title}
-              </h1>
-              
-              <div className="text-light-100/60 text-sm">
-                <time>{date}</time>
-              </div>
             </header>
-            
-            {/* Featured Image */}
-            {featuredImage && (
-              <div className="mb-8 rounded-xl overflow-hidden">
-                <img 
-                  src={featuredImage} 
-                  alt={title} 
-                  className="w-full h-auto"
-                />
-              </div>
-            )}
             
             {/* Post Content */}
             <div 
