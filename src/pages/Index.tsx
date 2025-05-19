@@ -76,6 +76,49 @@ const Index = () => {
         </div>
       </section>
       
+      {/* What We Do Section - New section added above Expert Services */}
+      <section id="what-we-do" className="container mx-auto px-4 py-16 scroll-mt-16">
+        <div className="text-center mb-12">
+          <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
+            What We Do
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 tracking-tight reveal-text">
+            Our Services
+          </h2>
+          <p className="text-light-100/70 mb-6 max-w-2xl mx-auto reveal-text">
+            We provide comprehensive digital marketing solutions to elevate your online presence.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: "Strategic SEO",
+              description: "Boost your visibility with search engine optimization that drives organic traffic."
+            },
+            {
+              title: "Content Creation",
+              description: "Engaging, on-brand content that resonates with your target audience."
+            },
+            {
+              title: "Website Development",
+              description: "Custom websites designed for user experience and conversion optimization."
+            },
+            {
+              title: "Brand Strategy",
+              description: "Cohesive visual identity and messaging that distinguishes your business."
+            }
+          ].map((service, index) => (
+            <div 
+              key={index} 
+              className="glass-card p-6 rounded-xl transition-all duration-300 hover:bg-blue-300/10 hover:translate-y-[-5px] hover:shadow-lg"
+            >
+              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
+              <p className="text-light-100/70">{service.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      
       {/* Services Section */}
       <section
         ref={sectionRef}
