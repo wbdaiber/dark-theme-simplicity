@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Share2, BookmarkPlus, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -7,6 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import { TableOfContents } from '@/components/TableOfContents';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -194,8 +196,6 @@ const BlogPost = () => {
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6 leading-tight">
                 {post.title}
               </h1>
-              
-              {/* Removed date and read time from here */}
             </div>
             
             {/* Featured Image as Thumbnail - Display on the right */}
@@ -225,30 +225,36 @@ const BlogPost = () => {
       
       {/* Post Content */}
       <article className="container mx-auto px-4 sm:px-6 lg:px-8 mb-16">
-        <div className="max-w-3xl mx-auto">
-          <div 
-            ref={contentRef}
-            className="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-medium prose-headings:text-light-100 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-light-100/80 prose-p:my-4 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline prose-strong:text-light-100 prose-strong:font-medium prose-ul:my-4 prose-ul:list-disc prose-ul:pl-5 prose-li:text-light-100/80 prose-li:my-1"
-            dangerouslySetInnerHTML={{ __html: post.content }}
-          />
-          
-          {/* Share Buttons - Updated to blue color */}
-          <div className="border-t border-b border-white/10 py-6 mt-8 mb-12">
-            <div className="flex justify-between items-center">
-              <span className="text-light-100/70">Share this article:</span>
-              <div className="flex gap-3">
-                <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
-                  <Twitter size={18} className="text-blue-300" />
-                </Button>
-                <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
-                  <Facebook size={18} className="text-blue-300" />
-                </Button>
-                <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
-                  <Linkedin size={18} className="text-blue-300" />
-                </Button>
+        <div className="max-w-4xl mx-auto flex">
+          {/* Main content area */}
+          <div className="flex-1">
+            <div 
+              ref={contentRef}
+              className="prose prose-invert prose-lg max-w-none prose-headings:font-display prose-headings:font-medium prose-headings:text-light-100 prose-h2:text-2xl prose-h2:mt-12 prose-h2:mb-4 prose-h3:text-xl prose-h3:mt-8 prose-h3:mb-3 prose-p:text-light-100/80 prose-p:my-4 prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline prose-strong:text-light-100 prose-strong:font-medium prose-ul:my-4 prose-ul:list-disc prose-ul:pl-5 prose-li:text-light-100/80 prose-li:my-1"
+              dangerouslySetInnerHTML={{ __html: post.content }}
+            />
+            
+            {/* Share Buttons - Updated to blue color */}
+            <div className="border-t border-b border-white/10 py-6 mt-8 mb-12">
+              <div className="flex justify-between items-center">
+                <span className="text-light-100/70">Share this article:</span>
+                <div className="flex gap-3">
+                  <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
+                    <Twitter size={18} className="text-blue-300" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
+                    <Facebook size={18} className="text-blue-300" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
+                    <Linkedin size={18} className="text-blue-300" />
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
+          
+          {/* Table of Contents */}
+          <TableOfContents contentRef={contentRef} className="ml-8" />
         </div>
       </article>
       
