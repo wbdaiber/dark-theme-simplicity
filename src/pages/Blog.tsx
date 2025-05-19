@@ -1,7 +1,6 @@
 
 import { useEffect, useRef } from 'react';
-import { Search, ChevronRight } from 'lucide-react';
-import { Input } from '@/components/ui/input';
+import { ChevronRight } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Separator } from '@/components/ui/separator';
 import { Card, CardContent } from '@/components/ui/card';
@@ -10,7 +9,6 @@ import Layout from '@/components/Layout';
 
 const Blog = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
-  const categoriesRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -31,8 +29,6 @@ const Blog = () => {
     return () => observer.disconnect();
   }, []);
 
-  const categories = ['SEO', 'Content Marketing', 'AI', 'Analytics'];
-
   return (
     <Layout>
       {/* Hero Section */}
@@ -48,21 +44,6 @@ const Blog = () => {
             <p className="text-xl md:text-2xl text-light-100/70 max-w-3xl reveal-text">
               The latest tools, trends, and strategies to elevate your digital presence and maximize your business growth.
             </p>
-            
-            <div 
-              ref={categoriesRef} 
-              className="flex flex-wrap gap-4 md:gap-8 mt-12 reveal-text"
-            >
-              {categories.map((category) => (
-                <Button 
-                  key={category} 
-                  variant="ghost" 
-                  className="text-light-100/70 hover:text-light-100 hover:bg-white/5 text-lg md:text-xl px-0"
-                >
-                  {category}
-                </Button>
-              ))}
-            </div>
           </div>
         </div>
       </section>
@@ -118,19 +99,12 @@ const Blog = () => {
       {/* All Articles section - kept from original implementation but with styling updates */}
       <section className="py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex flex-col md:flex-row gap-4 md:items-center justify-between mb-10">
+          <div className="mb-10">
             <h2 className="text-3xl md:text-4xl font-bold">All Articles</h2>
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-light-100/40" size={18} />
-              <Input 
-                placeholder="Search posts..." 
-                className="pl-10 w-full md:w-64"
-              />
-            </div>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-            {/* Blog post cards - kept from original implementation with updated styling */}
+            {/* Blog post cards */}
             {[...Array(6)].map((_, index) => (
               <Card 
                 key={index}
