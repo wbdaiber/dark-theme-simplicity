@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
@@ -235,7 +234,7 @@ const Index = () => {
               Contact Me
             </h2>
             <p className="text-xl text-light-100/70 max-w-2xl mx-auto reveal-text">
-              Have a question or want to work together? Reach out directly.
+              Let's discuss how we can elevate your online presence.
             </p>
           </div>
 
@@ -276,20 +275,6 @@ const Index = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-      
-      {/* CTA Section */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-dark-100">
-        <div className="container mx-auto">
-          <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 reveal-text">
-              Your customers are looking for you, are you ready to be found?
-            </h2>
-            <p className="text-xl text-light-100/70 mb-8 max-w-2xl mx-auto reveal-text">
-              Let's discuss how we can elevate your online presence.
-            </p>
           </div>
         </div>
       </section>
