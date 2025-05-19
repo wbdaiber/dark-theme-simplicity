@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X, Briefcase, Award, Settings, User } from 'lucide-react';
+import { Menu, X } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -16,13 +16,10 @@ const Navbar = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Define navigation links to match homepage sections
+  // Define navigation links to only include Blog and About
   const navLinks = [
-    { name: 'Services', path: '/#what-we-do', icon: <Briefcase className="w-4 h-4" /> },
-    { name: 'Benefits', path: '/#benefits', icon: <Award className="w-4 h-4" /> },
-    { name: 'Approach', path: '/#approach', icon: <Settings className="w-4 h-4" /> },
-    { name: 'About', path: '/#about', icon: <User className="w-4 h-4" /> },
     { name: 'Blog', path: '/blog' },
+    { name: 'About', path: '/about' },
   ];
 
   return (
@@ -81,9 +78,8 @@ const Navbar = () => {
               <Link
                 key={link.name}
                 to={link.path}
-                className="flex items-center gap-1.5 text-base md:text-lg font-medium text-light-100 hover:text-blue-300 transition-colors duration-200 hover-underline"
+                className="text-base md:text-lg font-medium text-light-100 hover:text-blue-300 transition-colors duration-200 hover-underline"
               >
-                {link.icon}
                 {link.name}
               </Link>
             ))}
@@ -119,10 +115,9 @@ const Navbar = () => {
             <Link
               key={link.name}
               to={link.path}
-              className="flex items-center gap-2 py-2 px-3 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors text-light-100"
+              className="block py-2 px-3 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors text-light-100"
               onClick={() => setMobileMenuOpen(false)}
             >
-              {link.icon}
               {link.name}
             </Link>
           ))}
