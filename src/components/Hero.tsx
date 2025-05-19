@@ -1,5 +1,7 @@
 
 import { useEffect, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Briefcase, Settings, UserRound, Mail } from 'lucide-react';
 
 const Hero = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -60,12 +62,43 @@ const Hero = () => {
             Digital assets that drive outsized return on investment.
           </p>
           
-          {/* Scroll Indicator */}
-          <div className="absolute bottom-16 left-1/2 transform -translate-x-1/2 flex flex-col items-center animate-pulse-subtle">
-            <span className="text-sm text-light-100/60 mb-2">Scroll to explore</span>
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="animate-float">
-              <path d="M12 5L12 19M12 19L19 12M12 19L5 12" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+          {/* Navigation Buttons - replacing scroll indicator */}
+          <div className="flex flex-wrap justify-center gap-4 mt-12 animate-fade-in">
+            <Button 
+              variant="outline" 
+              className="group hover:bg-blue-300/20"
+              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <Briefcase className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              Services
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="group hover:bg-blue-300/20"
+              onClick={() => document.getElementById('approach')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <Settings className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              Process
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="group hover:bg-blue-300/20"
+              onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <UserRound className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              About
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="group hover:bg-blue-300/20"
+              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <Mail className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              Contact
+            </Button>
           </div>
         </div>
       </div>

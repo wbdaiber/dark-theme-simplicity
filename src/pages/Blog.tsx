@@ -8,6 +8,7 @@ import { ChevronRight, Clock, Calendar, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import Layout from '@/components/Layout';
+import { Badge } from '@/components/ui/badge';
 
 const Blog = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);

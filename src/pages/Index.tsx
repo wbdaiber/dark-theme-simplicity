@@ -37,7 +37,7 @@ const Index = () => {
       <section
         ref={sectionRef}
         id="services"
-        className="py-12 px-4 sm:px-6 lg:px-8 relative"
+        className="py-12 px-4 sm:px-6 lg:px-8 relative scroll-mt-16"
       >
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-16">
@@ -120,7 +120,7 @@ const Index = () => {
       </section>
       
       {/* My Approach Section - Added from About page */}
-      <section className="container mx-auto px-4 py-16">
+      <section id="approach" className="container mx-auto px-4 py-16 scroll-mt-16">
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
             My Approach
@@ -163,7 +163,7 @@ const Index = () => {
       </section>
       
       {/* About Me Section - Removed the "Learn More" button */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-dark-300">
+      <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-dark-300 scroll-mt-16">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto">
             <div className="text-center mb-12">
@@ -201,7 +201,7 @@ const Index = () => {
       </section>
       
       {/* Contact Section - Removed the contact form and contact page link */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8">
+      <section id="contact" className="py-16 px-4 sm:px-6 lg:px-8 scroll-mt-16">
         <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-12">
             <Badge variant="outline" className="mb-3 py-1.5 px-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
