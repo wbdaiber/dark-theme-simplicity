@@ -46,7 +46,7 @@ const PostCard: React.FC<PostCardProps> = ({
         )}
         <time className="text-sm text-light-100/60 mb-2 block">{date}</time>
         <h3 className="text-xl font-medium mb-3 line-clamp-2">
-          <a href={`/blog/${slug}`} className="hover:text-blue-300 transition-colors">
+          <a href={`/blog/${slug}`} className="text-white hover:text-blue-300 transition-colors">
             {title}
           </a>
         </h3>
