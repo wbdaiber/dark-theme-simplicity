@@ -119,6 +119,49 @@ const Index = () => {
         </div>
       </section>
       
+      {/* My Approach Section - Added from About page */}
+      <section className="container mx-auto px-4 py-16">
+        <div className="text-center mb-12">
+          <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
+            My Approach
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-6 tracking-tight reveal-text">
+            How I work with clients
+          </h2>
+          <p className="text-light-100/70 mb-6 max-w-2xl mx-auto reveal-text">
+            I believe in a collaborative approach to content strategy. Your business is unique, and your content strategy should be too.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: "1. Discovery",
+              description: "I start by understanding your business, audience, and goals to create a tailored strategy."
+            },
+            {
+              title: "2. Strategy Development",
+              description: "Based on research and your goals, I develop a content strategy aligned with your business objectives."
+            },
+            {
+              title: "3. Implementation",
+              description: "I create content that engages your audience and drives the results you're looking for."
+            },
+            {
+              title: "4. Analysis & Optimization",
+              description: "I continuously monitor performance and optimize your content strategy for better results."
+            }
+          ].map((step, index) => (
+            <div 
+              key={index} 
+              className="glass-card p-6 rounded-xl transition-all duration-300 hover:bg-blue-300/10 hover:translate-y-[-5px] hover:shadow-lg"
+            >
+              <h3 className="text-xl font-bold mb-3">{step.title}</h3>
+              <p className="text-light-100/70">{step.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      
       {/* About Me Section - Removed the "Learn More" button */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-dark-300">
         <div className="container mx-auto">
