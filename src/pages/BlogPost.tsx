@@ -220,12 +220,12 @@ const BlogPost = () => {
           
           <div className="flex justify-end mt-6">
             <div className="flex items-center gap-3">
-              <Button variant="outline" size="sm" className="text-light-100/70 border-white/10 hover:bg-dark-100/50">
-                <BookmarkPlus size={16} className="mr-1" />
+              <Button variant="outline" size="sm" className="text-blue-300 border-white/10 hover:bg-dark-100/50 hover:text-blue-400">
+                <BookmarkPlus size={16} className="mr-1 text-blue-300" />
                 Save
               </Button>
-              <Button variant="outline" size="sm" className="text-light-100/70 border-white/10 hover:bg-dark-100/50">
-                <Share2 size={16} className="mr-1" />
+              <Button variant="outline" size="sm" className="text-blue-300 border-white/10 hover:bg-dark-100/50 hover:text-blue-400">
+                <Share2 size={16} className="mr-1 text-blue-300" />
                 Share
               </Button>
             </div>

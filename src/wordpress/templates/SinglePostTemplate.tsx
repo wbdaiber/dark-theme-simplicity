@@ -2,7 +2,8 @@
 import React from 'react';
 import Layout from '../static/Layout';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, BookmarkPlus, Share2 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -97,6 +98,20 @@ const SinglePostTemplate: React.FC<SinglePostTemplateProps> = ({
                 </div>
               )}
             </header>
+            
+            {/* Add Save and Share buttons */}
+            <div className="flex justify-end mb-8">
+              <div className="flex items-center gap-3">
+                <Button variant="outline" size="sm" className="text-blue-300 border-white/10 hover:bg-dark-100/50 hover:text-blue-400">
+                  <BookmarkPlus size={16} className="mr-1 text-blue-300" />
+                  Save
+                </Button>
+                <Button variant="outline" size="sm" className="text-blue-300 border-white/10 hover:bg-dark-100/50 hover:text-blue-400">
+                  <Share2 size={16} className="mr-1 text-blue-300" />
+                  Share
+                </Button>
+              </div>
+            </div>
             
             {/* Post Content */}
             <div 
