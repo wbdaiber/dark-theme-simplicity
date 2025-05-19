@@ -1,7 +1,6 @@
 
 import React from 'react';
 import Layout from '../static/Layout';
-import { Badge } from '@/components/ui/badge';
 import { ArrowLeft, BookmarkPlus, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
@@ -68,16 +67,6 @@ const SinglePostTemplate: React.FC<SinglePostTemplateProps> = ({
             {/* Post Header with Featured Image on right */}
             <header className="mb-12 flex flex-col md:flex-row justify-between items-start gap-8">
               <div className="flex-1">
-                {categories.length > 0 && (
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {categories.map((category, index) => (
-                      <Badge key={index} variant="outline" className="bg-blue-300/10 text-blue-300">
-                        {category}
-                      </Badge>
-                    ))}
-                  </div>
-                )}
-                
                 <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4">
                   {title}
                 </h1>
