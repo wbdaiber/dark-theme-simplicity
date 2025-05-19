@@ -1,10 +1,9 @@
-
 import { useEffect, useRef } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
 import ServiceCard from '@/components/ServiceCard';
 import { Badge } from '@/components/ui/badge';
-import { Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin, Globe, FileText, Database, Monitor } from 'lucide-react';
 
 const Index = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -33,7 +32,7 @@ const Index = () => {
     <Layout>
       <Hero />
       
-      {/* Key Benefits Section - Added new section above Expert Services */}
+      {/* Key Benefits Section */}
       <section id="benefits" className="container mx-auto px-4 py-16 scroll-mt-16">
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
@@ -76,136 +75,74 @@ const Index = () => {
         </div>
       </section>
       
-      {/* What We Do Section - New section added above Expert Services */}
-      <section id="what-we-do" className="container mx-auto px-4 py-16 scroll-mt-16">
-        <div className="text-center mb-12">
-          <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
-            What We Do
-          </Badge>
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 tracking-tight reveal-text">
-            Our Services
-          </h2>
-          <p className="text-light-100/70 mb-6 max-w-2xl mx-auto reveal-text">
-            We provide comprehensive digital marketing solutions to elevate your online presence.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {[
-            {
-              title: "Strategic SEO",
-              description: "Boost your visibility with search engine optimization that drives organic traffic."
-            },
-            {
-              title: "Content Creation",
-              description: "Engaging, on-brand content that resonates with your target audience."
-            },
-            {
-              title: "Website Development",
-              description: "Custom websites designed for user experience and conversion optimization."
-            },
-            {
-              title: "Brand Strategy",
-              description: "Cohesive visual identity and messaging that distinguishes your business."
-            }
-          ].map((service, index) => (
-            <div 
-              key={index} 
-              className="glass-card p-6 rounded-xl transition-all duration-300 hover:bg-blue-300/10 hover:translate-y-[-5px] hover:shadow-lg"
-            >
-              <h3 className="text-xl font-bold mb-3">{service.title}</h3>
-              <p className="text-light-100/70">{service.description}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-      
-      {/* Services Section */}
+      {/* What We Do Section - Enhanced with the visual style of Expert Services */}
       <section
         ref={sectionRef}
-        id="services"
+        id="what-we-do"
         className="py-12 px-4 sm:px-6 lg:px-8 relative scroll-mt-16"
       >
         <div className="container mx-auto">
           <div className="max-w-3xl mx-auto text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 reveal-text">
-              Expert Services
+            <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
+              What We Do
+            </Badge>
+            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 tracking-tight reveal-text">
+              Our Services
             </h2>
-            <p className="text-xl text-light-100/70 reveal-text">
-              Specialized solutions designed to help your business succeed online.
+            <p className="text-xl text-light-100/70 max-w-2xl mx-auto reveal-text">
+              Comprehensive digital marketing solutions to elevate your online presence.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <ServiceCard
-              title="SEO Consulting"
-              description="Tailored strategies that will actually get results."
+              title="Strategic SEO"
+              description="Boost your visibility with search engine optimization that drives organic traffic."
               icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                <Globe
                   className="w-8 h-8 text-blue-300"
-                >
-                  <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" />
-                  <circle cx="12" cy="12" r="3" />
-                </svg>
+                />
               }
               className="animate-fade-in"
             />
             
             <ServiceCard
-              title="Copywriting"
-              description="Engaging content for any audience and brand voice."
+              title="Content Creation"
+              description="Engaging, on-brand content that resonates with your target audience."
               icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                <FileText
                   className="w-8 h-8 text-blue-300"
-                >
-                  <path d="M12 19l7-7 3 3-7 7-3-3z" />
-                  <path d="M18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5z" />
-                  <path d="M2 2l7.586 7.586" />
-                  <circle cx="11" cy="11" r="2" />
-                </svg>
+                />
               }
               className="animate-fade-in animation-delay-200"
             />
             
             <ServiceCard
-              title="Web Design"
-              description="I built this website. I'll build yours."
+              title="Website Development"
+              description="Custom websites designed for user experience and conversion optimization."
               icon={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                <Monitor
                   className="w-8 h-8 text-blue-300"
-                >
-                  <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                  <path d="M3 9h18" />
-                  <path d="M9 21V9" />
-                </svg>
+                />
               }
               className="animate-fade-in animation-delay-400"
+            />
+
+            <ServiceCard
+              title="Brand Strategy"
+              description="Cohesive visual identity and messaging that distinguishes your business."
+              icon={
+                <Database
+                  className="w-8 h-8 text-blue-300"
+                />
+              }
+              className="animate-fade-in"
             />
           </div>
         </div>
       </section>
       
-      {/* My Approach Section - Added from About page */}
+      {/* My Approach Section */}
       <section id="approach" className="container mx-auto px-4 py-16 scroll-mt-16">
         <div className="text-center mb-12">
           <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
@@ -248,7 +185,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* About Me Section - Removed the "Learn More" button */}
+      {/* About Me Section */}
       <section id="about" className="py-16 px-4 sm:px-6 lg:px-8 bg-dark-300 scroll-mt-16">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto">
@@ -286,7 +223,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Contact Section - Removed the contact form and contact page link */}
+      {/* Contact Section */}
       <section id="contact" className="py-16 px-4 sm:px-6 lg:px-8 scroll-mt-16">
         <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-12">
