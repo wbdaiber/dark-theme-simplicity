@@ -1,7 +1,7 @@
 
 import { useEffect, useRef } from 'react';
 import { Button } from '@/components/ui/button';
-import { Briefcase, Settings, UserRound, Mail } from 'lucide-react';
+import { Briefcase, Award, Settings, User, Mail } from 'lucide-react';
 
 const Hero = () => {
   const headingRef = useRef<HTMLHeadingElement>(null);
@@ -62,12 +62,12 @@ const Hero = () => {
             Digital assets that drive outsized return on investment.
           </p>
           
-          {/* Navigation Buttons - replacing scroll indicator */}
+          {/* Navigation Buttons - updated to match homepage sections order */}
           <div className="flex flex-wrap justify-center gap-4 mt-12 animate-fade-in">
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20"
-              onClick={() => document.getElementById('services')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
+              onClick={() => document.getElementById('what-we-do')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <Briefcase className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
               Services
@@ -75,25 +75,34 @@ const Hero = () => {
             
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20"
-              onClick={() => document.getElementById('approach')?.scrollIntoView({ behavior: 'smooth' })}
+              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
+              onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Settings className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
-              Process
+              <Award className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              Benefits
             </Button>
             
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20"
+              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
+              onClick={() => document.getElementById('approach')?.scrollIntoView({ behavior: 'smooth' })}
+            >
+              <Settings className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              Approach
+            </Button>
+            
+            <Button 
+              variant="outline" 
+              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <UserRound className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              <User className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
               About
             </Button>
             
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20"
+              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
               <Mail className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
