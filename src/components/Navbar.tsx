@@ -66,13 +66,19 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation - Modified to show only Blog */}
+          {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
             <Link
               to="/blog"
               className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
             >
               Blog
+            </Link>
+            <Link
+              to="/about"
+              className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
+            >
+              About
             </Link>
           </nav>
 
@@ -93,7 +99,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu - Modified to show only Blog */}
+      {/* Mobile Menu */}
       <div
         className={`md:hidden absolute top-[64px] right-4 w-36 bg-dark-100/95 backdrop-blur-md shadow-lg rounded-md transition-all duration-300 ${
           mobileMenuOpen
@@ -108,6 +114,13 @@ const Navbar = () => {
             onClick={() => setMobileMenuOpen(false)}
           >
             Blog
+          </Link>
+          <Link
+            to="/about"
+            className="block py-1 px-2 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            About
           </Link>
         </div>
       </div>
