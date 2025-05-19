@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import { Menu, X, Briefcase, Award, Settings, User } from 'lucide-react';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -15,6 +15,15 @@ const Navbar = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Define navigation links to match homepage sections
+  const navLinks = [
+    { name: 'Services', path: '/#what-we-do', icon: <Briefcase className="w-4 h-4" /> },
+    { name: 'Benefits', path: '/#benefits', icon: <Award className="w-4 h-4" /> },
+    { name: 'Approach', path: '/#approach', icon: <Settings className="w-4 h-4" /> },
+    { name: 'About', path: '/#about', icon: <User className="w-4 h-4" /> },
+    { name: 'Blog', path: '/blog' },
+  ];
 
   return (
     <header
@@ -67,19 +76,17 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-8">
-            <Link
-              to="/blog"
-              className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
-            >
-              Blog
-            </Link>
-            <Link
-              to="/about"
-              className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
-            >
-              About
-            </Link>
+          <nav className="hidden md:flex items-center space-x-6">
+            {navLinks.map((link) => (
+              <Link
+                key={link.name}
+                to={link.path}
+                className="flex items-center gap-1.5 text-base md:text-lg font-medium text-light-100 hover:text-blue-300 transition-colors duration-200 hover-underline"
+              >
+                {link.icon}
+                {link.name}
+              </Link>
+            ))}
           </nav>
 
           {/* Mobile Menu Button */}
@@ -91,9 +98,9 @@ const Navbar = () => {
           >
             <span className="sr-only">Open main menu</span>
             {mobileMenuOpen ? (
-              <X className="h-6 w-6" aria-hidden="true" />
+              <X className="h-6 w-6 text-light-100" aria-hidden="true" />
             ) : (
-              <Menu className="h-6 w-6" aria-hidden="true" />
+              <Menu className="h-6 w-6 text-light-100" aria-hidden="true" />
             )}
           </button>
         </div>
@@ -101,27 +108,24 @@ const Navbar = () => {
 
       {/* Mobile Menu */}
       <div
-        className={`md:hidden absolute top-[64px] right-4 w-36 bg-dark-100/95 backdrop-blur-md shadow-lg rounded-md transition-all duration-300 ${
+        className={`md:hidden absolute top-[64px] right-4 w-44 bg-dark-100/95 backdrop-blur-md shadow-lg rounded-md transition-all duration-300 ${
           mobileMenuOpen
             ? 'opacity-100 scale-100'
             : 'opacity-0 scale-95 pointer-events-none'
         }`}
       >
-        <div className="px-2 py-1 space-y-0">
-          <Link
-            to="/blog"
-            className="block py-1 px-2 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Blog
-          </Link>
-          <Link
-            to="/about"
-            className="block py-1 px-2 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            About
-          </Link>
+        <div className="px-2 py-2 space-y-1">
+          {navLinks.map((link) => (
+            <Link
+              key={link.name}
+              to={link.path}
+              className="flex items-center gap-2 py-2 px-3 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors text-light-100"
+              onClick={() => setMobileMenuOpen(false)}
+            >
+              {link.icon}
+              {link.name}
+            </Link>
+          ))}
         </div>
       </div>
     </header>
