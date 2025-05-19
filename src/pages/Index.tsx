@@ -33,6 +33,49 @@ const Index = () => {
     <Layout>
       <Hero />
       
+      {/* Key Benefits Section - Added new section above Expert Services */}
+      <section id="benefits" className="container mx-auto px-4 py-16 scroll-mt-16">
+        <div className="text-center mb-12">
+          <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 border-blue-300/20">
+            Why Choose Us
+          </Badge>
+          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4 tracking-tight reveal-text">
+            Key Benefits
+          </h2>
+          <p className="text-light-100/70 mb-6 max-w-2xl mx-auto reveal-text">
+            We deliver real results through strategic digital solutions tailored to your business goals.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          {[
+            {
+              title: "Data-Driven",
+              description: "Our strategies are backed by thorough research and analytics for measurable outcomes."
+            },
+            {
+              title: "Customized Approach",
+              description: "Solutions are tailored to your specific industry, audience, and business objectives."
+            },
+            {
+              title: "Transparent Process",
+              description: "Clear communication and regular reporting keep you informed every step of the way."
+            },
+            {
+              title: "Continuous Optimization",
+              description: "We consistently refine strategies based on performance data to maximize ROI."
+            }
+          ].map((benefit, index) => (
+            <div 
+              key={index} 
+              className="glass-card p-6 rounded-xl transition-all duration-300 hover:bg-blue-300/10 hover:translate-y-[-5px] hover:shadow-lg"
+            >
+              <h3 className="text-xl font-bold mb-3">{benefit.title}</h3>
+              <p className="text-light-100/70">{benefit.description}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+      
       {/* Services Section */}
       <section
         ref={sectionRef}
