@@ -3,11 +3,8 @@ import { useEffect, useRef } from 'react';
 import Layout from '@/components/Layout';
 import Hero from '@/components/Hero';
 import ServiceCard from '@/components/ServiceCard';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { Badge } from '@/components/ui/badge';
-import { Send, Mail, Phone, MapPin } from 'lucide-react';
+import { Mail, Phone, MapPin } from 'lucide-react';
 
 const Index = () => {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -36,7 +33,7 @@ const Index = () => {
     <Layout>
       <Hero />
       
-      {/* Services Section - Reduced top padding from py-24 to py-12 */}
+      {/* Services Section */}
       <section
         ref={sectionRef}
         id="services"
@@ -122,7 +119,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* About Me Section */}
+      {/* About Me Section - Removed the "Learn More" button */}
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-dark-300">
         <div className="container mx-auto">
           <div className="max-w-5xl mx-auto">
@@ -146,14 +143,6 @@ const Index = () => {
                 <p className="text-lg text-light-100/90">
                   My approach combines data-driven strategies with creative thinking to deliver measurable results. Whether you're looking to increase website traffic, improve conversion rates, or establish your brand voice, I'm here to help you achieve your goals.
                 </p>
-                <div className="pt-4">
-                  <a
-                    href="/about"
-                    className="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-dark-300 bg-light-100 hover:bg-light-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-100 focus:ring-blue-300 transition-all duration-200 transform hover:-translate-y-1"
-                  >
-                    Learn More About Me
-                  </a>
-                </div>
               </div>
               <div className="relative h-[400px] w-full rounded-xl overflow-hidden glass-card reveal-text">
                 <div className="absolute inset-0 bg-gradient-to-tr from-blue-300/20 to-transparent"></div>
@@ -168,7 +157,7 @@ const Index = () => {
         </div>
       </section>
       
-      {/* Contact Section */}
+      {/* Contact Section - Removed the contact form and contact page link */}
       <section className="py-16 px-4 sm:px-6 lg:px-8">
         <div className="container mx-auto max-w-5xl">
           <div className="text-center mb-12">
@@ -179,7 +168,7 @@ const Index = () => {
               Contact Me
             </h2>
             <p className="text-xl text-light-100/70 max-w-2xl mx-auto reveal-text">
-              Have a question or want to work together? Reach out below.
+              Have a question or want to work together? Reach out directly.
             </p>
           </div>
 
@@ -221,45 +210,6 @@ const Index = () => {
               </div>
             </div>
           </div>
-
-          {/* Contact Form */}
-          <div className="mt-12 glass-card p-8 rounded-xl reveal-text">
-            <form className="space-y-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-light-100 mb-1">Name</label>
-                  <Input id="name" placeholder="Your name" />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-light-100 mb-1">Email</label>
-                  <Input id="email" placeholder="Your email" />
-                </div>
-              </div>
-              
-              <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-light-100 mb-1">Subject</label>
-                <Input id="subject" placeholder="Subject of your message" />
-              </div>
-              
-              <div>
-                <label htmlFor="message" className="block text-sm font-medium text-light-100 mb-1">Message</label>
-                <Textarea id="message" placeholder="Your message" className="min-h-[150px]" />
-              </div>
-              
-              <Button className="w-full sm:w-auto">
-                <span className="flex items-center">
-                  <Send className="mr-2 h-4 w-4" />
-                  Send Message
-                </span>
-              </Button>
-            </form>
-          </div>
-          
-          <div className="text-center mt-8">
-            <a href="/contact" className="text-blue-300 hover:underline font-medium">
-              Visit the contact page for more ways to connect →
-            </a>
-          </div>
         </div>
       </section>
       
@@ -273,12 +223,6 @@ const Index = () => {
             <p className="text-xl text-light-100/70 mb-8 max-w-2xl mx-auto reveal-text">
               Let's discuss how we can elevate your online presence.
             </p>
-            <a
-              href="/contact"
-              className="inline-flex items-center justify-center px-6 py-3 border border-transparent rounded-md shadow-sm text-base font-medium text-dark-300 bg-light-100 hover:bg-light-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-dark-100 focus:ring-blue-300 transition-all duration-200 transform hover:-translate-y-1"
-            >
-              Get in Touch
-            </a>
           </div>
         </div>
       </section>

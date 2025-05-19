@@ -66,17 +66,14 @@ const Navbar = () => {
             </Link>
           </div>
 
-          {/* Desktop Navigation */}
+          {/* Desktop Navigation - Modified to show only Blog */}
           <nav className="hidden md:flex items-center space-x-8">
-            {['Blog', 'Contact', 'About'].map((item) => (
-              <Link
-                key={item}
-                to={item === 'Blog' ? '/blog' : `/${item.toLowerCase()}`}
-                className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
-              >
-                {item}
-              </Link>
-            ))}
+            <Link
+              to="/blog"
+              className="text-base md:text-lg font-medium text-light-100/80 hover:text-light-100 transition-colors duration-200 hover-underline"
+            >
+              Blog
+            </Link>
           </nav>
 
           {/* Mobile Menu Button */}
@@ -96,7 +93,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu - Compact floating menu */}
+      {/* Mobile Menu - Modified to show only Blog */}
       <div
         className={`md:hidden absolute top-[64px] right-4 w-36 bg-dark-100/95 backdrop-blur-md shadow-lg rounded-md transition-all duration-300 ${
           mobileMenuOpen
@@ -105,16 +102,13 @@ const Navbar = () => {
         }`}
       >
         <div className="px-2 py-1 space-y-0">
-          {['Blog', 'Contact', 'About'].map((item) => (
-            <Link
-              key={item}
-              to={item === 'Blog' ? '/blog' : `/${item.toLowerCase()}`}
-              className="block py-1 px-2 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {item}
-            </Link>
-          ))}
+          <Link
+            to="/blog"
+            className="block py-1 px-2 text-sm font-medium rounded-md hover:bg-dark-300 transition-colors"
+            onClick={() => setMobileMenuOpen(false)}
+          >
+            Blog
+          </Link>
         </div>
       </div>
     </header>
