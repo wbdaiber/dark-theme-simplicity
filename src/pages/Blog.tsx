@@ -1,7 +1,10 @@
+<think>
+
+</think>
 
 import React, { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight, Clock, Calendar, ArrowRight, BookOpen } from 'lucide-react';
+import { ChevronRight, Clock, Calendar, ArrowRight } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious } from '@/components/ui/pagination';
 import Layout from '@/components/Layout';
@@ -318,49 +321,6 @@ const Blog = () => {
                 </PaginationItem>
               </PaginationContent>
             </Pagination>
-          </div>
-        </div>
-      </section>
-      
-      {/* Newsletter Sign-up */}
-      <section className="mb-24">
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="glass-card rounded-2xl p-8 md:p-12 bg-gradient-to-br from-blue-400/10 to-dark-300/50">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-              <div>
-                <h2 className="text-3xl font-display font-medium mb-4">
-                  Stay Updated with the Latest Insights
-                </h2>
-                <p className="text-light-100/80 mb-6">
-                  Subscribe to our newsletter to receive exclusive content, actionable tips, and industry updates directly to your inbox.
-                </p>
-                <div className="flex items-center gap-3">
-                  <BookOpen className="text-blue-300" size={32} />
-                  <div>
-                    <p className="text-sm text-light-100/60">Join over 4,500 subscribers</p>
-                    <p className="text-sm text-light-100/60">New content delivered weekly</p>
-                  </div>
-                </div>
-              </div>
-              <div>
-                <form className="space-y-4">
-                  <div>
-                    <input 
-                      type="email" 
-                      placeholder="Enter your email address" 
-                      className="w-full px-4 py-3 rounded-lg bg-dark-100/50 border border-white/10 text-light-100 placeholder:text-light-100/40 focus:outline-none focus:ring-2 focus:ring-blue-300/50"
-                      required
-                    />
-                  </div>
-                  <button type="submit" className="w-full py-3 px-4 bg-blue-300 hover:bg-blue-400 text-dark-300 font-medium rounded-lg transition-colors duration-200">
-                    Subscribe Now
-                  </button>
-                  <p className="text-xs text-light-100/60 text-center">
-                    By subscribing, you agree to our Privacy Policy. You can unsubscribe at any time.
-                  </p>
-                </form>
-              </div>
-            </div>
           </div>
         </div>
       </section>
