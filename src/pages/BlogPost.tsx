@@ -264,7 +264,7 @@ const BlogPost = () => {
       {/* Related Posts */}
       <section className="bg-dark-300 py-16">
         <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-          <h2 className="text-2xl md:text-3xl font-display font-medium mb-8 text-center">Related Articles</h2>
+          <h2 className="text-2xl md:text-3xl font-display font-medium mb-8 text-center text-white">Related Articles</h2>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {post.relatedPosts.map((relatedPost) => (
@@ -281,16 +281,6 @@ const BlogPost = () => {
                     </div>
                   </div>
                   <CardContent className="pt-5 flex flex-col flex-grow">
-                    <div className="flex items-center text-xs text-light-100/60 mb-3 gap-4">
-                      <span className="flex items-center gap-1">
-                        <Calendar size={12} />
-                        {relatedPost.date}
-                      </span>
-                      <span className="flex items-center gap-1">
-                        <Clock size={12} />
-                        {relatedPost.readTime} read
-                      </span>
-                    </div>
                     <h3 className="text-lg font-display font-medium mb-2 group-hover:text-blue-300 transition-colors line-clamp-2">
                       {relatedPost.title}
                     </h3>
