@@ -66,46 +66,46 @@ const Hero = () => {
           <div className="flex flex-wrap justify-center gap-4 mt-12 animate-fade-in">
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
+              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('what-we-do')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Briefcase className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              <Briefcase className="mr-2 text-dark-200" size={18} />
               Services
             </Button>
             
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
+              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('benefits')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Award className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              <Award className="mr-2 text-dark-200" size={18} />
               Benefits
             </Button>
             
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
+              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('approach')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Settings className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              <Settings className="mr-2 text-dark-200" size={18} />
               Approach
             </Button>
             
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
+              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('about')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <User className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              <User className="mr-2 text-dark-200" size={18} />
               About
             </Button>
             
             <Button 
               variant="outline" 
-              className="group hover:bg-blue-300/20 text-light-100 border-blue-300/30"
+              className="bg-blue-300 text-dark-200 hover:bg-blue-400 border-blue-400"
               onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
             >
-              <Mail className="mr-2 text-blue-300 group-hover:text-blue-300" size={18} />
+              <Mail className="mr-2 text-dark-200" size={18} />
               Contact
             </Button>
           </div>
