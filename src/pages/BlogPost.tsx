@@ -1,3 +1,4 @@
+
 import React, { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Calendar, Clock, Share2, BookmarkPlus, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -185,26 +186,39 @@ const BlogPost = () => {
       {/* Post Header */}
       <header className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12">
         <div className="max-w-4xl mx-auto">
-          <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 hover:bg-blue-300/20 border-blue-300/20">
-            {post.category}
-          </Badge>
-          
-          <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6 leading-tight">
-            {post.title}
-          </h1>
-          
-          <div className="flex flex-wrap items-center text-sm text-light-100/70 mb-8 gap-6">
-            <span className="flex items-center gap-1">
-              <Calendar size={16} />
-              {post.date}
-            </span>
-            <span className="flex items-center gap-1">
-              <Clock size={16} />
-              {post.readTime} read
-            </span>
+          <div className="flex flex-col md:flex-row justify-between items-start gap-8">
+            <div className="flex-1">
+              <Badge variant="outline" className="mb-4 bg-blue-300/10 text-blue-300 hover:bg-blue-300/20 border-blue-300/20">
+                {post.category}
+              </Badge>
+              
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6 leading-tight">
+                {post.title}
+              </h1>
+              
+              <div className="flex flex-wrap items-center text-sm text-light-100/70 mb-8 gap-6">
+                <span className="flex items-center gap-1">
+                  <Calendar size={16} />
+                  {post.date}
+                </span>
+                <span className="flex items-center gap-1">
+                  <Clock size={16} />
+                  {post.readTime} read
+                </span>
+              </div>
+            </div>
+            
+            {/* Featured Image as Thumbnail - Display on the right */}
+            <div className="w-full md:w-48 lg:w-64 flex-shrink-0 rounded-lg overflow-hidden">
+              <img 
+                src={post.imageUrl} 
+                alt={post.title} 
+                className="w-full h-auto object-cover"
+              />
+            </div>
           </div>
           
-          <div className="flex justify-end">
+          <div className="flex justify-end mt-6">
             <div className="flex items-center gap-3">
               <Button variant="outline" size="sm" className="text-light-100/70 border-white/10 hover:bg-dark-100/50">
                 <BookmarkPlus size={16} className="mr-1" />
@@ -219,16 +233,7 @@ const BlogPost = () => {
         </div>
       </header>
       
-      {/* Featured Image */}
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 mb-12">
-        <div className="max-w-5xl mx-auto rounded-2xl overflow-hidden aspect-[21/9]">
-          <img 
-            src={post.imageUrl} 
-            alt={post.title} 
-            className="w-full h-full object-cover"
-          />
-        </div>
-      </div>
+      {/* Remove the large featured image section since we already have it in the header */}
       
       {/* Post Content */}
       <article className="container mx-auto px-4 sm:px-6 lg:px-8 mb-16">
