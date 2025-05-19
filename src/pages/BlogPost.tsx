@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { ArrowLeft, Share2, BookmarkPlus, Facebook, Twitter, Linkedin } from 'lucide-react';
@@ -233,19 +232,19 @@ const BlogPost = () => {
             dangerouslySetInnerHTML={{ __html: post.content }}
           />
           
-          {/* Share Buttons */}
+          {/* Share Buttons - Updated to blue color */}
           <div className="border-t border-b border-white/10 py-6 mt-8 mb-12">
             <div className="flex justify-between items-center">
               <span className="text-light-100/70">Share this article:</span>
               <div className="flex gap-3">
                 <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
-                  <Twitter size={18} />
+                  <Twitter size={18} className="text-blue-300" />
                 </Button>
                 <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
-                  <Facebook size={18} />
+                  <Facebook size={18} className="text-blue-300" />
                 </Button>
                 <Button variant="outline" size="icon" className="rounded-full h-10 w-10">
-                  <Linkedin size={18} />
+                  <Linkedin size={18} className="text-blue-300" />
                 </Button>
               </div>
             </div>

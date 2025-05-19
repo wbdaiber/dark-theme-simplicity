@@ -1,7 +1,7 @@
 
 import React from 'react';
 import Layout from '../static/Layout';
-import { ArrowLeft, BookmarkPlus, Share2 } from 'lucide-react';
+import { ArrowLeft, BookmarkPlus, Share2, Facebook, Twitter, Linkedin } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import {
   Breadcrumb,
@@ -88,8 +88,21 @@ const SinglePostTemplate: React.FC<SinglePostTemplateProps> = ({
               )}
             </header>
             
-            {/* Add Save and Share buttons */}
-            <div className="flex justify-end mb-8">
+            {/* Add Save and Share buttons - Updated to have blue social sharing icons */}
+            <div className="flex justify-between mb-8">
+              <div className="flex items-center">
+                <div className="flex gap-3">
+                  <Button variant="outline" size="icon" className="rounded-full h-8 w-8">
+                    <Facebook size={16} className="text-blue-300" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="rounded-full h-8 w-8">
+                    <Twitter size={16} className="text-blue-300" />
+                  </Button>
+                  <Button variant="outline" size="icon" className="rounded-full h-8 w-8">
+                    <Linkedin size={16} className="text-blue-300" />
+                  </Button>
+                </div>
+              </div>
               <div className="flex items-center gap-3">
                 <Button variant="outline" size="sm" className="text-blue-300 border-white/10 hover:bg-dark-100/50 hover:text-blue-400">
                   <BookmarkPlus size={16} className="mr-1 text-blue-300" />
