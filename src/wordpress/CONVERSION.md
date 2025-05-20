@@ -1073,3 +1073,4 @@ module.exports = {
 - [ ] Theme supports WordPress features (menus, widgets, etc.)
 - [ ] Theme is responsive and matches original design
 - [ ] All paths and URLs are properly rendered using WordPress functions
+
