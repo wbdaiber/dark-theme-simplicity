@@ -1,7 +1,84 @@
-
 # WordPress Theme Conversion Guide
 
 This document provides comprehensive instructions for converting our React components into a WordPress theme. It serves as a reference for developers handling the conversion process.
+
+## 1. Project & Goal Context
+
+### Project Synopsis
+This React application is a modern, responsive website with a dark theme design focused on blog content delivery. It includes a homepage, blog listing, single post view, about page, and 404 page. The scope encompasses converting all React components to WordPress templates while maintaining visual consistency and interactive features. The conversion is considered "done" when the WordPress theme renders identically to the React app, maintains the same user experience, and meets all performance criteria.
+
+### Target WordPress Environment
+- **WordPress Version:** 6.4+ 
+- **PHP Version:** 7.4+ (8.0+ recommended)
+- **Theme Paradigm:** Classic theme with Block Editor (Gutenberg) compatibility
+- **Browser Support:** Latest two versions of Chrome, Firefox, Safari, and Edge
+
+### Acceptance Criteria
+- **Performance:** Lighthouse score 90+ on all metrics
+- **Accessibility:** WCAG 2.1 AA compliant
+- **SEO:** Perfect on-page optimization  
+- **Plugin Compatibility:** Contact Form 7, Yoast SEO, WP Super Cache, Advanced Custom Fields
+
+## 2. Pre-conversion Prerequisites
+
+### Local Development Environment
+- **PHP:** 7.4+ 
+- **MySQL/MariaDB:** 5.7+ / 10.4+
+- **Node.js:** 16+
+- **npm/yarn:** Latest stable
+- **WordPress CLI:** Latest version
+
+### Bootstrap Script
+Create a `setup.sh` script in the project root:
+
+```bash
+#!/bin/bash
+# Setup script for local development
+
+# Variables
+WP_DIR="wordpress"
+THEME_NAME="your-theme-name"
+THEME_DIR="$WP_DIR/wp-content/themes/$THEME_NAME"
+
+# Download WordPress core
+if [ ! -d "$WP_DIR" ]; then
+  wp core download --path=$WP_DIR
+  
+  # Configure WordPress
+  cp wp-config-sample.php $WP_DIR/wp-config.php
+  # Replace DB settings in wp-config.php
+  sed -i '' 's/database_name_here/wordpress/g' $WP_DIR/wp-config.php
+  sed -i '' 's/username_here/root/g' $WP_DIR/wp-config.php
+  sed -i '' 's/password_here/root/g' $WP_DIR/wp-config.php
+  
+  # Create database
+  wp db create --path=$WP_DIR
+  
+  # Install WordPress
+  wp core install --path=$WP_DIR --url=http://localhost:8080 --title="Your Site Title" --admin_user=admin --admin_password=admin --admin_email=admin@example.com
+fi
+
+# Create theme directory
+mkdir -p $THEME_DIR
+
+# Copy theme files
+cp -R theme/* $THEME_DIR/
+
+# Install required plugins
+wp plugin install advanced-custom-fields contact-form-7 wordpress-seo wp-super-cache --activate --path=$WP_DIR
+
+# Import demo content
+if [ -f "demo-content.xml" ]; then
+  wp import demo-content.xml --authors=create --path=$WP_DIR
+fi
+
+echo "Setup complete! Your WordPress installation is ready at ./wordpress"
+```
+
+Make the script executable:
+```bash
+chmod +x setup.sh
+```
 
 ## Directory Structure
 
@@ -26,6 +103,912 @@ theme-name/
 ├── header.php         # Header template
 ├── footer.php         # Footer template
 └── style.css          # Theme stylesheet and metadata
+```
+
+## 3. Asset Build & Watch Pipeline
+
+### Build System Configuration
+
+Create the following configuration files for asset compilation:
+
+#### package.json for theme development
+
+```json
+{
+  "name": "your-theme-name",
+  "version": "1.0.0",
+  "description": "WordPress theme with Tailwind CSS",
+  "scripts": {
+    "build:css": "postcss src/css/tailwind.css -o assets/css/tailwind.css --minify",
+    "watch:css": "postcss src/css/tailwind.css -o assets/css/tailwind.css --watch",
+    "build:js": "esbuild src/js/*.js --bundle --minify --outdir=assets/js",
+    "watch:js": "esbuild src/js/*.js --bundle --outdir=assets/js --watch",
+    "build": "npm run build:css && npm run build:js",
+    "dev": "concurrently \"npm run watch:css\" \"npm run watch:js\"",
+    "prod": "cross-env NODE_ENV=production npm run build"
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^3.0.0",
+    "autoprefixer": "^10.4.14",
+    "concurrently": "^8.0.1",
+    "cross-env": "^7.0.3",
+    "cssnano": "^6.0.0",
+    "esbuild": "^0.17.19",
+    "postcss": "^8.4.23",
+    "postcss-cli": "^10.1.0",
+    "tailwindcss": "^3.3.2"
+  }
+}
+```
+
+#### tailwind.config.js
+
+```js
+/** @type {import('tailwindcss').Config} */
+module.exports = {
+  content: [
+    './*.php',
+    './inc/**/*.php',
+    './template-parts/**/*.php',
+    './templates/**/*.php',
+    './src/js/**/*.js'
+  ],
+  theme: {
+    extend: {
+      colors: {
+        'blue-300': '#3b82f6',
+        'dark-100': '#0f172a',
+        'dark-200': '#0a0f1c',
+        'dark-300': '#0d1424',
+        'light-100': '#f8fafc',
+      },
+      fontFamily: {
+        'display': ['var(--font-display)', 'sans-serif'],
+      },
+    },
+  },
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
+}
+```
+
+#### postcss.config.js
+
+```js
+module.exports = {
+  plugins: {
+    tailwindcss: {},
+    autoprefixer: {},
+    ...(process.env.NODE_ENV === 'production' ? { cssnano: {} } : {})
+  }
+}
+```
+
+### Development Workflow
+
+1. **Install dependencies:**
+   ```bash
+   npm install
+   ```
+
+2. **Development mode with watch:**
+   ```bash
+   npm run dev
+   ```
+   This will watch both CSS and JS files, recompiling on changes.
+
+3. **Production build:**
+   ```bash
+   npm run prod
+   ```
+   This will minify CSS and JS for production use.
+
+### Source Maps Policy
+
+- **Development:** Source maps are enabled by default in dev mode
+- **Production:** Source maps are disabled in production builds
+
+To toggle development/production asset stacks:
+```bash
+# Development (with source maps)
+npm run dev
+
+# Production (minified, no source maps)
+npm run prod
+```
+
+## 4. Data & Content Modeling
+
+### React Data to WordPress Mapping
+
+| React Data Source | WordPress Implementation | Notes |
+|------------------|--------------------------|-------|
+| `/posts` endpoint | Default WP post type | Core WordPress posts |
+| `/pages/:id` | Default WP page type | Page templates will render these |
+| User data | WordPress users | User roles mapped to capabilities |
+| Categories | WordPress categories | Built-in taxonomy |
+| Tags | WordPress tags | Built-in taxonomy |
+| Image gallery | WordPress media library | Use `wp_get_attachment_image()` |
+| Settings/Config | Theme Customizer API | Global site settings |
+
+### Custom Fields Structure
+
+For complex data structures, use Advanced Custom Fields with these field groups:
+
+1. **Post Extended Fields**
+   - Featured (boolean)
+   - Subtitle (text)
+   - Reading Time (number)
+
+2. **Author Extended Fields**
+   - Title/Position (text)
+   - Social Links (repeater)
+   - Profile Image (image)
+
+### Demo Content Import
+
+Create a WXR (WordPress eXtended RSS) export file from a test site, or use WP-CLI to generate sample content:
+
+```bash
+# Create 10 sample posts
+wp post generate --count=10 --post_type=post --post_status=publish
+
+# Create 5 pages
+wp post generate --count=5 --post_type=page --post_status=publish
+
+# Create categories
+wp term create category "Technology" --description="Tech related posts"
+wp term create category "Design" --description="Design related posts"
+
+# Assign categories to posts
+wp post term set 1 category technology
+```
+
+## 5. Route / Navigation Mapping
+
+### React Routes to WordPress Permalinks
+
+| React Route | WordPress Permalink | Notes |
+|-------------|---------------------|-------|
+| `/` | `/` | Homepage |
+| `/blog` | `/blog/` | Blog archive page |
+| `/blog/:slug` | `/blog/%postname%/` | Single post |
+| `/about` | `/about/` | About page |
+| `*` (404) | Any non-existent URL | 404 template |
+
+### Permalink Configuration
+
+In WordPress admin, go to Settings → Permalinks and select "Post name" option.
+
+For the blog section, create a page named "Blog" and set it as the posts page in Settings → Reading.
+
+### Redirection Strategy
+
+Create a `.htaccess` file in the root directory with the following rules for any URL changes:
+
+```apache
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /
+
+# Redirect old URL format to new format if needed
+# RewriteRule ^old-path/(.*)$ /new-path/$1 [R=301,L]
+</IfModule>
+```
+
+## 6. Global State, API Calls & Interactivity
+
+### State Management Strategy
+
+| React Pattern | WordPress Implementation | Notes |
+|---------------|--------------------------|-------|
+| Context API | Theme Customizer API | For theme-wide settings |
+| Redux Store | WordPress options API | For site-wide data |
+| API Data Fetching | WP REST API | For dynamic data |
+| Local Component State | Vanilla JS / Alpine.js | For UI interactivity |
+
+### REST API Implementation
+
+For custom data needs, register custom REST API endpoints:
+
+```php
+<?php
+// In inc/api.php
+
+function theme_register_rest_routes() {
+    register_rest_route('theme/v1', '/settings', array(
+        'methods' => 'GET',
+        'callback' => 'theme_get_settings',
+        'permission_callback' => '__return_true'
+    ));
+}
+add_action('rest_api_init', 'theme_register_rest_routes');
+
+function theme_get_settings() {
+    return array(
+        'site_name' => get_bloginfo('name'),
+        'description' => get_bloginfo('description'),
+        'logo' => get_theme_mod('custom_logo') ? wp_get_attachment_url(get_theme_mod('custom_logo')) : '',
+        'primary_color' => get_theme_mod('primary_color', '#3b82f6')
+    );
+}
+```
+
+### Authentication Handling
+
+If the React app used authentication:
+
+```php
+<?php
+// In inc/auth.php
+
+function theme_auth_endpoints() {
+    register_rest_route('theme/v1', '/auth', array(
+        'methods' => 'POST',
+        'callback' => 'theme_auth_callback',
+        'permission_callback' => '__return_true'
+    ));
+}
+add_action('rest_api_init', 'theme_auth_endpoints');
+
+function theme_auth_callback($request) {
+    $params = $request->get_params();
+    $user = wp_authenticate($params['username'], $params['password']);
+    
+    if (is_wp_error($user)) {
+        return new WP_Error('invalid_credentials', 'Invalid credentials', array('status' => 401));
+    }
+    
+    $token = wp_generate_password(32, false);
+    update_user_meta($user->ID, 'auth_token', $token);
+    
+    return array(
+        'token' => $token,
+        'user_id' => $user->ID,
+        'user_login' => $user->user_login
+    );
+}
+
+function theme_validate_auth_token($token) {
+    global $wpdb;
+    
+    $user_id = $wpdb->get_var($wpdb->prepare(
+        "SELECT user_id FROM $wpdb->usermeta WHERE meta_key = 'auth_token' AND meta_value = %s",
+        $token
+    ));
+    
+    return $user_id ? get_user_by('ID', $user_id) : false;
+}
+```
+
+## 7. PHP & JS Coding Standards
+
+### Coding Style Configuration
+
+#### .editorconfig
+
+```
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.php]
+indent_size = 4
+
+[*.md]
+trim_trailing_whitespace = false
+```
+
+#### phpcs.xml
+
+```xml
+<?xml version="1.0"?>
+<ruleset name="WordPress Theme Coding Standards">
+    <description>PHPCS configuration file for WordPress theme development</description>
+    
+    <!-- Scan all files in directory -->
+    <file>.</file>
+    
+    <!-- Exclude paths -->
+    <exclude-pattern>/vendor/*</exclude-pattern>
+    <exclude-pattern>/node_modules/*</exclude-pattern>
+    <exclude-pattern>/assets/*</exclude-pattern>
+    
+    <!-- Include WordPress standards -->
+    <rule ref="WordPress-Core" />
+    <rule ref="WordPress-Docs" />
+    <rule ref="WordPress.WP.I18n" />
+    
+    <!-- Text domain -->
+    <rule ref="WordPress.WP.I18n">
+        <properties>
+            <property name="text_domain" type="array">
+                <element value="theme-textdomain"/>
+            </property>
+        </properties>
+    </rule>
+    
+    <!-- PHP version compatibility -->
+    <config name="testVersion" value="7.4-"/>
+    <rule ref="PHPCompatibilityWP" />
+</ruleset>
+```
+
+#### .eslintrc.js
+
+```js
+module.exports = {
+  root: true,
+  env: {
+    browser: true,
+    commonjs: true,
+    es6: true,
+    node: true
+  },
+  extends: [
+    'eslint:recommended'
+  ],
+  parserOptions: {
+    ecmaVersion: 2020,
+    sourceType: 'module'
+  },
+  rules: {
+    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
+    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
+  }
+};
+```
+
+### Naming Conventions
+
+- **Files:** lowercase-with-hyphens.php
+- **Functions:** prefix_descriptive_name()
+- **Classes:** Prefix_Descriptive_Name
+- **Text Domain:** theme-textdomain (used in all i18n functions)
+
+### Code Organization Guidelines
+
+- Each function should do one thing well
+- Use descriptive function and variable names
+- Document code with PHPDoc comments
+- Prefix all functions and hooks with theme prefix to avoid conflicts
+- Place related functionality in separate files in the /inc directory
+
+## 8. Automated & Manual Testing
+
+### Unit Testing Setup
+
+#### PHPUnit for PHP
+
+Create phpunit.xml in theme root:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit bootstrap="tests/bootstrap.php" colors="true">
+    <testsuites>
+        <testsuite name="Theme Test Suite">
+            <directory suffix=".php">./tests/</directory>
+        </testsuite>
+    </testsuites>
+</phpunit>
+```
+
+Create tests/bootstrap.php:
+
+```php
+<?php
+// First, load WordPress test environment
+$_tests_dir = '/tmp/wordpress-tests-lib';
+
+// Load WordPress
+require_once $_tests_dir . '/includes/bootstrap.php';
+
+// Load theme functions
+require_once dirname(__DIR__) . '/functions.php';
+```
+
+Sample test file (tests/test-theme-functions.php):
+
+```php
+<?php
+class Test_Theme_Functions extends WP_UnitTestCase {
+    function test_theme_setup() {
+        // Test that theme support is added correctly
+        $this->assertTrue(current_theme_supports('post-thumbnails'));
+        $this->assertTrue(current_theme_supports('title-tag'));
+    }
+}
+```
+
+#### Jest for JavaScript
+
+Add to package.json:
+
+```json
+{
+  "scripts": {
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "testMatch": [
+      "**/tests/js/**/*.test.js"
+    ]
+  }
+}
+```
+
+Sample JS test (tests/js/navigation.test.js):
+
+```javascript
+describe('Navigation', () => {
+  // Setup DOM elements
+  beforeEach(() => {
+    document.body.innerHTML = `
+      <button class="mobile-menu-toggle"></button>
+      <div class="mobile-menu hidden"></div>
+    `;
+  });
+  
+  test('toggle mobile menu shows/hides menu', () => {
+    // Simulate loading the script
+    require('../../src/js/navigation.js');
+    
+    const toggle = document.querySelector('.mobile-menu-toggle');
+    const menu = document.querySelector('.mobile-menu');
+    
+    // Initial state
+    expect(menu.classList.contains('hidden')).toBe(true);
+    
+    // Click to show
+    toggle.click();
+    expect(menu.classList.contains('hidden')).toBe(false);
+    
+    // Click to hide
+    toggle.click();
+    expect(menu.classList.contains('hidden')).toBe(true);
+  });
+});
+```
+
+### Visual Regression Testing
+
+Using Percy for visual testing:
+
+1. Install Percy CLI:
+```bash
+npm install --save-dev @percy/cli
+```
+
+2. Add to package.json:
+```json
+{
+  "scripts": {
+    "percy": "percy snapshot ./percy-snapshots.yml"
+  }
+}
+```
+
+3. Create percy-snapshots.yml:
+```yaml
+version: 1
+snapshot:
+  widths: [375, 768, 1280]
+  minHeight: 1024
+  percyCSS: ""
+  enableJavaScript: true
+  disableShadowDOM: false
+urls:
+  - /
+  - /blog
+  - /blog/sample-post
+  - /about
+```
+
+### Cross-browser Testing Checklist
+
+- [ ] Chrome (latest 2 versions)
+- [ ] Firefox (latest 2 versions)
+- [ ] Safari 14+
+- [ ] Edge (latest 2 versions)
+- [ ] Mobile Safari (iOS 14+)
+- [ ] Chrome for Android (latest)
+- [ ] Check responsive layouts at 320px, 768px, 1024px, 1440px
+
+## 9. Deployment & Version Control
+
+### Git Workflow
+
+```bash
+# Create feature branch
+git checkout -b feature/component-name
+
+# Make changes, then commit
+git add .
+git commit -m "feat: Convert component-name to WordPress template"
+
+# Push to remote
+git push origin feature/component-name
+
+# Create PR for review
+# After review, merge to develop branch
+```
+
+### CI/CD Pipeline
+
+Create .github/workflows/ci-cd.yml:
+
+```yaml
+name: Theme CI/CD
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint JavaScript
+        run: npx eslint src/js/
+      - name: Lint PHP
+        uses: szepeviktor/phpcs-action@v1
+        with:
+          standard: phpcs.xml
+  
+  build:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm ci
+      - name: Build assets
+        run: npm run prod
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: theme-build
+          path: assets/
+  
+  test:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'
+      - name: Install dependencies
+        run: npm ci
+      - name: Run JavaScript tests
+        run: npm test
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '7.4'
+          tools: composer:v2
+      - name: Install PHP dependencies
+        run: composer install
+      - name: Run PHP tests
+        run: vendor/bin/phpunit
+  
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: theme-build
+          path: assets/
+      - name: Create theme package
+        run: |
+          mkdir -p build
+          zip -r build/theme.zip . -x "node_modules/*" ".git/*" "tests/*" "*.log" "build/*"
+      - name: Deploy to production
+        uses: burnett01/rsync-deployments@5.2
+        with:
+          switches: -avz --delete
+          path: build/theme.zip
+          remote_path: ${{ secrets.DEPLOY_PATH }}
+          remote_host: ${{ secrets.DEPLOY_HOST }}
+          remote_user: ${{ secrets.DEPLOY_USER }}
+          remote_key: ${{ secrets.DEPLOY_KEY }}
+      - name: Create GitHub release
+        uses: softprops/action-gh-release@v1
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: build/theme.zip
+          name: Release ${{ github.ref_name }}
+          body_path: CHANGELOG.md
+```
+
+### Version Management
+
+Create `.version` file for semantic versioning:
+
+```
+1.0.0
+```
+
+Add release script to package.json:
+
+```json
+{
+  "scripts": {
+    "version": "conventional-changelog -p angular -i CHANGELOG.md -s && git add CHANGELOG.md",
+    "release:patch": "npm version patch && git push && git push --tags",
+    "release:minor": "npm version minor && git push && git push --tags",
+    "release:major": "npm version major && git push && git push --tags"
+  },
+  "devDependencies": {
+    "conventional-changelog-cli": "^2.2.2"
+  }
+}
+```
+
+## 10. Security, SEO & Performance
+
+### Security Hardening
+
+1. **Input Validation and Sanitization**:
+   - User inputs: `sanitize_text_field()`, `sanitize_textarea_field()`, `sanitize_email()`
+   - URLs: `esc_url()`, `esc_url_raw()`
+   - HTML output: `esc_html()`, `wp_kses_post()`
+
+2. **Nonce Verification**:
+   - Forms: `wp_create_nonce()` and `wp_verify_nonce()`
+   - AJAX: Check nonces on all requests
+
+3. **Capability Checks**:
+   - Always check user capabilities: `current_user_can()`
+
+4. **Secure Headers**:
+   Enable these headers via PHP or .htaccess:
+   ```
+   Content-Security-Policy
+   X-XSS-Protection
+   X-Content-Type-Options
+   Referrer-Policy
+   ```
+
+### SEO Implementation
+
+Replace React Helmet with proper WordPress head functions:
+
+```php
+<?php
+// In functions.php or inc/seo.php
+
+function theme_meta_description() {
+    if (is_singular()) {
+        global $post;
+        
+        // Try custom field first
+        $description = get_post_meta($post->ID, 'meta_description', true);
+        
+        // Fall back to excerpt
+        if (!$description) {
+            $description = wp_trim_words(get_the_excerpt(), 30, '...');
+        }
+        
+        if ($description) {
+            echo '<meta name="description" content="' . esc_attr($description) . '" />';
+        }
+    }
+}
+add_action('wp_head', 'theme_meta_description');
+
+function theme_open_graph_tags() {
+    if (is_singular()) {
+        global $post;
+        
+        echo '<meta property="og:title" content="' . esc_attr(get_the_title()) . '" />';
+        echo '<meta property="og:type" content="article" />';
+        echo '<meta property="og:url" content="' . esc_url(get_permalink()) . '" />';
+        
+        if (has_post_thumbnail()) {
+            $image = wp_get_attachment_image_src(get_post_thumbnail_id(), 'large');
+            echo '<meta property="og:image" content="' . esc_url($image[0]) . '" />';
+        }
+    }
+}
+add_action('wp_head', 'theme_open_graph_tags');
+```
+
+### Performance Optimization
+
+1. **Script Loading**:
+   ```php
+   wp_enqueue_script('theme-main', get_template_directory_uri() . '/assets/js/main.js', array(), '1.0.0', array(
+       'strategy' => 'defer',
+       'in_footer' => true,
+   ));
+   ```
+
+2. **Image Optimization**:
+   ```php
+   add_theme_support('responsive-embeds');
+   add_image_size('blog-thumbnail', 800, 450, true);
+   ```
+
+3. **Resource Hints**:
+   ```php
+   function theme_resource_hints($hints, $relation_type) {
+       if ('preconnect' === $relation_type) {
+           // Add Google Fonts domain
+           $hints[] = 'https://fonts.googleapis.com';
+           $hints[] = 'https://fonts.gstatic.com';
+       }
+       return $hints;
+   }
+   add_filter('wp_resource_hints', 'theme_resource_hints', 10, 2);
+   ```
+
+4. **Performance Targets**:
+   - Time to First Byte (TTFB): < 200ms
+   - First Contentful Paint (FCP): < 1s
+   - Largest Contentful Paint (LCP): < 2.5s
+   - Cumulative Layout Shift (CLS): < 0.1
+   - Total Blocking Time (TBT): < 300ms
+
+## 11. AI-Agent-Specific Guidance
+
+### Task Breakdown
+
+```json
+{
+  "conversionTasks": [
+    {
+      "id": "setup",
+      "name": "Setup project structure",
+      "dependencies": [],
+      "steps": [
+        "Create theme directory structure",
+        "Configure package.json and build tools",
+        "Setup theme style.css and functions.php"
+      ]
+    },
+    {
+      "id": "static-components",
+      "name": "Convert static components",
+      "dependencies": ["setup"],
+      "steps": [
+        "Convert Header.tsx to header.php",
+        "Convert Footer.tsx to footer.php",
+        "Convert Layout.tsx structure to be used in templates"
+      ]
+    },
+    {
+      "id": "templates",
+      "name": "Convert page templates",
+      "dependencies": ["static-components"],
+      "steps": [
+        "Convert Homepage.tsx to front-page.php",
+        "Convert BlogTemplate.tsx to index.php and archive.php",
+        "Convert SinglePostTemplate.tsx to single.php",
+        "Convert PageTemplate.tsx to page.php",
+        "Create 404.php from NotFound.tsx"
+      ]
+    },
+    {
+      "id": "dynamic-components",
+      "name": "Convert dynamic components",
+      "dependencies": ["static-components"],
+      "steps": [
+        "Convert PostCard.tsx to template-parts/content/content-card.php",
+        "Convert TableOfContents.tsx to template-parts/content/table-of-contents.php",
+        "Convert other dynamic components to template parts"
+      ]
+    },
+    {
+      "id": "scripts",
+      "name": "Convert JavaScript functionality",
+      "dependencies": ["templates", "dynamic-components"],
+      "steps": [
+        "Convert navigation.js to vanilla JS",
+        "Convert table-of-contents.js to vanilla JS",
+        "Ensure all interactive elements work properly"
+      ]
+    },
+    {
+      "id": "build-assets",
+      "name": "Build and optimize assets",
+      "dependencies": ["scripts"],
+      "steps": [
+        "Compile CSS with Tailwind",
+        "Bundle and minify JavaScript",
+        "Optimize images and other assets"
+      ]
+    },
+    {
+      "id": "test",
+      "name": "Test the theme",
+      "dependencies": ["build-assets"],
+      "steps": [
+        "Test in development environment",
+        "Verify all pages render correctly",
+        "Check responsive layouts",
+        "Validate accessibility compliance"
+      ]
+    }
+  ]
+}
+```
+
+### Error Handling Guidelines
+
+1. **Build Failures**:
+   - Check console output for specific error messages
+   - Verify file paths and imports
+   - Check for syntax errors in PHP files
+   - Validate CSS selector syntax
+
+2. **WordPress Hook Issues**:
+   - If a WordPress hook is missing, verify:
+     - Hook name spelling
+     - Hook priority (default is 10)
+     - Number of arguments (default is 1)
+     - Hook is registered before it's used
+
+3. **PHP Errors**:
+   - Check the PHP error log: `wp-content/debug.log`
+   - Use `try/catch` blocks for error-prone code
+   - Validate data before using it
+
+### Progress Logging Format
+
+Create a `logs/agent.log` file with this structure:
+
+```
+[YYYY-MM-DD HH:MM:SS] [LEVEL] Message
+```
+
+Example logging implementation:
+
+```php
+function agent_log($message, $level = 'INFO') {
+    $log_file = __DIR__ . '/logs/agent.log';
+    $timestamp = date('Y-m-d H:i:s');
+    $log_message = "[{$timestamp}] [{$level}] {$message}" . PHP_EOL;
+    
+    if (!file_exists(dirname($log_file))) {
+        mkdir(dirname($log_file), 0755, true);
+    }
+    
+    file_put_contents($log_file, $log_message, FILE_APPEND);
+}
+
+// Usage
+agent_log('Starting conversion of Header component', 'INFO');
+agent_log('Error in navigation.js: Uncaught TypeError', 'ERROR');
 ```
 
 ## Component to Template Mapping
@@ -1074,3 +2057,28 @@ module.exports = {
 - [ ] Theme is responsive and matches original design
 - [ ] All paths and URLs are properly rendered using WordPress functions
 
+## 12. Expanded Final Checklist
+
+✅ | Area | Tool/Command
+---|------|------------
+[ ] | Local environment setup | `./setup.sh`
+[ ] | Tailwind builds on file save | `npm run dev`
+[ ] | PHP syntax validation | `php -l file.php`
+[ ] | ESLint passes | `npx eslint src/js/`
+[ ] | PHPCS passes | `vendor/bin/phpcs`
+[ ] | All React routes mapped to WP permalinks | Manual verification
+[ ] | Custom post types registered | Check in WP admin
+[ ] | ACF fields registered | Check in WP admin
+[ ] | Responsive on mobile devices | Browser testing
+[ ] | WCAG 2.1 AA compliance | Accessibility audit
+[ ] | Lighthouse performance score > 90 | Lighthouse CI
+[ ] | Cross-browser compatibility | Manual testing
+[ ] | SEO meta tags present | View page source
+[ ] | Security headers enabled | Mozilla Observatory
+[ ] | JS interactivity works | Manual testing
+[ ] | Theme packaged and version tagged | `npm run release:patch`
+[ ] | All PHP errors and warnings fixed | Check debug.log
+[ ] | Page load time < 2s | Chrome DevTools
+[ ] | Code splitting implemented | Verify build output
+[ ] | Images optimized | Check image sizes
+[ ] | SVGs minified | Check SVG content
