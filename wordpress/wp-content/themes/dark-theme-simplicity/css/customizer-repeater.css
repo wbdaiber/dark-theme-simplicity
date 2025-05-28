@@ -1,0 +1,241 @@
+/**
+ * Customizer Repeater CSS
+ */
+
+.customizer-repeater-control-wrap {
+    background: #fff;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    margin-bottom: 10px;
+}
+
+.customizer-repeater-general-control-repeater-item {
+    background: #f7f7f7;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.customizer-repeater-item-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #ddd;
+}
+
+.customizer-repeater-item-title {
+    font-weight: bold;
+}
+
+.customizer-repeater-item-controls {
+    display: flex;
+    gap: 5px;
+}
+
+.customizer-repeater-toggle-item {
+    background: none;
+    border: none;
+    color: #0073aa;
+    cursor: pointer;
+    padding: 0;
+}
+
+.customizer-repeater-remove-item {
+    background: none;
+    border: none;
+    color: #a00;
+    cursor: pointer;
+    padding: 0;
+}
+
+.customizer-repeater-item-content {
+    padding: 15px;
+    display: none;
+}
+
+.customizer-repeater-general-control-repeater-item.expanded .customizer-repeater-item-content {
+    display: block;
+}
+
+.customizer-repeater-field {
+    margin-bottom: 15px;
+}
+
+.customizer-repeater-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.customizer-repeater-field-input {
+    width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 5px 10px;
+}
+
+.customizer-repeater-field textarea.customizer-repeater-field-input {
+    min-height: 60px;
+}
+
+.customizer-repeater-add-control-field {
+    width: 100%;
+    margin-top: 10px;
+}
+
+/* Drag and drop functionality styles */
+.customizer-repeater-general-control-droppable {
+    border: 2px dashed #0073aa;
+    margin: 10px 0;
+    padding: 5px;
+    background: rgba(0, 115, 170, 0.05);
+}
+
+.customizer-repeater-general-control-draggable {
+    cursor: move;
+}
+
+.ui-sortable-helper {
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+    opacity: 0.9;
+}
+
+.ui-sortable-placeholder {
+    background: #f7f7f7;
+    border: 2px dashed #ccc;
+    visibility: visible !important;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+/* Icon styles */
+.customizer-repeater-field-icon-preview {
+    display: inline-block;
+    margin-right: 10px;
+    vertical-align: middle;
+    width: 24px;
+    height: 24px;
+    text-align: center;
+    line-height: 24px;
+}
+
+.repeater-control {
+    margin-bottom: 20px;
+    padding: 10px;
+    background: #f7f7f7;
+    border: 1px solid #e5e5e5;
+    border-radius: 3px;
+}
+
+.repeater-field-control {
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    margin-bottom: 10px;
+    border-radius: 3px;
+    position: relative;
+    overflow: hidden;
+}
+
+.repeater-field-title {
+    padding: 10px 15px;
+    border-bottom: 1px solid #e5e5e5;
+    font-weight: 600;
+    color: #23282d;
+    cursor: pointer;
+    background: #f7f7f7;
+    margin: 0;
+    position: relative;
+}
+
+.repeater-field-title:after {
+    content: "\f140";
+    font: normal 20px/1 dashicons;
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.repeater-field-title.collapsed:after {
+    content: "\f142";
+}
+
+.repeater-field-content {
+    padding: 15px;
+    border-top: none;
+}
+
+.repeater-row {
+    margin-bottom: 15px;
+}
+
+.repeater-row:last-child {
+    margin-bottom: 0;
+}
+
+.repeater-row label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #23282d;
+}
+
+.repeater-row input[type="text"],
+.repeater-row textarea,
+.repeater-row select {
+    width: 100%;
+    max-width: 100%;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    padding: 5px 8px;
+}
+
+.repeater-row textarea {
+    min-height: 65px;
+    resize: vertical;
+}
+
+.repeater-field-remove {
+    color: #a00;
+    text-decoration: none;
+    display: inline-block;
+    padding: 5px 0;
+    font-size: 13px;
+    text-align: right;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.repeater-field-remove:hover {
+    color: #dc3232;
+    text-decoration: underline;
+}
+
+.add-new-repeater-field {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    text-align: center;
+    background: #0085ba;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.add-new-repeater-field:hover {
+    background: #008ec2;
+}
+
+/* Clear float */
+.repeater-control:after {
+    content: "";
+    display: table;
+    clear: both;
+} 

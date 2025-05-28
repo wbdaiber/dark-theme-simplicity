@@ -1,0 +1,210 @@
+/**
+ * Widget styles for Dark Theme Simplicity
+ */
+
+/* Widget general styling */
+.widget {
+    margin-bottom: 2rem;
+}
+
+.widget:last-child {
+    margin-bottom: 0;
+}
+
+.widget-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: #fff;
+    position: relative;
+    padding-bottom: 0.75rem;
+}
+
+.widget-title:after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 3rem;
+    height: 2px;
+    background-color: rgba(0, 133, 255, 0.5);
+}
+
+/* Widget text */
+.widget_text {
+    color: rgba(255, 255, 255, 0.8);
+}
+
+/* Widget links */
+.widget a {
+    color: rgba(255, 255, 255, 0.8);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.widget a:hover {
+    color: rgba(0, 133, 255, 1);
+}
+
+/* Lists in widgets */
+.widget ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.widget li {
+    padding: 0.5rem 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.widget li:last-child {
+    border-bottom: none;
+}
+
+/* Categories and archives widgets */
+.widget_categories ul,
+.widget_archive ul,
+.widget_recent_entries ul,
+.widget_recent_comments ul,
+.widget_meta ul,
+.widget_nav_menu ul {
+    margin-left: 0.5rem;
+}
+
+.widget_categories li,
+.widget_archive li {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+/* Calendar widget */
+.widget_calendar table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.widget_calendar caption {
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    text-align: center;
+}
+
+.widget_calendar th,
+.widget_calendar td {
+    padding: 0.25rem;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.widget_calendar th {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.widget_calendar #today {
+    background-color: rgba(0, 133, 255, 0.2);
+}
+
+/* Search widget */
+.widget_search .search-form {
+    position: relative;
+}
+
+.widget_search .search-field {
+    width: 100%;
+    padding: 0.5rem 3rem 0.5rem 1rem;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: rgba(0, 0, 0, 0.2);
+    color: rgba(255, 255, 255, 0.8);
+    border-radius: 0.25rem;
+}
+
+.widget_search .search-submit {
+    position: absolute;
+    top: 0;
+    right: 0;
+    height: 100%;
+    padding: 0 0.75rem;
+    background-color: rgba(0, 133, 255, 0.8);
+    border: none;
+    border-radius: 0 0.25rem 0.25rem 0;
+    color: #fff;
+    cursor: pointer;
+}
+
+.widget_search .search-submit:hover {
+    background-color: rgba(0, 87, 167, 1);
+}
+
+/* Tag cloud widget */
+.widget_tag_cloud .tagcloud {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+.widget_tag_cloud a {
+    display: inline-block;
+    padding: 0.25rem 0.75rem;
+    background-color: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 0.25rem;
+    font-size: 0.875rem !important;
+    line-height: 1.5;
+}
+
+.widget_tag_cloud a:hover {
+    background-color: rgba(0, 133, 255, 0.2);
+    border-color: rgba(0, 133, 255, 0.5);
+}
+
+/* Recent posts with thumbnails */
+.widget_recent_entries .post-date {
+    display: block;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 0.25rem;
+}
+
+/* Custom recent posts widget with thumbnails */
+.recent-posts-widget .recent-post {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.recent-posts-widget .recent-post:last-child {
+    margin-bottom: 0;
+    padding-bottom: 0;
+    border-bottom: none;
+}
+
+.recent-posts-widget .post-thumbnail {
+    flex-shrink: 0;
+    width: 4rem;
+    height: 4rem;
+}
+
+.recent-posts-widget .post-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.25rem;
+}
+
+.recent-posts-widget .post-content {
+    flex-grow: 1;
+}
+
+.recent-posts-widget .post-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin: 0 0 0.25rem;
+}
+
+.recent-posts-widget .post-date {
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.6);
+} 
