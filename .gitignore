@@ -1,0 +1,56 @@
+# WordPress specific files
+wp-config.php
+wp-content/advanced-cache.php
+wp-content/backup-db/
+wp-content/backups/
+wp-content/blogs.dir/
+wp-content/cache/
+wp-content/upgrade/
+wp-content/uploads/
+wp-content/mu-plugins/
+wp-content/wp-cache-config.php
+wp-content/plugins/hello.php
+wp-content/themes/*/node_modules/
+wp-content/themes/*.zip
+
+# Environment files
+.env
+.env.*
+!.env.example
+
+# Development & IDE files
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# Node & npm
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build files
+build/
+dist/
+vendor/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Backup files
+*.bak
+*.swp
+*.swo
+*~
+*.log
+
+# Package manager files
+package-lock.json
+yarn.lock
+composer.lock

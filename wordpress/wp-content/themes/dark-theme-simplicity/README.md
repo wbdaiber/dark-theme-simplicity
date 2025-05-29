@@ -61,3 +61,4 @@ This theme is licensed under the GNU General Public License v2 or later.
 - Built with Tailwind CSS
 - SVG icons included
 
+

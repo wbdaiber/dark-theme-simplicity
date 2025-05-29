@@ -57,6 +57,30 @@
     background-color: rgba(30, 30, 36, 0.7);
     backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: #0085ff !important;
+    border-width: 2px !important;
+    background-color: rgba(0, 133, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 133, 255, 0.2) !important;
+}
+
+/* Services cards should only have border hover, not background */
+#what-we-do .bg-\[#1e1e24\]:hover {
+    background-color: #1e1e24 !important;
+    border-color: #0085ff !important;
+    border-width: 2px !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 133, 255, 0.2) !important;
+}
+
+/* Make absolutely sure services cards get the blue border hover effect */
+#what-we-do [class*="border-zinc-700"]:hover {
+    border-color: #0085ff !important;
+    border-width: 2px !important;
 }
 
 /* Social Menu Styles */

@@ -784,31 +784,18 @@ if (!function_exists('dark_theme_simplicity_customize_register')) {
             'type'     => 'text',
         ) );
 
-        // Phone
-        $wp_customize->add_setting( 'dark_theme_simplicity_contact_phone', array(
-            'default'           => '(555) 123-4567',
+        // LinkedIn
+        $wp_customize->add_setting( 'dark_theme_simplicity_contact_linkedin', array(
+            'default'           => 'linkedin.com/in/braddaiber',
             'sanitize_callback' => 'sanitize_text_field',
             'transport'         => 'refresh',
         ) );
 
-        $wp_customize->add_control( 'dark_theme_simplicity_contact_phone', array(
-            'label'    => __( 'Phone Number', 'dark-theme-simplicity' ),
+        $wp_customize->add_control( 'dark_theme_simplicity_contact_linkedin', array(
+            'label'    => __( 'LinkedIn Profile', 'dark-theme-simplicity' ),
+            'description' => __( 'Enter your LinkedIn URL (e.g., linkedin.com/in/username)', 'dark-theme-simplicity' ),
             'section'  => 'dark_theme_simplicity_contact_section',
-            'settings' => 'dark_theme_simplicity_contact_phone',
-            'type'     => 'text',
-        ) );
-
-        // Location
-        $wp_customize->add_setting( 'dark_theme_simplicity_contact_location', array(
-            'default'           => 'New York, NY',
-            'sanitize_callback' => 'sanitize_text_field',
-            'transport'         => 'refresh',
-        ) );
-
-        $wp_customize->add_control( 'dark_theme_simplicity_contact_location', array(
-            'label'    => __( 'Location', 'dark-theme-simplicity' ),
-            'section'  => 'dark_theme_simplicity_contact_section',
-            'settings' => 'dark_theme_simplicity_contact_location',
+            'settings' => 'dark_theme_simplicity_contact_linkedin',
             'type'     => 'text',
         ) );
 

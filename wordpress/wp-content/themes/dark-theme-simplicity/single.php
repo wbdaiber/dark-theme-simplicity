@@ -89,10 +89,16 @@
                         <?php if (has_post_thumbnail()) : ?>
                             <div class="hidden md:flex md:col-span-1 p-4 items-center justify-center">
                                 <div class="w-full h-full flex items-center justify-center max-h-96">
-                                    <?php the_post_thumbnail('large', ['class' => 'w-full h-full max-h-80 object-contain object-center rounded-lg shadow-lg']); ?>
+                                    <div class="aspect-video relative bg-gradient-to-tr from-blue-300/20 to-purple-300/20">
+                                        <?php if (has_post_thumbnail()) : ?>
+                                            <?php the_post_thumbnail('medium', ['class' => 'w-full h-full object-cover opacity-60']); ?>
+                                        <?php else: ?>
+                                            <div class="w-full h-full bg-gradient-to-tr from-blue-300/20 to-purple-300/20"></div>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -407,7 +413,7 @@
                             while ($related_posts_query->have_posts()) : $related_posts_query->the_post();
                                 // Get the first category
                                 $post_categories = get_the_category();
-                                $first_category = !empty($post_categories) ? $post_categories[0]->name : '';
+                                $first_category = !empty($post_categories) ? $post_categories[0] : null;
                         ?>
                             <a href="<?php the_permalink(); ?>" class="block h-full">
                                 <div class="overflow-hidden border border-white/10 backdrop-blur-lg bg-dark-100/50 rounded-xl transition-all duration-300 hover:bg-dark-100 h-full flex flex-col">
@@ -416,30 +422,38 @@
                                             <?php the_post_thumbnail('medium', ['class' => 'w-full h-full object-cover opacity-60']); ?>
                                         <?php else: ?>
                                             <div class="w-full h-full bg-gradient-to-tr from-blue-300/20 to-purple-300/20"></div>
-                        <?php endif; ?>
+                                        <?php endif; ?>
                                         <?php if ($first_category) : ?>
-                                            <span class="absolute top-4 left-4 bg-blue-300/90 text-dark-300 px-2 py-1 rounded-full text-xs font-medium">
-                                                <?php echo esc_html($first_category); ?>
+                                            <span class="absolute top-4 left-4 bg-blue-300/90 text-dark-300 px-2 py-1 rounded-full text-xs font-medium z-10">
+                                                <?php echo esc_html($first_category->name); ?>
                                             </span>
-                <?php endif; ?>
+                                        <?php endif; ?>
                                     </div>
                                     <div class="p-5 flex flex-col flex-grow">
-                                        <h3 class="text-xl md:text-2xl font-medium mb-3 transition-colors line-clamp-2 text-white group-hover:text-blue-300">
+                                        <div class="flex gap-2 mb-3 items-center">
+                                            <span class="text-xs text-light-100/50 flex items-center">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-3 w-3 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                                </svg>
+                                                Last Updated: <?php echo get_the_modified_date(); ?>
+                                            </span>
+                                        </div>
+                                        <h3 class="text-xl md:text-2xl font-bold mb-2 line-clamp-2 text-white hover:text-blue-300 transition-colors pl-0">
                                             <?php the_title(); ?>
                                         </h3>
-                                        <p class="text-light-100/70 text-sm mb-3 line-clamp-2">
+                                        <p class="text-light-100/70 line-clamp-3 mb-4 text-sm">
                                             <?php 
                                             if (has_excerpt()) {
                                                 echo get_the_excerpt();
                                             } else {
-                                                echo wp_trim_words(get_the_content(), 15, '...');
+                                                echo wp_trim_words(get_the_content(), 20, '...');
                                             }
                                             ?>
                                         </p>
                                     </div>
                                 </div>
                             </a>
-                <?php
+                        <?php
                             endwhile;
                         else :
                             echo '<div class="col-span-3 text-center text-light-100/70">No related posts found.</div>';
@@ -448,6 +462,51 @@
                         // Reset post data to restore the main query & post
                         wp_reset_postdata();
                 ?>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="py-16 px-4 sm:px-6 lg:px-8 bg-dark-200 contact-section mt-16 relative rounded-xl shadow-xl">
+                <div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-blue-500/0 via-blue-500/20 to-blue-500/0"></div>
+                <div class="container mx-auto max-w-5xl">
+                    <div class="text-center mb-16">
+                        <span class="inline-block px-4 py-2 bg-blue-300/10 section-label rounded-full text-sm font-medium mb-4 border border-blue-300/20">
+                            Get in Touch
+                        </span>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4 text-light-100">
+                            <?php echo esc_html(get_theme_mod('dark_theme_simplicity_contact_title', 'Contact Me')); ?>
+                        </h2>
+                        <p class="text-xl text-light-100/70 max-w-2xl mx-auto">
+                            <?php echo esc_html(get_theme_mod('dark_theme_simplicity_contact_description', 'Let\'s discuss how we can elevate your online presence.')); ?>
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto">
+                        <a href="mailto:<?php echo esc_attr(get_theme_mod('dark_theme_simplicity_contact_email', 'hello@braddaiber.com')); ?>" class="glass-card p-6 rounded-xl hover:border-blue-500 hover:border-2 hover:bg-blue-500/10 hover:translate-y-[-5px] transition-all duration-300 shadow-md hover:shadow-blue-500/20">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-300/20 p-3 rounded-lg">
+                                    <svg class="w-6 h-6 contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                        <polyline points="22,6 12,13 2,6"></polyline>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">Email</h3>
+                            </div>
+                        </a>
+
+                        <a href="https://<?php echo esc_attr(get_theme_mod('dark_theme_simplicity_contact_linkedin', 'linkedin.com/in/braddaiber')); ?>" target="_blank" rel="noopener noreferrer" class="glass-card p-6 rounded-xl hover:border-blue-500 hover:border-2 hover:bg-blue-500/10 hover:translate-y-[-5px] transition-all duration-300 shadow-md hover:shadow-blue-500/20">
+                            <div class="flex items-center space-x-4">
+                                <div class="bg-blue-300/20 p-3 rounded-lg">
+                                    <svg class="w-6 h-6 contact-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                        <rect x="2" y="9" width="4" height="12"></rect>
+                                        <circle cx="4" cy="4" r="2"></circle>
+                                    </svg>
+                                </div>
+                                <h3 class="text-2xl font-bold text-white">LinkedIn</h3>
+                            </div>
+                        </a>
                     </div>
                 </div>
             </section>
@@ -509,10 +568,9 @@
 .bg-dark-300 .text-xl.md\:text-2xl {
     letter-spacing: -0.01em;
     line-height: 1.3;
-    margin-bottom: 0.75rem;
 }
 
-.bg-dark-300 .text-light-100\/70.text-sm {
+.bg-dark-300 .text-light-100\/70.line-clamp-3 {
     font-size: 0.95rem;
     line-height: 1.6;
     color: rgba(248, 250, 252, 0.7);
@@ -520,6 +578,48 @@
 
 /* Enhanced hover states for related posts */
 .bg-dark-300 .overflow-hidden:hover h3 {
+    color: #60a5fa;
+}
+
+/* Related article thumbnail hover effects */
+.aspect-video {
+    position: relative;
+    overflow: hidden;
+}
+
+.aspect-video img {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overflow-hidden:hover .aspect-video img {
+    transform: scale(1.05);
+    opacity: 0.9;
+}
+
+/* Gradient background hover effect for posts without thumbnails */
+.aspect-video div {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.overflow-hidden:hover .aspect-video div {
+    transform: scale(1.05);
+    opacity: 0.9;
+    background-image: linear-gradient(to top right, rgba(96, 165, 250, 0.3), rgba(192, 132, 252, 0.3));
+}
+
+/* Glass card styling for contact section */
+.glass-card {
+    background-color: rgba(30, 30, 36, 0.4);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.contact-icon {
     color: #60a5fa;
 }
 
