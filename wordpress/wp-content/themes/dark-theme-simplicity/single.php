@@ -107,7 +107,7 @@
             <article <?php post_class('max-w-6xl mx-auto bg-dark-300 rounded-xl shadow-xl overflow-hidden'); ?>>
                 <div class="p-8 md:p-12">
                 <?php
-                    // Extract headings for table of contents
+                    // Extract headings for table of contents - improved version
                     $content = get_the_content();
                     $pattern = '/<h2.*?>(.*?)<\/h2>/i';
                     $h2_found = preg_match_all($pattern, $content, $headings);
@@ -117,10 +117,10 @@
                     $toc_content = '';
                     
                     if ($has_toc) {
-                        // Build TOC HTML
+                        // Build TOC HTML with consistent styling
                         $toc_content .= '<div class="table-of-contents p-6 bg-dark-400 rounded-lg border border-white/10 mt-4">';
                         $toc_content .= '<h2 class="text-xl font-bold mb-4 text-white">Table of Contents</h2>';
-                        $toc_content .= '<ul class="space-y-2">';
+                        $toc_content .= '<ul class="space-y-2 toc-list">';
                         
                         foreach ($headings[1] as $index => $heading) {
                             // Strip any HTML tags
@@ -128,10 +128,10 @@
                             // Use the same sanitize_title function as in the functions.php
                             $heading_id = sanitize_title($clean_heading);
                             
-                            $toc_content .= '<li class="text-light-100/80 hover:text-blue-300">';
-                            $toc_content .= '<a href="#' . $heading_id . '" class="flex items-center gap-2 transition-colors">';
-                            $toc_content .= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-                            $toc_content .= $clean_heading;
+                            $toc_content .= '<li class="toc-item text-light-100/80 hover:text-blue-300">';
+                            $toc_content .= '<a href="#' . $heading_id . '" class="toc-link flex items-center gap-2 transition-colors">';
+                            $toc_content .= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+                            $toc_content .= '<span class="toc-text">' . $clean_heading . '</span>';
                             $toc_content .= '</a></li>';
                         }
                         
@@ -222,22 +222,18 @@
                         <!-- Compact mobile TOC -->
                         <div class="table-of-contents p-4 bg-dark-400 rounded-lg border border-white/10">
                             <h2 class="text-lg font-medium mb-3 text-white">Contents</h2>
-                            <ul class="space-y-1">
+                            <ul class="space-y-1 toc-list">
                             <?php 
-                            // Extract headings for mobile TOC
-                            $pattern = '/<h2.*?>(.*?)<\/h2>/i';
-                            preg_match_all($pattern, get_the_content(), $headings);
-                            
                             foreach ($headings[1] as $index => $heading) {
                                 // Strip any HTML tags
                                 $clean_heading = strip_tags($heading);
                                 // Use the same sanitize_title function as in the functions.php
                                 $heading_id = sanitize_title($clean_heading);
                                 
-                                echo '<li class="text-light-100/80 hover:text-blue-300 text-sm">';
-                                echo '<a href="#' . $heading_id . '" class="flex items-center gap-1 transition-colors">';
-                                echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-                                echo $clean_heading;
+                                echo '<li class="toc-item text-light-100/80 hover:text-blue-300 text-sm">';
+                                echo '<a href="#' . $heading_id . '" class="toc-link flex items-center gap-1 transition-colors">';
+                                echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+                                echo '<span class="toc-text">' . $clean_heading . '</span>';
                                 echo '</a></li>';
                             }
                             ?>
@@ -344,14 +340,28 @@
                                 <!-- Table of Contents - Make even more compact -->
                                 <?php if ($has_toc) : ?>
                                     <?php 
-                                    // Modify TOC content to be more compact with smaller text
-                                    $toc_content = str_replace(
-                                        ['p-6', 'p-4', 'text-xl', 'text-lg', 'mb-4', 'mb-3', 'space-y-2', 'space-y-1', 'text-white'], 
-                                        ['p-3', 'p-3', 'text-base', 'text-base', 'mb-2', 'mb-2', 'space-y-1', 'space-y-1', 'text-light-100'],
-                                        $toc_content
-                                    );
-                                    echo $toc_content; 
+                                    // Instead of string replacement, which might be unreliable,
+                                    // Let's manually create the desktop TOC with our consistent styling
                                     ?>
+                                    <div class="table-of-contents p-3 bg-dark-400 rounded-lg border border-white/10">
+                                        <h2 class="text-base font-medium mb-2 text-light-100">Table of Contents</h2>
+                                        <ul class="space-y-1 toc-list">
+                                            <?php
+                                            foreach ($headings[1] as $index => $heading) {
+                                                // Strip any HTML tags
+                                                $clean_heading = strip_tags($heading);
+                                                // Use the same sanitize_title function as in the functions.php
+                                                $heading_id = sanitize_title($clean_heading);
+                                                
+                                                echo '<li class="toc-item text-light-100/80 hover:text-blue-300">';
+                                                echo '<a href="#' . $heading_id . '" class="toc-link flex items-center gap-1 transition-colors">';
+                                                echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+                                                echo '<span class="toc-text">' . $clean_heading . '</span>';
+                                                echo '</a></li>';
+                                            }
+                                            ?>
+                                        </ul>
+                                    </div>
                                 <?php endif; ?>
 
                                 <!-- Sidebar Widgets - Make more compact -->
@@ -826,6 +836,51 @@ article,
         margin-top: 0 !important;
         margin-bottom: 8px !important;
     }
+}
+
+/* Consistently style Table of Contents */
+.toc-list {
+    list-style: none !important;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+.toc-item {
+    margin-bottom: 0.25rem !important;
+}
+
+.toc-link {
+    display: flex !important;
+    align-items: center !important;
+    text-decoration: none !important;
+}
+
+.toc-caret {
+    color: #60a5fa !important;
+    flex-shrink: 0 !important;
+    margin-right: 0.5rem !important;
+    display: inline-block !important;
+}
+
+.toc-text {
+    font-size: 0.9rem;
+    line-height: 1.3;
+}
+
+/* Make content wider by limiting right sidebar width */
+.md\:w-1\/5.lg\:w-1\/6 {
+    max-width: 220px;
+}
+
+/* Enhanced hover states for TOC items */
+.toc-link:hover {
+    color: #60a5fa !important;
+    text-decoration: none !important;
+}
+
+.toc-link:hover .toc-caret {
+    transform: translateX(2px);
+    transition: transform 0.2s ease;
 }
 </style>
 
