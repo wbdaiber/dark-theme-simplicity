@@ -142,11 +142,11 @@
 
                     <!-- Mobile TOC (shows only on mobile) -->
                     <?php if ($has_toc) : ?>
-                    <div class="md:hidden mb-8">
+                    <div class="md:hidden mb-6">
                         <!-- Mobile Sharing Buttons -->
-                        <div class="flex justify-between items-center p-4 bg-dark-400 rounded-lg border border-white/10 mb-4">
-                            <div class="font-medium text-white">Share this article</div>
-                            <div class="flex gap-3">
+                        <div class="flex justify-between items-center p-3 bg-dark-400 rounded-lg border border-white/10 mb-3">
+                            <div class="font-medium text-white text-sm">Share this article</div>
+                            <div class="flex gap-2">
                                 <div class="relative" id="share-container-mobile">
                                     <button class="flex items-center justify-center w-10 h-10 bg-dark-300/80 hover:bg-dark-300 rounded-full transition-colors" id="share-btn-mobile">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300">
@@ -219,15 +219,38 @@
                             </div>
                         </div>
                         
-                        <?php echo $toc_content; ?>
-                            </div>
-                        <?php endif; ?>
+                        <!-- Compact mobile TOC -->
+                        <div class="table-of-contents p-4 bg-dark-400 rounded-lg border border-white/10">
+                            <h2 class="text-lg font-medium mb-3 text-white">Contents</h2>
+                            <ul class="space-y-1">
+                            <?php 
+                            // Extract headings for mobile TOC
+                            $pattern = '/<h2.*?>(.*?)<\/h2>/i';
+                            preg_match_all($pattern, get_the_content(), $headings);
+                            
+                            foreach ($headings[1] as $index => $heading) {
+                                // Strip any HTML tags
+                                $clean_heading = strip_tags($heading);
+                                // Use the same sanitize_title function as in the functions.php
+                                $heading_id = sanitize_title($clean_heading);
+                                
+                                echo '<li class="text-light-100/80 hover:text-blue-300 text-sm">';
+                                echo '<a href="#' . $heading_id . '" class="flex items-center gap-1 transition-colors">';
+                                echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+                                echo $clean_heading;
+                                echo '</a></li>';
+                            }
+                            ?>
+                            </ul>
+                        </div>
+                    </div>
+                    <?php endif; ?>
 
                     <!-- Two-column layout for content and TOC on desktop -->
                     <div class="flex flex-col md:flex-row gap-8">
-                        <!-- Main content column -->
-                        <div class="flex-1">
-                            <div class="entry-content prose prose-invert prose-lg max-w-none text-light-100/80">
+                        <!-- Main content column - Increase width and improve readability -->
+                        <div class="flex-1 md:w-3/4 lg:w-4/5">
+                            <div class="entry-content prose prose-invert prose-lg max-w-none text-light-100/80 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4">
                                 <?php the_content(); ?>
                             </div>
 
@@ -236,13 +259,13 @@
                             </footer>
                         </div>
                         
-                        <!-- Desktop TOC, Sharing, and Widgets -->
-                        <div class="hidden md:block md:w-64 lg:w-80 flex-shrink-0">
-                            <div class="sticky top-24 space-y-8">
-                                <!-- Desktop Sharing Buttons -->
-                                <div class="p-6 bg-dark-400 rounded-lg border border-white/10">
-                                    <h2 class="text-xl font-bold mb-4 text-white">Share Article</h2>
-                                    <div class="flex flex-col gap-3">
+                        <!-- Desktop TOC, Sharing, and Widgets - Decrease width -->
+                        <div class="hidden md:block md:w-1/4 lg:w-1/5 flex-shrink-0">
+                            <div class="sticky top-24 space-y-6">
+                                <!-- Desktop Sharing Buttons - Make more compact -->
+                                <div class="p-4 bg-dark-400 rounded-lg border border-white/10">
+                                    <h2 class="text-lg font-medium mb-3 text-white">Share Article</h2>
+                                    <div class="flex flex-col gap-2">
                                         <!-- Share Dropdown -->
                                         <div class="relative w-full" id="share-container">
                                             <button class="flex items-center gap-2 bg-dark-300/80 hover:bg-dark-300 border border-white/5 rounded-lg px-4 py-2 text-sm text-white transition-all w-full" id="share-btn">
@@ -318,9 +341,17 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Table of Contents -->
+                                <!-- Table of Contents - Make more compact -->
                                 <?php if ($has_toc) : ?>
-                                    <?php echo $toc_content; ?>
+                                    <?php 
+                                    // Modify TOC content to be more compact
+                                    $toc_content = str_replace(
+                                        ['p-6', 'text-xl', 'mb-4', 'space-y-2'], 
+                                        ['p-4', 'text-lg', 'mb-3', 'space-y-1'], 
+                                        $toc_content
+                                    );
+                                    echo $toc_content; 
+                                    ?>
                                 <?php endif; ?>
                                 
                                 <!-- Sidebar Widgets -->
