@@ -248,8 +248,8 @@
 
                     <!-- Two-column layout for content and TOC on desktop -->
                     <div class="flex flex-col md:flex-row gap-8">
-                        <!-- Main content column - Increase width and improve readability -->
-                        <div class="flex-1 md:w-3/4 lg:w-4/5">
+                        <!-- Main content column - Further increase width -->
+                        <div class="flex-1 md:w-4/5 lg:w-5/6">
                             <div class="entry-content prose prose-invert prose-lg max-w-none text-light-100/80 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4">
                                 <?php the_content(); ?>
                             </div>
@@ -259,12 +259,12 @@
                             </footer>
                         </div>
                         
-                        <!-- Desktop TOC, Sharing, and Widgets - Decrease width -->
-                        <div class="hidden md:block md:w-1/4 lg:w-1/5 flex-shrink-0">
-                            <div class="sticky top-24 space-y-6">
-                                <!-- Desktop Sharing Buttons - Make more compact -->
-                                <div class="p-4 bg-dark-400 rounded-lg border border-white/10">
-                                    <h2 class="text-lg font-medium mb-3 text-white">Share Article</h2>
+                        <!-- Desktop TOC, Sharing, and Widgets - Further decrease width -->
+                        <div class="hidden md:block md:w-1/5 lg:w-1/6 flex-shrink-0">
+                            <div class="sticky top-24 space-y-4">
+                                <!-- Desktop Sharing Buttons - Make even more compact -->
+                                <div class="p-3 bg-dark-400 rounded-lg border border-white/10">
+                                    <h2 class="text-base font-medium mb-2 text-white">Share Article</h2>
                                     <div class="flex flex-col gap-2">
                                         <!-- Share Dropdown -->
                                         <div class="relative w-full" id="share-container">
@@ -341,22 +341,22 @@
                                     </div>
                                 </div>
                                 
-                                <!-- Table of Contents - Make more compact -->
+                                <!-- Table of Contents - Make even more compact -->
                                 <?php if ($has_toc) : ?>
                                     <?php 
-                                    // Modify TOC content to be more compact
+                                    // Modify TOC content to be more compact with smaller text
                                     $toc_content = str_replace(
-                                        ['p-6', 'text-xl', 'mb-4', 'space-y-2'], 
-                                        ['p-4', 'text-lg', 'mb-3', 'space-y-1'], 
+                                        ['p-6', 'p-4', 'text-xl', 'text-lg', 'mb-4', 'mb-3', 'space-y-2', 'space-y-1', 'text-white'], 
+                                        ['p-3', 'p-3', 'text-base', 'text-base', 'mb-2', 'mb-2', 'space-y-1', 'space-y-1', 'text-light-100'],
                                         $toc_content
                                     );
                                     echo $toc_content; 
                                     ?>
                                 <?php endif; ?>
-                                
-                                <!-- Sidebar Widgets -->
+
+                                <!-- Sidebar Widgets - Make more compact -->
                                 <?php if (is_active_sidebar('sidebar-post') || is_active_sidebar('sidebar-1')) : ?>
-                                    <div class="mt-8">
+                                    <div class="mt-4 text-sm">
                                         <?php get_sidebar(); ?>
                                     </div>
                                 <?php endif; ?>
@@ -551,17 +551,56 @@
     .site-main .container {
         margin-top: 2rem !important;
     }
+    
+    /* Ensure mobile content is optimized */
+    .entry-content {
+        font-size: 1rem !important;
+    }
+    
+    /* Make mobile TOC more compact */
+    .table-of-contents {
+        padding: 0.75rem !important;
+    }
+    
+    .table-of-contents h2 {
+        font-size: 1rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .table-of-contents ul {
+        margin: 0 !important;
+        padding-left: 0.5rem !important;
+    }
+    
+    .table-of-contents li {
+        margin-bottom: 0.25rem !important;
+        font-size: 0.875rem !important;
+    }
 }
 
 @media (min-width: 769px) and (max-width: 1024px) {
     .site-main .container {
         margin-top: 2rem !important;
     }
+    
+    /* Ensure tablet content is optimized */
+    .entry-content {
+        font-size: 1.05rem !important;
+    }
 }
 
 @media (min-width: 1025px) {
     .site-main .container {
         margin-top: 2rem !important;
+    }
+    
+    /* Ensure desktop content has proper width */
+    .flex-1.md\:w-4\/5.lg\:w-5\/6 {
+        width: 82% !important;
+    }
+    
+    .md\:w-1\/5.lg\:w-1\/6 {
+        width: 18% !important;
     }
 }
 
@@ -580,6 +619,24 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+/* Make TOC text smaller and with proper spacing */
+.table-of-contents li a {
+    font-size: 0.9rem;
+    line-height: 1.3;
+    padding: 0.25rem 0;
+}
+
+/* Make content wider by limiting right sidebar width */
+.md\:w-1\/5.lg\:w-1\/6 {
+    max-width: 220px;
+}
+
+/* Enhanced hover states for sidebar elements */
+.table-of-contents a:hover {
+    color: #60a5fa !important;
+    text-decoration: none !important;
 }
 
 /* Enhanced related articles styling */
