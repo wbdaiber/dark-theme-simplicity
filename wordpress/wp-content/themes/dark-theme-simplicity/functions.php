@@ -14,6 +14,11 @@ function dark_theme_simplicity_scripts() {
     // Enqueue the main stylesheet with a timestamp to prevent caching
     wp_enqueue_style('dark-theme-simplicity-style', get_stylesheet_uri(), array(), time());
     
+    // Enqueue homepage animation styles
+    if (is_front_page()) {
+        wp_enqueue_style('homepage-animations', get_template_directory_uri() . '/assets/css/homepage.css', array(), time());
+    }
+    
     // Enqueue WCAG accessibility styles for blog posts
     if (is_single() || is_home() || is_archive() || is_search()) {
         wp_enqueue_style('blog-accessibility', get_template_directory_uri() . '/css/blog-accessibility.css', array(), time());
@@ -340,7 +345,34 @@ add_action('wp_ajax_dark_theme_simplicity_toggle_featured', 'dark_theme_simplici
 /**
  * Include the Theme Customizer
  */
-require get_template_directory() . '/inc/customizer.php';
+function dark_theme_simplicity_include_customizer() {
+    // First, include the repeater control class if it exists
+    $customizer_repeater_path = get_template_directory() . '/inc/customizer-repeater.php';
+    if (file_exists($customizer_repeater_path)) {
+        require_once $customizer_repeater_path;
+    }
+
+    // Then include the main customizer file
+    $customizer_path = get_template_directory() . '/inc/customizer.php';
+    if (file_exists($customizer_path)) {
+        require_once $customizer_path;
+    }
+}
+// Use the customize_register hook with priority 1 to load before other customizer functions
+add_action('customize_register', 'dark_theme_simplicity_include_customizer', 1);
+
+/**
+ * Enqueue scripts and styles for the customizer
+ */
+function dark_theme_simplicity_customize_controls_enqueue_scripts() {
+    // Enqueue the customizer repeater scripts and styles
+    if (class_exists('Dark_Theme_Simplicity_Customizer_Repeater_Control')) {
+        wp_enqueue_script('jquery-ui-sortable');
+        wp_enqueue_style('customizer-repeater-style', get_template_directory_uri() . '/css/customizer-repeater.css', array(), '1.0.0');
+        wp_enqueue_script('customizer-repeater-script', get_template_directory_uri() . '/js/customizer-repeater.js', array('jquery', 'jquery-ui-sortable', 'customize-controls'), '1.0.0', true);
+    }
+}
+add_action('customize_controls_enqueue_scripts', 'dark_theme_simplicity_customize_controls_enqueue_scripts');
 
 /**
  * Custom Walker Classes for Navigation Menus
@@ -509,21 +541,39 @@ class Dark_Theme_Simplicity_Walker_Social_Menu extends Walker_Nav_Menu {
     private $social_icons = array(
         'linkedin.com' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>',
         'twitter.com' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.5 11.5"></path><path d="M20 4L8.5 15.5"></path><path d="M4 20l7.5-7.5"></path><path d="M12.5 15.5L20 20"></path></svg>',
+        'x.com' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.5 11.5"></path><path d="M20 4L8.5 15.5"></path><path d="M4 20l7.5-7.5"></path><path d="M12.5 15.5L20 20"></path></svg>',
         'facebook.com' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>',
         'instagram.com' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>',
         'youtube.com' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>',
         'github.com' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>',
+        'linkedin' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path><rect x="2" y="9" width="4" height="12"></rect><circle cx="4" cy="4" r="2"></circle></svg>',
+        'twitter' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.5 11.5"></path><path d="M20 4L8.5 15.5"></path><path d="M4 20l7.5-7.5"></path><path d="M12.5 15.5L20 20"></path></svg>',
+        'x' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.5 11.5"></path><path d="M20 4L8.5 15.5"></path><path d="M4 20l7.5-7.5"></path><path d="M12.5 15.5L20 20"></path></svg>',
+        'facebook' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>',
+        'instagram' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>',
+        'youtube' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>',
+        'github' => '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>',
     );
     
     /**
      * Get icon for social link
      */
-    private function get_social_icon($url) {
+    private function get_social_icon($url, $title) {
+        // Check URL for known social media domains
         foreach ($this->social_icons as $domain => $icon) {
-            if (strpos($url, $domain) !== false) {
+            if (stripos($url, $domain) !== false) {
                 return $icon;
             }
         }
+        
+        // If URL doesn't match, check if the title matches any social network name
+        $title_lower = strtolower($title);
+        foreach ($this->social_icons as $domain => $icon) {
+            if (stripos($title_lower, $domain) !== false || stripos($domain, $title_lower) !== false) {
+                return $icon;
+            }
+        }
+        
         // Default icon if no match found
         return '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>';
     }
@@ -533,29 +583,17 @@ class Dark_Theme_Simplicity_Walker_Social_Menu extends Walker_Nav_Menu {
      */
     public function start_el(&$output, $item, $depth = 0, $args = array(), $id = 0) {
         $url = $item->url;
-        $icon = $this->get_social_icon($url);
+        $title = $item->title;
+        $icon = $this->get_social_icon($url, $title);
         
-        $item_output = '<a href="' . esc_url($url) . '" class="flex items-center gap-3 text-light-100/70 hover:text-blue-400 transition-colors">';
+        $item_output = '<li class="social-menu-item">';
+        $item_output .= '<a href="' . esc_url($url) . '" class="flex items-center gap-3 text-light-100/70 hover:text-blue-400 transition-colors">';
         $item_output .= $icon;
-        $item_output .= '<span>' . esc_html($item->title) . '</span>';
+        $item_output .= '<span>' . esc_html($title) . '</span>';
         $item_output .= '</a>';
+        $item_output .= '</li>';
         
         $output .= apply_filters('walker_nav_menu_start_el', $item_output, $item, $depth, $args);
-    }
-    
-    /**
-     * Overriding to remove <li> elements
-     */
-    public function start_lvl(&$output, $depth = 0, $args = array()) {
-        // No sub-menu support for social menu
-    }
-    
-    public function end_lvl(&$output, $depth = 0, $args = array()) {
-        // No sub-menu support for social menu
-    }
-    
-    public function end_el(&$output, $item, $depth = 0, $args = array()) {
-        // No closing </li> needed
     }
 }
 
@@ -683,4 +721,234 @@ function dark_theme_simplicity_get_service_icon($icon_name) {
     } else {
         return $icons['globe']; // Default icon
     }
-} 
+}
+
+// Add a meta box for selecting related posts
+function dark_theme_simplicity_add_related_posts_meta_box() {
+    add_meta_box(
+        'dark_theme_simplicity_related_posts',
+        'Manually Select Related Posts',
+        'dark_theme_simplicity_related_posts_meta_box_callback',
+        'post',
+        'normal',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'dark_theme_simplicity_add_related_posts_meta_box');
+
+// Callback function to display the meta box content
+function dark_theme_simplicity_related_posts_meta_box_callback($post) {
+    // Add a nonce field for security
+    wp_nonce_field('dark_theme_simplicity_related_posts_nonce', 'related_posts_nonce');
+    
+    // Get the saved related post IDs
+    $related_post_ids = get_post_meta($post->ID, '_related_posts', true);
+    
+    if (!is_array($related_post_ids)) {
+        $related_post_ids = array();
+    }
+    
+    // Query for posts to select from
+    $args = array(
+        'post_type' => 'post',
+        'post_status' => 'publish',
+        'posts_per_page' => -1,
+        'orderby' => 'title',
+        'order' => 'ASC',
+        'post__not_in' => array($post->ID), // Exclude current post
+    );
+    
+    $posts = get_posts($args);
+    
+    if (empty($posts)) {
+        echo '<p>No posts available to select.</p>';
+        return;
+    }
+    
+    echo '<p>Select up to three posts to display in the "Related Articles" section. If no posts are selected, related posts will be chosen automatically based on shared categories.</p>';
+    echo '<div style="max-height: 300px; overflow-y: auto; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">';
+    
+    foreach ($posts as $related_post) {
+        $checked = in_array($related_post->ID, $related_post_ids) ? 'checked="checked"' : '';
+        
+        echo '<label style="display: block; margin-bottom: 5px;">';
+        echo '<input type="checkbox" name="related_posts[]" value="' . esc_attr($related_post->ID) . '" ' . $checked . '> ';
+        echo esc_html($related_post->post_title);
+        echo '</label>';
+    }
+    
+    echo '</div>';
+    echo '<p class="description">Note: Only the first three selected posts will be displayed.</p>';
+    
+    // Add some JavaScript to limit selections to 3
+    ?>
+    <script type="text/javascript">
+    jQuery(document).ready(function($) {
+        $('input[name="related_posts[]"]').on('change', function() {
+            var checked = $('input[name="related_posts[]"]:checked');
+            if (checked.length > 3) {
+                $(this).prop('checked', false);
+                alert('You can only select up to three related posts.');
+            }
+        });
+    });
+    </script>
+    <?php
+}
+
+// Save the meta box data
+function dark_theme_simplicity_save_related_posts_meta($post_id) {
+    // Check if our nonce is set
+    if (!isset($_POST['related_posts_nonce'])) {
+        return;
+    }
+    
+    // Verify the nonce
+    if (!wp_verify_nonce($_POST['related_posts_nonce'], 'dark_theme_simplicity_related_posts_nonce')) {
+        return;
+    }
+    
+    // Check if this is an autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    // Check user permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    // Save the related posts data
+    if (isset($_POST['related_posts']) && is_array($_POST['related_posts'])) {
+        // Limit to first 3 selected posts
+        $related_posts = array_slice($_POST['related_posts'], 0, 3);
+        update_post_meta($post_id, '_related_posts', $related_posts);
+    } else {
+        // No posts selected, delete the meta
+        delete_post_meta($post_id, '_related_posts');
+    }
+}
+add_action('save_post', 'dark_theme_simplicity_save_related_posts_meta');
+
+/**
+ * Add CSS fixes for styling elements on the front page
+ */
+function dark_theme_simplicity_custom_css_fix() {
+    if (is_front_page()) {
+        ?>
+        <style type="text/css">
+            /* Hero Button Styles */
+            .hero-btn {
+                background-color: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_color', '#0085ff')); ?> !important;
+                border-radius: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_radius', '0')); ?>px !important;
+                padding-left: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_padding_x', '32')); ?>px !important;
+                padding-right: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_padding_x', '32')); ?>px !important;
+                padding-top: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_padding_y', '16')); ?>px !important;
+                padding-bottom: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_padding_y', '16')); ?>px !important;
+                font-size: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_text_size', '18')); ?>px !important;
+                font-weight: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_font_weight', '500')); ?> !important;
+                border-width: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_border_width', '0')); ?>px !important;
+                border-style: solid !important;
+                border-color: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_border_color', '#ffffff')); ?> !important;
+                display: inline-flex !important;
+                color: white !important;
+            }
+            
+            .hero-btn:hover {
+                background-color: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_hover_color', '#0057a7')); ?> !important;
+            }
+            
+            /* Section Label Styles */
+            .section-label {
+                color: #0085ff !important;
+            }
+        </style>
+        <?php
+    }
+}
+add_action('wp_head', 'dark_theme_simplicity_custom_css_fix', 999); // High priority to ensure it runs after other styles
+
+/**
+ * Add JavaScript for hero button hover effects
+ */
+function dark_theme_simplicity_button_hover_js() {
+    if (is_front_page()) {
+        ?>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                // Apply hero button colors via JavaScript to handle caching issues
+                const heroButtons = document.querySelectorAll('.hero-btn');
+                const hoverColor = '<?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_hover_color', '#0057a7')); ?>';
+                const defaultColor = '<?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_color', '#0085ff')); ?>';
+                
+                heroButtons.forEach(button => {
+                    // Set up hover event
+                    button.addEventListener('mouseenter', function() {
+                        this.style.backgroundColor = hoverColor;
+                    });
+                    
+                    // Set up mouse leave event to revert to original color
+                    button.addEventListener('mouseleave', function() {
+                        this.style.backgroundColor = defaultColor;
+                    });
+                });
+            });
+        </script>
+        <?php
+    }
+}
+add_action('wp_footer', 'dark_theme_simplicity_button_hover_js');
+
+/**
+ * Add notice to help set up Social Menu
+ */
+function dark_theme_simplicity_social_menu_notice() {
+    // Only show to editors and admins
+    if (!current_user_can('edit_theme_options')) {
+        return;
+    }
+    
+    // Check if the notice has been dismissed
+    $dismissed = get_option('dark_theme_simplicity_social_notice_dismissed', false);
+    if (!$dismissed && !has_nav_menu('social')) {
+        ?>
+        <div class="notice notice-info is-dismissible" id="dark-theme-social-notice">
+            <p><strong><?php _e('Dark Theme Simplicity Tip:', 'dark-theme-simplicity'); ?></strong> 
+            <?php _e('Set up your social media links by creating a menu and assigning it to the "Social Menu" location in the menu settings. This will display your social links in the footer.', 'dark-theme-simplicity'); ?></p>
+            <p><?php printf(__('Alternatively, you can add your LinkedIn and Twitter/X URLs in the <a href="%s">Theme Customizer</a>.', 'dark-theme-simplicity'), admin_url('customize.php?autofocus[section]=dark_theme_simplicity_social_links')); ?></p>
+            <button type="button" class="notice-dismiss-permanent" data-notice="social">
+                <span class="screen-reader-text"><?php _e('Dismiss this notice forever.', 'dark-theme-simplicity'); ?></span>
+            </button>
+        </div>
+        <script>
+            jQuery(document).ready(function($) {
+                $(document).on('click', '.notice-dismiss-permanent', function() {
+                    var notice = $(this).data('notice');
+                    if (notice === 'social') {
+                        $.ajax({
+                            url: ajaxurl,
+                            type: 'POST',
+                            data: {
+                                action: 'dark_theme_simplicity_dismiss_social_notice',
+                                nonce: '<?php echo wp_create_nonce('dark_theme_simplicity_dismiss_social_notice'); ?>'
+                            }
+                        });
+                        $('#dark-theme-social-notice').hide();
+                    }
+                });
+            });
+        </script>
+        <?php
+    }
+}
+add_action('admin_notices', 'dark_theme_simplicity_social_menu_notice');
+
+/**
+ * Handle AJAX request to dismiss social menu notice
+ */
+function dark_theme_simplicity_dismiss_social_notice() {
+    check_ajax_referer('dark_theme_simplicity_dismiss_social_notice', 'nonce');
+    update_option('dark_theme_simplicity_social_notice_dismissed', true);
+    wp_die();
+}
+add_action('wp_ajax_dark_theme_simplicity_dismiss_social_notice', 'dark_theme_simplicity_dismiss_social_notice'); 

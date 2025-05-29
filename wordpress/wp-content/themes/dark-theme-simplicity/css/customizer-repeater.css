@@ -1,114 +1,202 @@
 /**
- * Customizer Repeater CSS
+ * Dark Theme Simplicity Customizer Repeater CSS
  */
 
-.customizer-repeater-control-wrap {
+/* Control Container */
+.customizer-repeater-control {
+    margin-bottom: 12px;
     background: #fff;
-    border: 1px solid #ddd;
     border-radius: 3px;
-    margin-bottom: 10px;
-}
-
-.customizer-repeater-general-control-repeater-item {
-    background: #f7f7f7;
     border: 1px solid #e5e5e5;
-    border-radius: 3px;
-    margin-bottom: 10px;
-    position: relative;
+    padding: 10px;
 }
 
+/* Items Container */
+.customizer-repeater-items {
+    margin-bottom: 10px;
+}
+
+/* Individual Item */
+.customizer-repeater-item {
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    background: #fff;
+    border-radius: 3px;
+    box-shadow: 0 1px 1px rgba(0,0,0,.04);
+}
+
+.customizer-repeater-item.expanded {
+    box-shadow: 0 2px 5px rgba(0,0,0,.1);
+}
+
+/* Item Header */
 .customizer-repeater-item-header {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 15px;
-    cursor: pointer;
+    background: #f7f7f7;
     border-bottom: 1px solid #ddd;
+    cursor: move;
+    user-select: none;
 }
 
-.customizer-repeater-item-title {
-    font-weight: bold;
+.customizer-repeater-item.expanded .customizer-repeater-item-header {
+    background: #f0f0f0;
+    border-bottom-color: #ccc;
 }
 
-.customizer-repeater-item-controls {
+.customizer-repeater-item-header .title {
+    font-weight: 600;
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+}
+
+.customizer-repeater-item-header .item-controls {
     display: flex;
-    gap: 5px;
+    align-items: center;
 }
 
-.customizer-repeater-toggle-item {
-    background: none;
-    border: none;
-    color: #0073aa;
-    cursor: pointer;
-    padding: 0;
-}
-
-.customizer-repeater-remove-item {
-    background: none;
-    border: none;
-    color: #a00;
-    cursor: pointer;
-    padding: 0;
-}
-
+/* Item Content */
 .customizer-repeater-item-content {
-    padding: 15px;
+    padding: 12px 15px;
     display: none;
+    background: #fdfdfd;
 }
 
-.customizer-repeater-general-control-repeater-item.expanded .customizer-repeater-item-content {
-    display: block;
-}
-
+/* Field Styling */
 .customizer-repeater-field {
     margin-bottom: 15px;
+}
+
+.customizer-repeater-field:last-child {
+    margin-bottom: 5px;
 }
 
 .customizer-repeater-field label {
     display: block;
     margin-bottom: 5px;
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 13px;
+    color: #23282d;
 }
 
-.customizer-repeater-field-input {
+.customizer-repeater-field input,
+.customizer-repeater-field textarea,
+.customizer-repeater-field select {
     width: 100%;
     border: 1px solid #ddd;
     border-radius: 3px;
-    padding: 5px 10px;
+    padding: 7px 10px;
+    color: #32373c;
 }
 
-.customizer-repeater-field textarea.customizer-repeater-field-input {
-    min-height: 60px;
+.customizer-repeater-field textarea {
+    min-height: 65px;
+    resize: vertical;
 }
 
-.customizer-repeater-add-control-field {
+/* Add Button */
+.customize-add-repeater-item {
     width: 100%;
-    margin-top: 10px;
+    text-align: center;
+    display: block;
+    background: #0085ba;
+    color: #fff;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: all 0.2s ease;
 }
 
-/* Drag and drop functionality styles */
-.customizer-repeater-general-control-droppable {
-    border: 2px dashed #0073aa;
-    margin: 10px 0;
-    padding: 5px;
-    background: rgba(0, 115, 170, 0.05);
+.customize-add-repeater-item:hover {
+    background: #008ec2;
 }
 
-.customizer-repeater-general-control-draggable {
-    cursor: move;
+/* Remove Button */
+.customizer-repeater-remove {
+    color: #a00;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-left: 10px;
 }
 
-.ui-sortable-helper {
+.customizer-repeater-remove:hover {
+    color: #dc3232;
+}
+
+.customizer-repeater-remove .dashicons {
+    width: 16px;
+    height: 16px;
+    font-size: 16px;
+    vertical-align: text-bottom;
+}
+
+/* Toggle Button */
+.customizer-repeater-toggle {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    margin-right: 5px;
+    color: #0073aa;
+    height: 20px;
+    width: 20px;
+    line-height: 1;
+}
+
+.customizer-repeater-toggle:hover {
+    color: #00a0d2;
+}
+
+.customizer-repeater-toggle .toggle-indicator {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    font-size: 20px;
+    line-height: 1;
+    text-align: center;
+}
+
+.customizer-repeater-toggle .toggle-indicator:before {
+    content: "\f140";
+    display: inline-block;
+    font: normal 20px/1 dashicons;
+    vertical-align: middle;
+}
+
+.customizer-repeater-item.expanded .customizer-repeater-toggle .toggle-indicator:before {
+    content: "\f142";
+}
+
+/* Sortable Placeholder */
+.customizer-repeater-items .ui-sortable-placeholder {
+    border: 1px dashed #ccc;
+    background: #f7f7f7;
+    margin-bottom: 10px;
+    visibility: visible !important;
+    border-radius: 3px;
+    box-shadow: none;
+}
+
+/* When dragging */
+.customizer-repeater-items .ui-sortable-helper {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     opacity: 0.9;
 }
 
-.ui-sortable-placeholder {
-    background: #f7f7f7;
-    border: 2px dashed #ccc;
-    visibility: visible !important;
-    height: 50px;
-    margin-bottom: 10px;
+/* Clear floats */
+.customizer-repeater-control::after,
+.customizer-repeater-items::after {
+    content: "";
+    display: table;
+    clear: both;
 }
 
 /* Icon styles */
@@ -238,4 +326,99 @@
     content: "";
     display: table;
     clear: both;
+}
+
+/**
+ * Customizer Repeater Control CSS
+ */
+
+/* Repeater Control */
+.customizer-repeater-control-wrap {
+    margin-bottom: 15px;
+}
+
+/* Repeater Items */
+.customizer-repeater-general-control-repeater-item {
+    background: #fff;
+    border: 1px solid #ddd;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+/* Item Header */
+.customizer-repeater-item-header {
+    padding: 10px 15px;
+    cursor: move;
+    background: #f7f7f7;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.customizer-repeater-item-title {
+    font-weight: 600;
+    margin: 0;
+    max-width: 75%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.customizer-repeater-item-controls {
+    display: flex;
+    gap: 5px;
+}
+
+/* Content area */
+.customizer-repeater-item-content {
+    padding: 15px;
+    display: none;
+}
+
+.customizer-repeater-general-control-repeater-item.expanded .customizer-repeater-item-content {
+    display: block;
+}
+
+/* Fields */
+.customizer-repeater-field {
+    margin-bottom: 15px;
+}
+
+.customizer-repeater-field label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+}
+
+.customizer-repeater-field-input {
+    width: 100%;
+}
+
+/* Buttons */
+.customizer-repeater-toggle-item,
+.customizer-repeater-remove-item {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+    color: #555;
+}
+
+.customizer-repeater-toggle-item:hover,
+.customizer-repeater-remove-item:hover {
+    color: #0073aa;
+}
+
+.customizer-repeater-remove-item:hover {
+    color: #dc3232;
+}
+
+.customizer-repeater-add-control-field {
+    margin-top: 10px !important;
+    width: 100%;
+}
+
+/* Ensure enough spacing for the elements */
+.customizer-repeater-field textarea {
+    min-height: 60px;
 } 

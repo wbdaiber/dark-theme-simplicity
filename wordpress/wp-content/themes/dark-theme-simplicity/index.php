@@ -2,9 +2,35 @@
 
 <main id="content" class="site-main bg-dark-200">
     <!-- Hero Section -->
-    <section class="py-16 md:py-24 bg-dark-300">
+    <?php
+    // Get customizer settings
+    $hero_padding = get_theme_mod('dark_theme_simplicity_blog_hero_padding', 'medium');
+    $hero_alignment = get_theme_mod('dark_theme_simplicity_blog_hero_alignment', 'left');
+    
+    // Set padding classes based on customizer setting
+    $padding_classes = 'py-12 md:py-16'; // Small (default fallback)
+    if ($hero_padding === 'medium') {
+        $padding_classes = 'py-16 md:py-24';
+    } elseif ($hero_padding === 'large') {
+        $padding_classes = 'py-20 md:py-32';
+    } elseif ($hero_padding === 'extra-large') {
+        $padding_classes = 'py-24 md:py-40';
+    }
+    
+    // Set alignment classes based on customizer setting
+    $alignment_classes = 'text-left'; // Left (default fallback)
+    $container_classes = '';
+    if ($hero_alignment === 'center') {
+        $alignment_classes = 'text-center';
+        $container_classes = 'mx-auto';
+    } elseif ($hero_alignment === 'right') {
+        $alignment_classes = 'text-right';
+        $container_classes = 'ml-auto';
+    }
+    ?>
+    <section class="<?php echo esc_attr($padding_classes); ?> bg-dark-300 blog-hero-section">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="max-w-5xl">
+            <div class="max-w-5xl <?php echo esc_attr($container_classes); ?> <?php echo esc_attr($alignment_classes); ?>">
                 <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-white reveal-text">
                     <?php 
                     if (is_home() && !is_front_page()) {
@@ -14,12 +40,12 @@
                     } elseif (is_search()) {
                         printf(esc_html__('Search Results for: %s', 'dark-theme-simplicity'), '<span>' . get_search_query() . '</span>');
                     } else {
-                        esc_html_e('Insights & Resources', 'dark-theme-simplicity');
+                        echo esc_html(get_theme_mod('dark_theme_simplicity_blog_hero_title', 'Insights & Resources'));
                     }
                     ?>
                 </h1>
-                <p class="text-xl md:text-2xl text-light-100/70 max-w-3xl reveal-text">
-                    The latest tools, trends, and strategies to elevate your digital presence and maximize your business growth.
+                <p class="text-xl md:text-2xl max-w-3xl <?php echo $hero_alignment === 'center' ? 'mx-auto' : ($hero_alignment === 'right' ? 'ml-auto' : ''); ?> reveal-text blog-hero-description" style="color: <?php echo esc_attr($desc_color); ?> !important; opacity: <?php echo esc_attr($desc_opacity_decimal); ?> !important;">
+                    <?php echo esc_html(get_theme_mod('dark_theme_simplicity_blog_hero_description', 'The latest tools, trends, and strategies to elevate your digital presence and maximize your business growth.')); ?>
                 </p>
                 <?php if (is_archive() && get_the_archive_description()) : ?>
                     <div class="archive-description text-xl text-light-100/70 mt-4 reveal-text">
@@ -29,6 +55,56 @@
             </div>
         </div>
     </section>
+
+    <?php 
+    // Output custom CSS for blog hero background and colors
+    $blog_hero_bg = get_theme_mod('dark_theme_simplicity_blog_hero_bg_image', '');
+    $blog_hero_overlay_opacity = get_theme_mod('dark_theme_simplicity_blog_hero_overlay_opacity', 70);
+    $overlay_opacity_decimal = $blog_hero_overlay_opacity / 100;
+    $title_color = get_theme_mod('dark_theme_simplicity_blog_hero_title_color', '#ffffff');
+    $desc_color = get_theme_mod('dark_theme_simplicity_blog_hero_desc_color', '#ffffff');
+    $desc_opacity = get_theme_mod('dark_theme_simplicity_blog_hero_desc_opacity', 70);
+    $desc_opacity_decimal = $desc_opacity / 100;
+    ?>
+    <style>
+        .blog-hero-section {
+            position: relative;
+            background-color: #121214; /* Base dark color */
+            <?php if (!empty($blog_hero_bg)) : ?>
+            background-image: url('<?php echo esc_url($blog_hero_bg); ?>');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            <?php endif; ?>
+        }
+        
+        <?php if (!empty($blog_hero_bg)) : ?>
+        .blog-hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(18, 18, 20, <?php echo esc_attr($overlay_opacity_decimal); ?>);
+            z-index: 1;
+        }
+        
+        .blog-hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+        <?php endif; ?>
+        
+        .blog-hero-section h1 {
+            color: <?php echo esc_attr($title_color); ?> !important;
+        }
+        
+        .blog-hero-description {
+            color: <?php echo esc_attr($desc_color); ?> !important;
+            opacity: <?php echo esc_attr($desc_opacity_decimal); ?> !important;
+        }
+    </style>
 
     <?php 
     // Featured Posts Section

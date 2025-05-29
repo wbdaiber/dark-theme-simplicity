@@ -23,7 +23,24 @@
                                 <nav class="flex items-center gap-2 text-sm mb-6 text-light-100/70">
                                     <a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-blue-400 transition-colors">Home</a>
                                     <span class="text-light-100/50">›</span>
-                                    <a href="<?php echo esc_url(home_url('/blog')); ?>" class="hover:text-blue-400 transition-colors">Blog</a>
+                                    <?php
+                                    // Get the page ID that's set as the "Posts page" in Settings > Reading
+                                    $posts_page_id = get_option('page_for_posts');
+                                    
+                                    if ($posts_page_id) {
+                                        // If a static page is set as the posts page
+                                        $posts_page_title = get_the_title($posts_page_id);
+                                        $posts_page_url = get_permalink($posts_page_id);
+                                        ?>
+                                        <a href="<?php echo esc_url($posts_page_url); ?>" class="hover:text-blue-400 transition-colors"><?php echo esc_html($posts_page_title); ?></a>
+                                        <?php
+                                    } else {
+                                        // If no static page is set (default behavior)
+                                        ?>
+                                        <a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-blue-400 transition-colors">Blog</a>
+                                        <?php
+                                    }
+                                    ?>
                                 </nav>
                                 
                                 <!-- Category Badge -->
@@ -55,14 +72,14 @@
 
                                 <!-- Meta Information -->
                                 <div class="flex flex-wrap items-center gap-4 text-sm text-light-100/80 drop-shadow-md">
-                                    <time datetime="<?php echo esc_attr(get_the_date('c')); ?>" class="flex items-center gap-2">
+                                    <time datetime="<?php echo esc_attr(get_the_modified_date('c')); ?>" class="flex items-center gap-2">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-300">
                                             <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
                                             <line x1="16" y1="2" x2="16" y2="6"></line>
                                             <line x1="8" y1="2" x2="8" y2="6"></line>
                                             <line x1="3" y1="10" x2="21" y2="10"></line>
                                         </svg>
-                                        <?php echo esc_html(get_the_date()); ?>
+                                        <span>Last Updated: <?php echo esc_html(get_the_modified_date()); ?></span>
                                     </time>
                                 </div>
                             </div>
@@ -319,45 +336,70 @@
                     
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
                         <?php
-                        // Get the categories of the current post
-                        $categories = wp_get_post_categories(get_the_ID());
                         $current_post_id = get_the_ID();
                         
-                        // Set up arguments for the related posts query
-                        $args = array(
-                            'category__in'     => $categories,
-                            'post__not_in'     => array($current_post_id),
-                            'posts_per_page'   => 3,
-                            'orderby'          => 'rand',
-                            'post_status'      => 'publish'
-                        );
+                        // First check if manually selected related posts exist
+                        $manual_related_posts = get_post_meta($current_post_id, '_related_posts', true);
+                        $has_manual_related = false;
                         
-                        $related_posts_query = new WP_Query($args);
+                        if (!empty($manual_related_posts) && is_array($manual_related_posts)) {
+                            // Set up arguments for manually selected related posts
+                            $manual_args = array(
+                                'post__in'       => $manual_related_posts,
+                                'posts_per_page' => 3,
+                                'post_status'    => 'publish',
+                                'orderby'        => 'post__in', // Preserve the order selected
+                            );
+                            
+                            $related_posts_query = new WP_Query($manual_args);
+                            
+                            // If we have manually selected related posts, set flag to true
+                            if ($related_posts_query->have_posts()) {
+                                $has_manual_related = true;
+                            }
+                        }
                         
-                        // If we don't have enough related posts by category, add recent posts as a fallback
-                        if ($related_posts_query->post_count < 3) {
-                            // Store the posts we already have
-                            $existing_posts = wp_list_pluck($related_posts_query->posts, 'ID');
-                            $posts_to_exclude = array_merge(array($current_post_id), $existing_posts);
+                        // If no manual related posts, use category-based selection (existing code)
+                        if (!$has_manual_related) {
+                            // Get the categories of the current post
+                            $categories = wp_get_post_categories($current_post_id);
                             
-                            // How many more posts do we need?
-                            $posts_needed = 3 - $related_posts_query->post_count;
-                            
-                            // Get recent posts excluding the current post and already displayed related posts
-                            $recent_args = array(
-                                'post__not_in'     => $posts_to_exclude,
-                                'posts_per_page'   => $posts_needed,
-                                'orderby'          => 'date',
-                                'order'            => 'DESC',
+                            // Set up arguments for the related posts query
+                            $args = array(
+                                'category__in'     => $categories,
+                                'post__not_in'     => array($current_post_id),
+                                'posts_per_page'   => 3,
+                                'orderby'          => 'rand',
                                 'post_status'      => 'publish'
                             );
                             
-                            $recent_query = new WP_Query($recent_args);
+                            $related_posts_query = new WP_Query($args);
                             
-                            // Merge the results
-                            if ($recent_query->have_posts()) {
-                                $related_posts_query->posts = array_merge($related_posts_query->posts, $recent_query->posts);
-                                $related_posts_query->post_count = count($related_posts_query->posts);
+                            // If we don't have enough related posts by category, add recent posts as a fallback
+                            if ($related_posts_query->post_count < 3) {
+                                // Store the posts we already have
+                                $existing_posts = wp_list_pluck($related_posts_query->posts, 'ID');
+                                $posts_to_exclude = array_merge(array($current_post_id), $existing_posts);
+                                
+                                // How many more posts do we need?
+                                $posts_needed = 3 - $related_posts_query->post_count;
+                                
+                                // Get recent posts excluding the current post and already displayed related posts
+                                $recent_args = array(
+                                    'post__not_in'     => $posts_to_exclude,
+                                    'posts_per_page'   => $posts_needed,
+                                    'orderby'          => 'date',
+                                    'order'            => 'DESC',
+                                    'post_status'      => 'publish'
+                                );
+                                
+                                $recent_query = new WP_Query($recent_args);
+                                
+                                // Merge the results
+                                if ($recent_query->have_posts()) {
+                                    $related_posts_query->posts = array_merge($related_posts_query->posts, $recent_query->posts);
+                                    $related_posts_query->post_count = count($related_posts_query->posts);
+                                }
                             }
                         }
                         
@@ -401,7 +443,7 @@
                             endwhile;
                         else :
                             echo '<div class="col-span-3 text-center text-light-100/70">No related posts found.</div>';
-                endif;
+                        endif;
                         
                         // Reset post data to restore the main query & post
                         wp_reset_postdata();
