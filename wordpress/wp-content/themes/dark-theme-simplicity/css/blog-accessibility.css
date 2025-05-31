@@ -22,17 +22,17 @@ body {
 
 /* Enhanced prose styling for main content */
 .entry-content.prose {
-  font-size: 1.125rem; /* 18px - larger than default for better readability */
-  line-height: 1.7; /* Increased line height for content */
+  font-size: 1.65rem; /* Further increased from 1.45rem */
+  line-height: 2; /* Further increased from 1.8 */
   max-width: none;
 }
 
 /* Paragraph spacing and typography */
 .entry-content.prose p {
-  margin-bottom: 1.75em; /* Increased from typical 1.25em */
-  line-height: 1.7;
-  font-size: 1.125rem;
-  color: rgba(248, 250, 252, 0.85); /* Slightly higher contrast */
+  margin-bottom: 1.75em;
+  line-height: 2; /* Further increased from 1.8 */
+  font-size: 1.65rem; /* Further increased from 1.45rem */
+  color: rgba(248, 250, 252, 0.85);
 }
 
 /* Enhanced paragraph spacing for better readability */
@@ -44,15 +44,15 @@ body {
    HEADINGS HIERARCHY & SPACING
    ============================================ */
 
-/* Enhanced heading typography with proper spacing */
+/* Reduced heading spacing */
 .entry-content.prose h1,
 .entry-content.prose h2,
 .entry-content.prose h3,
 .entry-content.prose h4,
 .entry-content.prose h5,
 .entry-content.prose h6 {
-  margin-top: 2em; /* Increased top margin */
-  margin-bottom: 0.75em; /* Balanced bottom margin */
+  margin-top: 1rem; /* Decreased from 2em */
+  margin-bottom: 0.5em; /* Reduced spacing */
   line-height: 1.25;
   font-weight: 700;
   color: #ffffff;
@@ -63,38 +63,38 @@ body {
 .entry-content.prose h1 {
   font-size: 2.5rem;
   margin-top: 0; /* Remove top margin for first heading */
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
 }
 
 .entry-content.prose h2 {
   font-size: 2rem;
-  margin-top: 2.5em;
-  margin-bottom: 0.875em;
+  margin-top: 1rem; /* Decreased from 2.5em */
+  margin-bottom: 0.5em;
   border-bottom: 2px solid rgba(59, 130, 246, 0.3);
   padding-bottom: 0.5rem;
 }
 
 .entry-content.prose h3 {
   font-size: 1.625rem;
-  margin-top: 2.25em;
-  margin-bottom: 0.75em;
+  margin-top: 1rem; /* Decreased from 2.25em */
+  margin-bottom: 0.5em;
 }
 
 .entry-content.prose h4 {
   font-size: 1.375rem;
-  margin-top: 2em;
-  margin-bottom: 0.625em;
+  margin-top: 1rem; /* Decreased from 2em */
+  margin-bottom: 0.5em;
 }
 
 .entry-content.prose h5 {
   font-size: 1.25rem;
-  margin-top: 1.75em;
+  margin-top: 1rem; /* Decreased from 1.75em */
   margin-bottom: 0.5em;
 }
 
 .entry-content.prose h6 {
   font-size: 1.125rem;
-  margin-top: 1.5em;
+  margin-top: 1rem; /* Decreased from 1.5em */
   margin-bottom: 0.5em;
 }
 
@@ -104,7 +104,7 @@ body {
 
 /* Enhanced image spacing and accessibility */
 .entry-content.prose img {
-  margin: 2rem 0; /* Increased from 1rem */
+  margin: 1rem 0; /* Decreased from 2rem */
   border-radius: 0.5rem;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
   max-width: 100%;
@@ -114,7 +114,7 @@ body {
 
 /* Figure and caption styling */
 .entry-content.prose figure {
-  margin: 2.5rem 0; /* Enhanced spacing around figures */
+  margin: 1rem 0; /* Decreased from 2.5rem */
 }
 
 .entry-content.prose figcaption {
@@ -129,7 +129,7 @@ body {
 /* Video and iframe spacing */
 .entry-content.prose video,
 .entry-content.prose iframe {
-  margin: 2rem 0;
+  margin: 1rem 0; /* Decreased from 2rem */
   border-radius: 0.5rem;
 }
 
@@ -238,8 +238,9 @@ body {
   position: relative;
 }
 
-.entry-content.prose blockquote::before {
-  content: """;
+/* Fix the blockquote::before selector that was causing linter errors */
+.entry-content.prose blockquote:before {
+  content: "\201C"; /* Opening double quote */
   font-size: 4rem;
   color: rgba(59, 130, 246, 0.3);
   position: absolute;
@@ -319,14 +320,21 @@ button:focus,
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 0.75rem;
   padding: 1.5rem;
+  font-size: 1rem !important; /* Increased to 1rem as requested */
 }
 
 .table-of-contents h2 {
-  font-size: 1.25rem;
+  font-size: 1.4rem !important; /* Reduced to 1.4rem as requested */
   margin-bottom: 1rem;
   color: #ffffff;
   border: none;
   padding: 0;
+  display: block !important; /* Ensure it's visible */
+}
+
+/* Remove the span styling since we're using h2 */
+.table-of-contents span.toc-title {
+  display: none !important;
 }
 
 .table-of-contents ul {
@@ -336,19 +344,21 @@ button:focus,
 }
 
 .table-of-contents li {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.6rem !important;
+  font-size: 1rem !important; /* Increased to 1rem as requested */
 }
 
 .table-of-contents a {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 0.75rem;
-  border-radius: 0.375rem;
-  color: rgba(248, 250, 252, 0.8);
-  text-decoration: none;
-  transition: all 0.2s ease;
-  min-height: 44px; /* Minimum touch target size */
+  padding: 0.4rem 0.75rem !important;
+  border-radius: 0.375rem !important;
+  color: rgba(248, 250, 252, 0.8) !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  min-height: 40px !important;
+  font-size: 1rem !important; /* Increased to 1rem as requested */
 }
 
 .table-of-contents a:hover {
@@ -395,15 +405,11 @@ button:focus,
     margin: 1.5rem 0;
   }
   
-  .entry-content.prose th,
-  .entry-content.prose td {
-    padding: 0.75rem 0.5rem;
-  }
-  
   /* Touch-friendly TOC on mobile */
   .table-of-contents a {
     min-height: 48px; /* Larger touch targets on mobile */
     padding: 0.75rem 1rem;
+    font-size: 1rem; /* Updated to match new size */
   }
 }
 
@@ -528,3 +534,882 @@ button:focus,
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
 */ 
+
+/* ============================================
+   EMERGENCY FIXES FOR BLOG LAYOUT
+   ============================================ */
+
+/* Mobile sticky navigation styles */
+.mobile-sticky-nav {
+  width: 100% !important;
+  transition: all 0.3s ease !important;
+}
+
+/* Active state for toggle buttons */
+.mobile-share-toggle.active,
+.mobile-toc-toggle.active {
+  background-color: rgba(55, 65, 81, 0.5) !important;
+  color: #60a5fa !important;
+}
+
+/* Mobile dropdowns */
+.mobile-share-dropdown,
+.mobile-toc-dropdown {
+  transition: all 0.2s ease !important;
+  z-index: 999 !important;
+  font-size: 1.1rem !important; /* Updated to match 1.1rem size */
+}
+
+/* Mobile TOC list styling with increased font size */
+.mobile-toc-list,
+.mobile-toc-dropdown {
+  max-height: 60vh !important;
+  overflow-y: auto !important;
+  padding-right: 8px !important;
+  scrollbar-width: thin !important;
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+}
+
+.mobile-toc-list a,
+.mobile-toc-dropdown a {
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+  min-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.4rem 0.75rem !important;
+}
+
+/* Mobile toggle buttons text size */
+.mobile-share-toggle,
+.mobile-toc-toggle {
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+}
+
+/* Scrollbar styling for mobile TOC */
+.mobile-toc-list::-webkit-scrollbar {
+  width: 4px !important;
+}
+
+.mobile-toc-list::-webkit-scrollbar-track {
+  background: transparent !important;
+}
+
+.mobile-toc-list::-webkit-scrollbar-thumb {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 20px !important;
+}
+
+.mobile-toc-list::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Fix sticky container on mobile */
+@media (max-width: 767px) {
+  /* Make sticky container actually sticky */
+  .sticky.top-\[70px\] {
+    position: sticky !important;
+    top: 70px !important;
+    z-index: 40 !important;
+    margin-bottom: 1.5rem !important;
+    width: 100% !important;
+  }
+  
+  /* Enhanced visual effects when scrolled */
+  .scrolled .mobile-sticky-nav {
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+    border-color: rgba(96, 165, 250, 0.3) !important;
+  }
+}
+
+/* Fix column widths for desktop */
+@media (min-width: 768px) {
+  /* Make main content column wider */
+  .flex-col.md\:flex-row > div:first-child {
+    width: 75% !important;
+    flex: 0 0 75% !important;
+  }
+  
+  /* Make TOC/sidebar column narrower */
+  .flex-col.md\:flex-row > div:last-child {
+    width: 25% !important;
+    flex: 0 0 25% !important;
+  }
+  
+  /* Ensure sticky behavior works correctly */
+  .sticky.top-24 {
+    position: sticky !important;
+    top: 5rem !important;
+    max-height: calc(100vh - 8rem) !important;
+    overflow-y: auto !important;
+    padding-right: 0.5rem !important;
+  }
+}
+
+/* Fix table display and overflow issues */
+.entry-content table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  margin: 1.5em 0 !important;
+  display: block !important;
+  overflow-x: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+}
+
+/* Fix hero image duplication issue */
+@media (min-width: 768px) {
+  .absolute.inset-0.md\:hidden {
+    display: none !important; /* Hide background image on desktop */
+  }
+}
+
+/* Make sure videos stay at a reasonable size but remain responsive */
+.entry-content.prose video,
+.entry-content.prose iframe,
+.entry-content.prose .wp-block-embed,
+.entry-content.prose .wp-block-video,
+.entry-content.prose .responsive-video-wrapper {
+  margin: 2rem auto;
+  max-width: 100%;
+  display: block;
+}
+
+/* ============================================
+   VIDEO EMBED FIXES
+   ============================================ */
+
+/* Make sure videos maintain proper 16:9 aspect ratio */
+.responsive-video-wrapper,
+.entry-content.prose .responsive-video-wrapper,
+.wp-block-embed__wrapper {
+  width: 100%;
+  padding-bottom: 56.25%; /* 16:9 ratio */
+  position: relative;
+  margin: 1rem auto !important; /* Reduced spacing */
+  border-radius: 0.75rem !important; /* Rounded corners like featured image */
+  overflow: hidden !important; /* Ensure content respects border radius */
+  border: none !important; /* Remove border completely */
+  background: transparent !important; /* Remove background - no lines */
+  box-shadow: none !important; /* Remove shadow for cleaner look */
+}
+
+.responsive-video-wrapper iframe,
+.responsive-video-wrapper video,
+.responsive-video-wrapper object,
+.responsive-video-wrapper embed,
+.entry-content.prose .responsive-video-wrapper iframe,
+.entry-content.prose .responsive-video-wrapper video,
+.wp-block-embed__wrapper iframe {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* Fix for WordPress embed containers */
+.wp-block-embed,
+.wp-block-video {
+  margin: 1rem auto !important; /* Reduced spacing */
+}
+
+/* Desktop/Large Screens */
+@media (min-width: 1024px) {
+  .responsive-video-wrapper,
+  .entry-content.prose .responsive-video-wrapper,
+  .wp-block-embed,
+  .wp-block-video {
+    max-width: 854px;
+    margin: 1rem auto !important; /* Reduced spacing */
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .responsive-video-wrapper,
+  .entry-content.prose .responsive-video-wrapper,
+  .wp-block-embed,
+  .wp-block-video {
+    max-width: 600px;
+    width: 95%;
+    margin: 1rem auto !important; /* Reduced spacing */
+  }
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+  .responsive-video-wrapper,
+  .entry-content.prose .responsive-video-wrapper,
+  .wp-block-embed,
+  .wp-block-video {
+    max-width: 450px;
+    width: 100%;
+    margin: 1rem auto !important; /* Reduced spacing */
+  }
+}
+
+/* Video elements direct styling */
+.entry-content.prose video,
+.entry-content.prose iframe,
+.entry-content.prose .wp-block-embed,
+.entry-content.prose .wp-block-video {
+  margin: 1rem auto !important; /* Reduced spacing */
+  border-radius: 0.75rem !important; /* Rounded corners */
+  overflow: hidden !important; /* Ensure content respects border radius */
+  border: none !important; /* Remove border completely */
+  background: transparent !important; /* Remove background - no lines */
+  box-shadow: none !important; /* Remove shadow for cleaner look */
+}
+
+/* ============================================
+   BLOG POST TABLE FIXES
+   ============================================ */
+
+/* Fix tables in blog content to be responsive and properly styled */
+.entry-content table,
+.entry-content.prose table {
+  width: 100% !important;
+  max-width: 100% !important;
+  overflow-x: auto !important;
+  display: block !important;
+  border-collapse: collapse !important;
+  margin: 2rem 0 !important;
+  border-spacing: 0 !important;
+  border-radius: 0.5rem !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Style table elements */
+.entry-content th,
+.entry-content td,
+.entry-content.prose th,
+.entry-content.prose td {
+  padding: 0.75rem 1rem !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  text-align: left !important;
+  vertical-align: top !important;
+  min-width: 100px !important; /* Ensure cells don't get too narrow */
+}
+
+/* Table header styling */
+.entry-content th,
+.entry-content.prose th {
+  background-color: rgba(55, 65, 81, 0.8) !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  position: sticky !important;
+  top: 0 !important; /* Makes headers sticky when scrolling horizontally */
+  z-index: 10 !important;
+}
+
+/* Table cell styling */
+.entry-content td,
+.entry-content.prose td {
+  background-color: rgba(31, 41, 55, 0.4) !important;
+  color: rgba(248, 250, 252, 0.85) !important;
+}
+
+/* Zebra striping for better readability */
+.entry-content tbody tr:nth-child(even) td,
+.entry-content.prose tbody tr:nth-child(even) td {
+  background-color: rgba(31, 41, 55, 0.6) !important;
+}
+
+/* Hover state for better UX */
+.entry-content tbody tr:hover td,
+.entry-content.prose tbody tr:hover td {
+  background-color: rgba(59, 130, 246, 0.1) !important;
+}
+
+/* Make table container to enable horizontal scrolling */
+.entry-content .table-container,
+.entry-content.prose .table-container {
+  width: 100% !important;
+  overflow-x: auto !important;
+  margin: 2rem 0 !important;
+  border-radius: 0.5rem !important;
+  background-color: rgba(31, 41, 55, 0.2) !important;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* When table is within a container, reset some styles */
+.entry-content .table-container table,
+.entry-content.prose .table-container table {
+  margin: 0 !important;
+  display: table !important; /* Reset to table instead of block */
+  box-shadow: none !important;
+}
+
+/* Tables on mobile devices */
+@media (max-width: 768px) {
+  .entry-content table,
+  .entry-content.prose table {
+    font-size: 0.875rem !important;
+  }
+  
+  .entry-content th,
+  .entry-content td,
+  .entry-content.prose th,
+  .entry-content.prose td {
+    padding: 0.625rem 0.75rem !important;
+    min-width: 80px !important;
+  }
+}
+
+/* Ensure tables are properly separated from TOC */
+.table-of-contents table,
+.table-of-contents th,
+.table-of-contents td {
+  /* Reset any potential inheritance issues */
+  all: revert;
+}
+
+/* Explicitly style TOC to avoid conflicts */
+.table-of-contents {
+  margin: 2rem 0 !important;
+  background: rgba(31, 41, 55, 0.6) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  border-radius: 0.75rem !important;
+  padding: 1.5rem !important;
+}
+
+.table-of-contents h2 {
+  font-size: 1.4rem !important; /* Reduced to 1.4rem as requested */
+  margin-bottom: 1rem;
+  color: #ffffff;
+  border: none;
+  padding: 0;
+  display: block !important; /* Ensure it's visible */
+}
+
+.table-of-contents span.toc-title {
+  display: none !important;
+}
+
+.table-of-contents ul {
+  margin: 0 !important;
+  padding: 0 !important;
+  list-style: none !important;
+}
+
+.table-of-contents li {
+  margin-bottom: 0.6rem !important;
+}
+
+.table-of-contents a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.4rem 0.75rem !important;
+  border-radius: 0.375rem !important;
+  color: rgba(248, 250, 252, 0.8) !important;
+  text-decoration: none !important;
+  min-height: 40px !important;
+}
+
+/* ============================================
+   ENHANCED TYPOGRAPHY FOR BLOG POSTS
+   ============================================ */
+
+/* Larger base font size for blog content */
+.single .entry-content,
+.single .entry-content.prose {
+  font-size: 1.45rem; /* Further increased from 1.35rem */
+  line-height: 1.8;
+}
+
+/* Enhanced paragraph spacing and typography */
+.single .entry-content p,
+.single .entry-content.prose p {
+  margin-bottom: 0.7rem; /* Set to exactly 0.7rem as requested */
+  line-height: 2; /* Further increased from 1.8 */
+  font-size: 1.65rem; /* Further increased from 1.45rem */
+  color: rgba(248, 250, 252, 0.9);
+}
+
+/* Increased spacing between paragraphs specifically */
+.single .entry-content p + p,
+.single .entry-content.prose p + p {
+  margin-top: 2.5em; /* Keep the spacing between paragraphs */
+}
+
+/* First paragraph in each section shouldn't have the padding */
+.single .entry-content h1 + p,
+.single .entry-content h2 + p,
+.single .entry-content h3 + p,
+.single .entry-content h4 + p,
+.single .entry-content h5 + p,
+.single .entry-content h6 + p,
+.single .entry-content.prose h1 + p,
+.single .entry-content.prose h2 + p,
+.single .entry-content.prose h3 + p,
+.single .entry-content.prose h4 + p,
+.single .entry-content.prose h5 + p,
+.single .entry-content.prose h6 + p {
+  padding-left: 0;
+}
+
+/* Enhanced heading typography with further reduced spacing */
+.single .entry-content h1,
+.single .entry-content.prose h1 {
+  font-size: 3rem;
+  margin-bottom: 0.5rem; /* Further decreased from 0.75rem */
+  line-height: 1.2;
+}
+
+.single .entry-content h2,
+.single .entry-content.prose h2 {
+  font-size: 2.5rem;
+  margin-top: 2em; /* Further decreased from 2.5em */
+  margin-bottom: 0.35em; /* Further decreased from 0.5em */
+  padding-bottom: 0.5rem; /* Slightly reduced */
+  line-height: 1.3;
+}
+
+.single .entry-content h3,
+.single .entry-content.prose h3 {
+  font-size: 2.1rem;
+  margin-top: 1.75em; /* Further decreased from 2.25em */
+  margin-bottom: 0.35em; /* Further decreased from 0.5em */
+  line-height: 1.3;
+}
+
+.single .entry-content h4,
+.single .entry-content.prose h4 {
+  font-size: 1.85rem;
+  margin-top: 1.5em; /* Further decreased from 2em */
+  margin-bottom: 0.35em; /* Further decreased from 0.5em */
+  line-height: 1.3;
+}
+
+.single .entry-content h5,
+.single .entry-content.prose h5 {
+  font-size: 1.7rem;
+  margin-top: 1.25em; /* Further decreased from 1.75em */
+  margin-bottom: 0.35em; /* Further decreased from 0.5em */
+  line-height: 1.3;
+}
+
+.single .entry-content h6,
+.single .entry-content.prose h6 {
+  font-size: 1.5rem;
+  margin-top: 1em; /* Further decreased from 1.5em */
+  margin-bottom: 0.35em; /* Further decreased from 0.5em */
+  line-height: 1.3;
+}
+
+/* Enhanced list typography with larger font */
+.single .entry-content ul,
+.single .entry-content ol,
+.single .entry-content.prose ul,
+.single .entry-content.prose ol {
+  margin: 1rem 0; /* Further decreased from 1.5rem */
+  padding-left: 2.5rem;
+  font-size: 1.45rem; /* Increased to match paragraph size */
+  line-height: 1.8;
+}
+
+.single .entry-content li,
+.single .entry-content.prose li {
+  margin-bottom: 0.75rem; /* Reduced from 1rem */
+  line-height: 1.8;
+  font-size: 1.45rem; /* Increased to match paragraph size */
+}
+
+/* Enhanced table typography */
+.single .entry-content table,
+.single .entry-content.prose table {
+  font-size: 1.25rem !important; /* Increased from 1.125rem */
+  line-height: 1.7 !important;
+}
+
+.single .entry-content th,
+.single .entry-content.prose th {
+  font-size: 1.3rem !important; /* Increased from 1.175rem */
+  padding: 1rem 1.25rem !important;
+  font-weight: 700 !important;
+}
+
+.single .entry-content td,
+.single .entry-content.prose td {
+  padding: 1rem 1.25rem !important;
+  font-size: 1.25rem !important; /* Increased from 1.125rem */
+}
+
+/* Enhanced blockquote typography */
+.single .entry-content blockquote,
+.single .entry-content.prose blockquote {
+  font-size: 1.35rem; /* Increased from 1.25rem */
+  line-height: 1.8;
+  padding: 1.75rem 2.25rem;
+  margin: 2rem 0; /* Decreased from 2.5rem for closer spacing */
+}
+
+/* Enhanced code typography */
+.single .entry-content code,
+.single .entry-content.prose code {
+  font-size: 1.1rem; /* Increased from 1rem */
+  padding: 0.3rem 0.6rem;
+}
+
+.single .entry-content pre,
+.single .entry-content.prose pre {
+  padding: 1.75rem;
+  margin: 2rem 0; /* Decreased from 2.5rem for closer spacing */
+  line-height: 1.7;
+}
+
+.single .entry-content pre code,
+.single .entry-content.prose pre code {
+  font-size: 1.1rem; /* Increased from 1rem */
+}
+
+/* Adjust mobile typography to maintain readability */
+@media (max-width: 768px) {
+  .single .entry-content,
+  .single .entry-content.prose {
+    font-size: 1.35rem; /* Increased from 1.25rem */
+  }
+  
+  .single .entry-content p,
+  .single .entry-content.prose p {
+    font-size: 1.35rem; /* Increased from 1.25rem */
+    margin-bottom: 0.5em;
+  }
+  
+  .single .entry-content li,
+  .single .entry-content.prose li {
+    font-size: 1.35rem; /* Increased from 1.25rem */
+  }
+}
+
+/* Override for Tailwind prose classes that may conflict with our styles */
+.single .entry-content.prose,
+.single .entry-content.prose.prose-invert,
+.single .entry-content.prose.prose-lg {
+  font-size: 1.4rem !important;
+  line-height: 1.7 !important;
+}
+
+.single .entry-content.prose p,
+.single .entry-content.prose.prose-invert p,
+.single .entry-content.prose.prose-lg p,
+.single .entry-content p {
+  margin-bottom: 0.7rem !important;
+  line-height: 1.7 !important;
+  font-size: 1.4rem !important;
+  color: rgba(248, 250, 252, 0.9) !important;
+}
+
+/* Increased spacing between paragraphs specifically */
+.single .entry-content.prose p + p,
+.single .entry-content.prose.prose-invert p + p,
+.single .entry-content.prose.prose-lg p + p,
+.single .entry-content p + p {
+  margin-top: 2.5em !important;
+}
+
+/* Enhanced TOC styles with adjusted font sizes */
+.table-of-contents,
+.toc-desktop,
+.single .table-of-contents,
+.single .toc-desktop {
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+  overflow-wrap: break-word !important;
+  word-wrap: break-word !important;
+  hyphens: auto !important;
+  max-width: 100% !important;
+  padding-right: 4px !important;
+}
+
+.table-of-contents h2,
+.toc-desktop h2,
+.single .table-of-contents h2,
+.single .toc-desktop h2 {
+  font-size: 1.4rem !important; /* Reduced to 1.4rem as requested */
+  margin-bottom: 0.8rem !important;
+  color: #ffffff !important;
+  border: none !important;
+  padding: 0 !important;
+  display: block !important; /* Ensure it's visible */
+}
+
+.table-of-contents span.toc-title,
+.toc-desktop span.toc-title,
+.single .table-of-contents span.toc-title,
+.single .toc-desktop span.toc-title {
+  display: none !important;
+}
+
+.table-of-contents li,
+.toc-desktop li,
+.single .table-of-contents li,
+.single .toc-desktop li {
+  margin-bottom: 0.6rem !important;
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+}
+
+.table-of-contents a,
+.toc-desktop a,
+.single .table-of-contents a,
+.single .toc-desktop a {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.5rem !important;
+  padding: 0.4rem 0.75rem !important;
+  border-radius: 0.375rem !important;
+  color: rgba(248, 250, 252, 0.8) !important;
+  text-decoration: none !important;
+  transition: all 0.2s ease !important;
+  min-height: 40px !important;
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+}
+
+/* TOC text styling with decreased size */
+.toc-text,
+.single .toc-text {
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* Mobile TOC list styling with increased font size */
+.mobile-toc-list,
+.mobile-toc-dropdown {
+  max-height: 60vh !important;
+  overflow-y: auto !important;
+  padding-right: 8px !important;
+  scrollbar-width: thin !important;
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+}
+
+.mobile-toc-list a,
+.mobile-toc-dropdown a {
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+  min-height: 40px !important;
+  display: flex !important;
+  align-items: center !important;
+  padding: 0.4rem 0.75rem !important;
+}
+
+/* Mobile toggle buttons text size */
+.mobile-share-toggle,
+.mobile-toc-toggle {
+  font-size: 1rem !important; /* Increased to 1rem as requested */
+}
+
+/* Make sure "Share This" has consistent styling with TOC */
+.toc-text, 
+.share-text {
+  font-size: 1.4rem !important; /* Reduced to 1.4rem to match TOC header size */
+  font-weight: 600;
+  color: #ffffff;
+}
+
+/* ============================================
+   RELATED ARTICLES SECTION STYLES
+   ============================================ */
+
+/* Enhance Related Articles section heading */
+.single .bg-dark-300 h2 {
+  font-size: 2.2rem !important; /* Increased from original size */
+  margin-bottom: 1.5rem !important;
+  font-weight: 600 !important;
+  color: #ffffff !important;
+  line-height: 1.3 !important;
+}
+
+/* Enhance Related Articles cards */
+.single .bg-dark-300 .grid h3 {
+  font-size: 1.4rem !important; /* Increased from original size */
+  line-height: 1.4 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+.single .bg-dark-300 .grid p {
+  font-size: 1.1rem !important;
+  line-height: 1.5 !important;
+  margin-bottom: 0.5rem !important;
+}
+
+/* Responsive adjustments for Related Articles */
+@media (max-width: 768px) {
+  .single .bg-dark-300 h2 {
+    font-size: 1.8rem !important;
+  }
+  
+  .single .bg-dark-300 .grid h3 {
+    font-size: 1.2rem !important;
+  }
+}
+
+/* ============================================
+   SIDEBAR VIDEO THUMBNAILS SCALING
+   ============================================ */
+
+/* Ensure video thumbnails in sidebar scale properly */
+#secondary .widget video,
+#secondary .widget iframe,
+#secondary .widget .wp-video,
+#secondary .widget .wp-block-embed,
+#secondary .widget .wp-block-video {
+  max-width: 100% !important;
+  width: 100% !important;
+  height: auto !important;
+  margin: 1rem 0 !important;
+}
+
+/* Fix for responsive video containers in sidebar */
+#secondary .widget .responsive-video-wrapper,
+#secondary .widget .wp-block-embed__wrapper {
+  position: relative !important;
+  padding-bottom: 56.25% !important; /* 16:9 aspect ratio */
+  height: 0 !important;
+  overflow: hidden !important;
+  max-width: 100% !important;
+  margin: 1rem 0 !important;
+}
+
+#secondary .widget .responsive-video-wrapper iframe,
+#secondary .widget .responsive-video-wrapper video,
+#secondary .widget .wp-block-embed__wrapper iframe {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 0.375rem !important;
+}
+
+/* Styling for video thumbnails in sidebar widgets */
+#secondary .widget img.attachment-medium,
+#secondary .widget img.wp-post-image {
+  max-width: 100% !important;
+  height: auto !important;
+  border-radius: 0.375rem !important;
+  margin: 0.5rem 0 !important;
+}
+
+/* Fix for WordPress default video player in sidebar */
+#secondary .widget .mejs-container,
+#secondary .widget .wp-video-shortcode {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Scale for Recent Posts widget with thumbnails */
+#secondary .widget .post-thumbnail img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  border-radius: 0.375rem !important;
+}
+
+/* ============================================
+   BUTTON WIDGET VIDEO EMBED FIXES
+   ============================================ */
+
+/* Fix for videos inside button widgets or elements */
+button iframe,
+.button iframe,
+.wp-block-button iframe,
+button .wp-block-embed,
+.button .wp-block-embed,
+.wp-block-button .wp-block-embed,
+button .responsive-video-wrapper,
+.button .responsive-video-wrapper,
+.wp-block-button .responsive-video-wrapper {
+  position: relative !important;
+  width: 100% !important;
+  min-width: 300px !important; /* Ensure minimum width */
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 169px !important; /* 16:9 ratio for minimum width */
+  display: block !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  border: none !important;
+  overflow: visible !important;
+}
+
+/* Fix for video containers that appear within button elements */
+button > div,
+.button > div,
+.wp-block-button > div {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  overflow: visible !important;
+}
+
+/* Ensure YouTube embeds are properly sized */
+button .youtube-player,
+.button .youtube-player,
+.wp-block-button .youtube-player,
+button .wp-block-embed-youtube,
+.button .wp-block-embed-youtube,
+.wp-block-button .wp-block-embed-youtube {
+  width: 100% !important;
+  min-height: 180px !important; /* Ensure minimum height */
+  max-width: 100% !important;
+  position: relative !important;
+  overflow: visible !important;
+}
+
+/* Fix for video containers appearing in button widgets */
+.widget_media_video button,
+.widget_custom_html button,
+.widget_text button,
+.widget_media_video .button,
+.widget_custom_html .button,
+.widget_text .button {
+  width: auto !important;
+  min-width: 300px !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 180px !important;
+  padding: 0 !important;
+  margin: 1rem 0 !important;
+  position: relative !important;
+  display: block !important;
+  overflow: visible !important;
+  background: transparent !important;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Fix for play button position on video thumbnails */
+button .mejs-overlay-button,
+.button .mejs-overlay-button,
+.wp-block-button .mejs-overlay-button {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  transform: translate(-50%, -50%) !important;
+}
+
+/* Specific fix for the button widget shown in the screenshot */
+.entry-content button iframe,
+.entry-content .button iframe,
+.entry-content button video,
+.entry-content .button video,
+button[class*="Button"] iframe,
+button[class*="Button"] video,
+div[class*="Button"] iframe,
+div[class*="Button"] video {
+  min-width: 300px !important;
+  min-height: 169px !important;
+  width: 100% !important;
+  height: auto !important;
+  aspect-ratio: 16/9 !important;
+  position: relative !important;
+  display: block !important;
+  z-index: 100 !important;
+}
+
+/* Make sure "Share This" has consistent styling with TOC */
+.toc-text, 
+.share-text {
+  font-size: 1.4rem !important; /* Reduced to 1.4rem to match TOC header size */
+  font-weight: 600;
+  color: #ffffff;
+} 

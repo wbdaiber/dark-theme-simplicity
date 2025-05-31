@@ -19,9 +19,19 @@ function dark_theme_simplicity_scripts() {
         wp_enqueue_style('homepage-animations', get_template_directory_uri() . '/assets/css/homepage.css', array(), time());
     }
     
+    // Enqueue common content styles for both posts and pages
+    if (is_single() || is_page()) {
+        wp_enqueue_style('common-content', get_template_directory_uri() . '/css/common-content.css', array(), time());
+    }
+    
     // Enqueue WCAG accessibility styles for blog posts
     if (is_single() || is_home() || is_archive() || is_search()) {
-        wp_enqueue_style('blog-accessibility', get_template_directory_uri() . '/css/blog-accessibility.css', array(), time());
+        wp_enqueue_style('blog-accessibility', get_template_directory_uri() . '/css/blog-accessibility.css', array(), time() . '_v13');
+    }
+    
+    // Enqueue custom page styles
+    if (is_page()) {
+        wp_enqueue_style('page-styles', get_template_directory_uri() . '/css/page-styles.css', array(), time() . '_v6');
     }
     
     // Enqueue widget styles
@@ -30,13 +40,18 @@ function dark_theme_simplicity_scripts() {
     // Enqueue theme JavaScript
     wp_enqueue_script('dark-theme-simplicity-script', get_template_directory_uri() . '/src/js/theme.js', array(), time(), true);
 
-    // Add dark mode class to body if user preference is dark
-    if (isset($_COOKIE['theme']) && $_COOKIE['theme'] === 'dark') {
-        add_filter('body_class', function($classes) {
-            $classes[] = 'dark';
-            return $classes;
-        });
+    // Enqueue blog fixes script for single posts
+    if (is_single()) {
+        wp_enqueue_script('blog-fixes', get_template_directory_uri() . '/js/blog-fixes.js', array('jquery'), time(), true);
     }
+
+    // Add dark mode class to body if user preference is dark
+    wp_add_inline_script('dark-theme-simplicity-script', '
+        const prefersDarkScheme = window.matchMedia("(prefers-color-scheme: dark)");
+        if (prefersDarkScheme.matches) {
+            document.body.classList.add("dark-mode");
+        }
+    ');
 }
 add_action('wp_enqueue_scripts', 'dark_theme_simplicity_scripts');
 
@@ -725,19 +740,129 @@ function dark_theme_simplicity_get_service_icon($icon_name) {
 
 // Add a meta box for selecting related posts
 function dark_theme_simplicity_add_related_posts_meta_box() {
+    // Only add to posts, not pages
     add_meta_box(
         'dark_theme_simplicity_related_posts',
         'Manually Select Related Posts',
         'dark_theme_simplicity_related_posts_meta_box_callback',
-        'post',
+        'post', // Only apply to posts
         'normal',
         'high'
     );
 }
 add_action('add_meta_boxes', 'dark_theme_simplicity_add_related_posts_meta_box');
 
-// Callback function to display the meta box content
+// Add a meta box for toggling sidebar widgets, TOC, and share buttons
+function dark_theme_simplicity_add_display_options_meta_box() {
+    // Add to posts
+    add_meta_box(
+        'dark_theme_simplicity_display_options',
+        'Display Options',
+        'dark_theme_simplicity_display_options_meta_box_callback',
+        'post',
+        'side',
+        'high'
+    );
+    
+    // Add to pages
+    add_meta_box(
+        'dark_theme_simplicity_display_options',
+        'Display Options',
+        'dark_theme_simplicity_display_options_meta_box_callback',
+        'page',
+        'side',
+        'high'
+    );
+}
+add_action('add_meta_boxes', 'dark_theme_simplicity_add_display_options_meta_box');
+
+// Callback function to display the display options meta box content
+function dark_theme_simplicity_display_options_meta_box_callback($post) {
+    // Add a nonce field for security
+    wp_nonce_field('dark_theme_simplicity_display_options_nonce', 'display_options_nonce');
+    
+    // Get the saved values
+    $show_sidebar_widgets = get_post_meta($post->ID, '_show_sidebar_widgets', true);
+    $show_toc = get_post_meta($post->ID, '_show_table_of_contents', true);
+    $show_share_buttons = get_post_meta($post->ID, '_show_share_buttons', true);
+    
+    // Default values if not set
+    $default_show_widgets = get_theme_mod('dark_theme_simplicity_default_show_widgets', 'yes');
+    if ($show_sidebar_widgets === '') $show_sidebar_widgets = $default_show_widgets;
+    if ($show_toc === '') $show_toc = 'yes';
+    if ($show_share_buttons === '') $show_share_buttons = 'yes';
+    
+    ?>
+    <p>
+        <label for="show_sidebar_widgets">Sidebar Widgets:</label><br>
+        <select name="show_sidebar_widgets" id="show_sidebar_widgets">
+            <option value="yes" <?php selected($show_sidebar_widgets, 'yes'); ?>>Show</option>
+            <option value="no" <?php selected($show_sidebar_widgets, 'no'); ?>>Hide</option>
+        </select>
+    </p>
+    
+    <?php if ($post->post_type === 'post') : // Only show TOC and Share options for posts ?>
+    <p>
+        <label for="show_table_of_contents">Table of Contents:</label><br>
+        <select name="show_table_of_contents" id="show_table_of_contents">
+            <option value="yes" <?php selected($show_toc, 'yes'); ?>>Show</option>
+            <option value="no" <?php selected($show_toc, 'no'); ?>>Hide</option>
+        </select>
+    </p>
+    
+    <p>
+        <label for="show_share_buttons">Share Buttons:</label><br>
+        <select name="show_share_buttons" id="show_share_buttons">
+            <option value="yes" <?php selected($show_share_buttons, 'yes'); ?>>Show</option>
+            <option value="no" <?php selected($show_share_buttons, 'no'); ?>>Hide</option>
+        </select>
+    </p>
+    <?php endif; ?>
+    <?php
+}
+
+// Save the display options meta box data
+function dark_theme_simplicity_save_display_options_meta($post_id) {
+    // Check if our nonce is set
+    if (!isset($_POST['display_options_nonce'])) {
+        return;
+    }
+    
+    // Verify the nonce
+    if (!wp_verify_nonce($_POST['display_options_nonce'], 'dark_theme_simplicity_display_options_nonce')) {
+        return;
+    }
+    
+    // Check if this is an autosave
+    if (defined('DOING_AUTOSAVE') && DOING_AUTOSAVE) {
+        return;
+    }
+    
+    // Check user permissions
+    if (!current_user_can('edit_post', $post_id)) {
+        return;
+    }
+    
+    // Save sidebar widgets setting
+    if (isset($_POST['show_sidebar_widgets'])) {
+        update_post_meta($post_id, '_show_sidebar_widgets', sanitize_text_field($_POST['show_sidebar_widgets']));
+    }
+    
+    // Save TOC setting if it's a post
+    if (get_post_type($post_id) === 'post' && isset($_POST['show_table_of_contents'])) {
+        update_post_meta($post_id, '_show_table_of_contents', sanitize_text_field($_POST['show_table_of_contents']));
+    }
+    
+    // Save share buttons setting if it's a post
+    if (get_post_type($post_id) === 'post' && isset($_POST['show_share_buttons'])) {
+        update_post_meta($post_id, '_show_share_buttons', sanitize_text_field($_POST['show_share_buttons']));
+    }
+}
+
+// Callback function to display the related posts meta box content
 function dark_theme_simplicity_related_posts_meta_box_callback($post) {
+    global $wpdb;
+    
     // Add a nonce field for security
     wp_nonce_field('dark_theme_simplicity_related_posts_nonce', 'related_posts_nonce');
     
@@ -748,47 +873,88 @@ function dark_theme_simplicity_related_posts_meta_box_callback($post) {
         $related_post_ids = array();
     }
     
-    // Query for posts to select from
-    $args = array(
-        'post_type' => 'post',
-        'post_status' => 'publish',
-        'posts_per_page' => -1,
-        'orderby' => 'title',
-        'order' => 'ASC',
-        'post__not_in' => array($post->ID), // Exclude current post
+    // Extended debugging information
+    echo '<div style="margin-bottom: 10px; padding: 10px; background: #f8f8f8; border: 1px solid #ddd;">';
+    echo '<h4 style="margin-top:0;">Debugging Information:</h4>';
+    
+    // Check if posts table exists
+    $table_exists = $wpdb->get_var("SHOW TABLES LIKE '{$wpdb->posts}'");
+    echo '<p>Posts table exists: ' . ($table_exists ? 'Yes' : 'No') . '</p>';
+    
+    // Direct SQL query to count posts
+    $sql_post_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->posts} WHERE post_type = 'post' AND post_status = 'publish'");
+    echo '<p>SQL direct count of published posts: ' . intval($sql_post_count) . '</p>';
+    
+    // Check post meta table
+    $meta_count = $wpdb->get_var("SELECT COUNT(*) FROM {$wpdb->postmeta} WHERE meta_key = '_related_posts'");
+    echo '<p>Number of posts with related posts meta: ' . intval($meta_count) . '</p>';
+    
+    if (!empty($related_post_ids)) {
+        echo '<p>Current post has ' . count($related_post_ids) . ' related posts selected with IDs: ' . implode(', ', $related_post_ids) . '</p>';
+    } else {
+        echo '<p>Current post has no related posts selected yet.</p>';
+    }
+    
+    echo '</div>';
+    
+    // Direct SQL query to get posts to avoid potential WP_Query issues
+    $sql = $wpdb->prepare(
+        "SELECT ID, post_title FROM {$wpdb->posts} 
+         WHERE post_type = 'post' 
+         AND post_status = 'publish' 
+         AND ID != %d 
+         ORDER BY post_title ASC",
+        $post->ID
     );
     
-    $posts = get_posts($args);
+    $posts = $wpdb->get_results($sql);
     
     if (empty($posts)) {
-        echo '<p>No posts available to select.</p>';
+        echo '<div style="color:red; padding:10px; background:#ffeeee; border:1px solid #ffcccc;">';
+        echo '<p><strong>No posts available to select.</strong> You need to create more blog posts first.</p>';
+        echo '</div>';
         return;
     }
     
-    echo '<p>Select up to three posts to display in the "Related Articles" section. If no posts are selected, related posts will be chosen automatically based on shared categories.</p>';
+    echo '<p>Select up to 3 related posts to display at the bottom of this post:</p>';
     echo '<div style="max-height: 300px; overflow-y: auto; margin-bottom: 10px; padding: 10px; border: 1px solid #ccc; background: #f9f9f9;">';
     
+    // Loop through posts and display checkboxes with more clear styling
     foreach ($posts as $related_post) {
         $checked = in_array($related_post->ID, $related_post_ids) ? 'checked="checked"' : '';
         
-        echo '<label style="display: block; margin-bottom: 5px;">';
-        echo '<input type="checkbox" name="related_posts[]" value="' . esc_attr($related_post->ID) . '" ' . $checked . '> ';
-        echo esc_html($related_post->post_title);
+        echo '<div style="padding: 8px; margin-bottom: 5px; background: #fff; border: 1px solid #eee; border-radius: 3px;">';
+        echo '<label style="display: block; cursor: pointer;">';
+        echo '<input type="checkbox" name="related_posts[]" value="' . esc_attr($related_post->ID) . '" ' . $checked . ' style="margin-right: 8px;"> ';
+        echo '<strong>' . esc_html($related_post->post_title) . '</strong> (ID: ' . $related_post->ID . ')';
         echo '</label>';
+        echo '</div>';
     }
     
     echo '</div>';
     echo '<p class="description">Note: Only the first three selected posts will be displayed.</p>';
     
-    // Add some JavaScript to limit selections to 3
+    // Add some JavaScript to limit selections to 3 and improve interactivity
     ?>
     <script type="text/javascript">
     jQuery(document).ready(function($) {
+        // Make the entire div clickable, not just the checkbox
+        $('.related-post-item').on('click', function() {
+            var checkbox = $(this).find('input[type="checkbox"]');
+            checkbox.prop('checked', !checkbox.prop('checked')).trigger('change');
+        });
+        
+        // Prevent clicks on the checkbox from triggering the div click
+        $('.related-post-item input[type="checkbox"]').on('click', function(e) {
+            e.stopPropagation();
+        });
+        
+        // Limit to 3 selections
         $('input[name="related_posts[]"]').on('change', function() {
             var checked = $('input[name="related_posts[]"]:checked');
             if (checked.length > 3) {
                 $(this).prop('checked', false);
-                alert('You can only select up to three related posts.');
+                alert('You can only select up to 3 related posts.');
             }
         });
     });
@@ -796,8 +962,13 @@ function dark_theme_simplicity_related_posts_meta_box_callback($post) {
     <?php
 }
 
-// Save the meta box data
+// Save the related posts meta box data
 function dark_theme_simplicity_save_related_posts_meta($post_id) {
+    // Only process for posts
+    if (get_post_type($post_id) !== 'post') {
+        return;
+    }
+    
     // Check if our nonce is set
     if (!isset($_POST['related_posts_nonce'])) {
         return;
@@ -818,11 +989,29 @@ function dark_theme_simplicity_save_related_posts_meta($post_id) {
         return;
     }
     
+    // Debug information for saving
+    $debug_info = array(
+        'post_id' => $post_id,
+        'has_related_posts' => isset($_POST['related_posts']),
+        'related_posts_count' => isset($_POST['related_posts']) ? count($_POST['related_posts']) : 0
+    );
+    
+    // Add debug log
+    add_post_meta($post_id, '_debug_related_posts_save', $debug_info, true);
+    
     // Save the related posts data
     if (isset($_POST['related_posts']) && is_array($_POST['related_posts'])) {
+        // Sanitize post IDs and ensure they're integers
+        $sanitized_post_ids = array_map('absint', $_POST['related_posts']);
+        
         // Limit to first 3 selected posts
-        $related_posts = array_slice($_POST['related_posts'], 0, 3);
+        $related_posts = array_slice($sanitized_post_ids, 0, 3);
+        
+        // Update post meta
         update_post_meta($post_id, '_related_posts', $related_posts);
+        
+        // For debugging: save a timestamp of when this was last updated
+        update_post_meta($post_id, '_related_posts_updated', current_time('mysql'));
     } else {
         // No posts selected, delete the meta
         delete_post_meta($post_id, '_related_posts');
@@ -831,73 +1020,27 @@ function dark_theme_simplicity_save_related_posts_meta($post_id) {
 add_action('save_post', 'dark_theme_simplicity_save_related_posts_meta');
 
 /**
- * Add CSS fixes for styling elements on the front page
+ * Add prose class to entry-content for better typography
  */
-function dark_theme_simplicity_custom_css_fix() {
-    if (is_front_page()) {
-        ?>
-        <style type="text/css">
-            /* Hero Button Styles */
-            .hero-btn {
-                background-color: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_color', '#0085ff')); ?> !important;
-                border-radius: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_radius', '0')); ?>px !important;
-                padding-left: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_padding_x', '32')); ?>px !important;
-                padding-right: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_padding_x', '32')); ?>px !important;
-                padding-top: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_padding_y', '16')); ?>px !important;
-                padding-bottom: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_padding_y', '16')); ?>px !important;
-                font-size: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_text_size', '18')); ?>px !important;
-                font-weight: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_font_weight', '500')); ?> !important;
-                border-width: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_border_width', '0')); ?>px !important;
-                border-style: solid !important;
-                border-color: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_border_color', '#ffffff')); ?> !important;
-                display: inline-flex !important;
-                color: white !important;
-            }
-            
-            .hero-btn:hover {
-                background-color: <?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_hover_color', '#0057a7')); ?> !important;
-            }
-            
-            /* Section Label Styles */
-            .section-label {
-                color: #0085ff !important;
-            }
-        </style>
-        <?php
+function dark_theme_simplicity_add_prose_class($classes) {
+    if (is_single() || is_home() || is_archive() || is_search()) {
+        $classes[] = 'prose';
     }
+    return $classes;
 }
-add_action('wp_head', 'dark_theme_simplicity_custom_css_fix', 999); // High priority to ensure it runs after other styles
+add_filter('post_class', 'dark_theme_simplicity_add_prose_class');
 
 /**
- * Add JavaScript for hero button hover effects
+ * Add prose class to the entry-content div
  */
-function dark_theme_simplicity_button_hover_js() {
-    if (is_front_page()) {
-        ?>
-        <script>
-            document.addEventListener('DOMContentLoaded', function() {
-                // Apply hero button colors via JavaScript to handle caching issues
-                const heroButtons = document.querySelectorAll('.hero-btn');
-                const hoverColor = '<?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_hover_color', '#0057a7')); ?>';
-                const defaultColor = '<?php echo esc_attr(get_theme_mod('dark_theme_simplicity_hero_button_color', '#0085ff')); ?>';
-                
-                heroButtons.forEach(button => {
-                    // Set up hover event
-                    button.addEventListener('mouseenter', function() {
-                        this.style.backgroundColor = hoverColor;
-                    });
-                    
-                    // Set up mouse leave event to revert to original color
-                    button.addEventListener('mouseleave', function() {
-                        this.style.backgroundColor = defaultColor;
-                    });
-                });
-            });
-        </script>
-        <?php
+function dark_theme_simplicity_add_prose_to_content_div($content) {
+    if (is_single() || is_home() || is_archive() || is_search()) {
+        // Add the prose class to div.entry-content if it doesn't already have it
+        $content = preg_replace('/<div class="entry-content([^"]*)"/', '<div class="entry-content$1 prose"', $content, 1);
     }
+    return $content;
 }
-add_action('wp_footer', 'dark_theme_simplicity_button_hover_js');
+add_filter('the_content', 'dark_theme_simplicity_add_prose_to_content_div', 1);
 
 /**
  * Add notice to help set up Social Menu
@@ -951,4 +1094,113 @@ function dark_theme_simplicity_dismiss_social_notice() {
     update_option('dark_theme_simplicity_social_notice_dismissed', true);
     wp_die();
 }
-add_action('wp_ajax_dark_theme_simplicity_dismiss_social_notice', 'dark_theme_simplicity_dismiss_social_notice'); 
+add_action('wp_ajax_dark_theme_simplicity_dismiss_social_notice', 'dark_theme_simplicity_dismiss_social_notice');
+
+/**
+ * Add responsive wrapper to video embeds for better responsiveness
+ */
+function dark_theme_simplicity_responsive_video_embeds($html, $url, $attr) {
+    // Only apply to oEmbed videos
+    if (strpos($html, 'youtube.com') !== false || 
+        strpos($html, 'youtu.be') !== false || 
+        strpos($html, 'vimeo.com') !== false || 
+        strpos($html, 'dailymotion.com') !== false ||
+        strpos($html, 'videopress.com') !== false) {
+        
+        // Add responsive wrapper with proper spacing
+        $html = '<div class="responsive-video-wrapper">' . $html . '</div>';
+    }
+    return $html;
+}
+add_filter('embed_oembed_html', 'dark_theme_simplicity_responsive_video_embeds', 10, 3);
+
+/**
+ * Add responsive classes to WordPress video blocks
+ */
+function dark_theme_simplicity_add_responsive_video_classes() {
+    if (is_singular()) {
+        wp_enqueue_script(
+            'dark-theme-responsive-videos',
+            get_template_directory_uri() . '/js/responsive-videos.js',
+            array('jquery'),
+            time(), // Use time() instead of a fixed version to prevent caching issues
+            true
+        );
+    }
+}
+add_action('wp_enqueue_scripts', 'dark_theme_simplicity_add_responsive_video_classes');
+
+/**
+ * Filter the content to add spacing to iframes not handled by oEmbed
+ */
+function dark_theme_simplicity_content_iframe_spacing($content) {
+    if (!is_singular()) {
+        return $content;
+    }
+    
+    // Don't process if no iframes in content
+    if (strpos($content, '<iframe') === false) {
+        return $content;
+    }
+    
+    // Use DOMDocument to properly modify HTML
+    if (class_exists('DOMDocument')) {
+        $dom = new DOMDocument();
+        
+        // Prevent errors from showing with malformed HTML
+        libxml_use_internal_errors(true);
+        
+        // Load the content
+        $dom->loadHTML('<?xml encoding="utf-8" ?><div>' . $content . '</div>');
+        
+        // Find all iframes
+        $iframes = $dom->getElementsByTagName('iframe');
+        
+        // We need to track iframes to wrap
+        $iframes_to_wrap = array();
+        
+        // Collect iframes that need wrapping
+        foreach ($iframes as $iframe) {
+            // Skip if already in a responsive wrapper
+            $parent = $iframe->parentNode;
+            if ($parent->nodeName === 'div' && 
+                ($parent->hasAttribute('class') && 
+                (strpos($parent->getAttribute('class'), 'responsive-video-wrapper') !== false ||
+                 strpos($parent->getAttribute('class'), 'wp-block-embed__wrapper') !== false))) {
+                continue;
+            }
+            
+            // Add to list of iframes to wrap
+            $iframes_to_wrap[] = $iframe;
+        }
+        
+        // Now wrap the iframes
+        foreach ($iframes_to_wrap as $iframe) {
+            $wrapper = $dom->createElement('div');
+            $wrapper->setAttribute('class', 'responsive-video-wrapper');
+            
+            $parent = $iframe->parentNode;
+            $clone = $iframe->cloneNode(true);
+            
+            // Replace the iframe with our wrapper containing the iframe
+            $wrapper->appendChild($clone);
+            $parent->replaceChild($wrapper, $iframe);
+        }
+        
+        // Get the modified content
+        $modified_content = $dom->saveHTML();
+        
+        // Clean up the output
+        $modified_content = preg_replace('/^<!DOCTYPE.+?>/', '', $modified_content);
+        $modified_content = str_replace(array('<html>', '</html>', '<body>', '</body>', '<?xml encoding="utf-8" ?>'), '', $modified_content);
+        $modified_content = preg_replace('/<div>(.+)<\/div>/s', '$1', $modified_content);
+        
+        // Only return modified content if we made changes
+        if (!empty($iframes_to_wrap)) {
+            return $modified_content;
+        }
+    }
+    
+    return $content;
+}
+add_filter('the_content', 'dark_theme_simplicity_content_iframe_spacing', 20); // Run after other content filters 

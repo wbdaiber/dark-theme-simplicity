@@ -1,0 +1,21 @@
+/* Video embed styling for pages, matching blog post styling */
+.entry-content video,
+.entry-content iframe,
+.entry-content .wp-block-video,
+.entry-content .responsive-video-wrapper {
+  margin: 1rem auto !important;
+  border-radius: 0.75rem !important; /* Rounded corners */
+  overflow: hidden !important; /* Ensure content respects border radius */
+  border: none !important; /* Remove border completely */
+  background: transparent !important; /* Remove background - no lines */
+  box-shadow: none !important; /* Remove shadow for cleaner look */
+}
+
+.entry-content .wp-block-embed {
+  margin: 1rem 0 !important; /* Reduced from 2.5rem */
+  border-radius: 0.75rem !important; /* Rounded corners */
+  overflow: hidden !important; /* Ensure content respects border radius */
+  border: none !important; /* Remove border completely */
+  background: transparent !important; /* Remove background - no lines */
+  box-shadow: none !important; /* Remove shadow for cleaner look */
+} 

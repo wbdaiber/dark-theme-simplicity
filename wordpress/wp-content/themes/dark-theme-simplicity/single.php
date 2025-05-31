@@ -1,8 +1,97 @@
-<?php get_header(); ?>
+<?php
+/**
+ * The template for displaying all single posts
+ */
+
+get_header();
+
+// Get post display options
+$show_widgets = get_post_meta(get_the_ID(), '_show_sidebar_widgets', true);
+$show_toc = get_post_meta(get_the_ID(), '_show_table_of_contents', true);
+$show_share = get_post_meta(get_the_ID(), '_show_share_buttons', true);
+
+// Get default settings from theme customizer
+$default_show_widgets = get_theme_mod('dark_theme_simplicity_default_show_widgets', 'yes');
+$default_show_toc = get_theme_mod('dark_theme_simplicity_default_show_toc', 'yes');
+$default_show_share = get_theme_mod('dark_theme_simplicity_default_show_share', 'yes');
+
+// Use defaults if not set on individual post
+if ($show_widgets === '') $show_widgets = $default_show_widgets;
+if ($show_toc === '') $show_toc = $default_show_toc;
+if ($show_share === '') $show_share = $default_show_share;
+
+// Set class based on sidebar visibility
+$sidebar_class = ($show_widgets === 'yes') ? '' : 'no-sidebar';
+
+// Add classes for TOC and share visibility
+$toc_class = ($show_toc === 'yes') ? '' : 'no-toc';
+$share_class = ($show_share === 'yes') ? '' : 'no-share';
+
+// Combine all classes
+$visibility_classes = trim("$sidebar_class $toc_class $share_class");
+
+// When all elements are hidden, use a specific content class
+if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
+    $content_class = 'full-width-content w-full max-w-4xl mx-auto';
+} else {
+    $content_class = '';
+}
+
+// Additional classes for more responsive layout when elements are hidden
+$responsive_class = '';
+$content_width_class = 'md:w-4/5 lg:w-4/5 xl:w-5/6'; // Updated default content width with sidebar - wider on larger screens
+
+// Calculate how many elements are hidden (TOC, widgets, share)
+$hidden_elements = 0;
+if ($show_toc !== 'yes') $hidden_elements++;
+if ($show_widgets !== 'yes') $hidden_elements++;
+if ($show_share !== 'yes') $hidden_elements++;
+
+// Apply responsive classes based on hidden elements
+if ($hidden_elements === 3) {
+    // All elements are hidden - full width content
+    $responsive_class = 'full-content';
+    $content_width_class = 'md:w-full lg:w-full xl:w-full';
+} elseif ($hidden_elements === 2) {
+    // Two elements are hidden - extra wide content
+    $responsive_class = 'wide-content';
+    $content_width_class = 'md:w-5/6 lg:w-9/10 xl:w-11/12';
+} elseif ($hidden_elements === 1) {
+    // One element is hidden - slightly wider content
+    $responsive_class = 'wider-content';
+    $content_width_class = 'md:w-4/5 lg:w-5/6 xl:w-7/8';
+}
+
+// Calculate sidebar width class based on visible elements
+$sidebar_width_class = 'md:w-1/5 lg:w-1/5 xl:w-1/6'; // Updated sidebar width - narrower on larger screens
+
+if ($show_toc !== 'yes' && $show_share !== 'yes') {
+    // If both TOC and share are hidden but widgets are shown
+    $sidebar_width_class = 'md:w-1/6 lg:w-1/7 xl:w-1/8';
+}
+
+// Calculate additional classes for layout when all elements are hidden
+$centered_layout = '';
+if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
+    $centered_layout = 'flex flex-col items-center';
+}
+?>
 
 <main id="content" class="site-main pt-0 pb-16">
     <div class="container mx-auto px-4" style="margin-top: 2rem;">
-    <?php while (have_posts()) : the_post(); ?>
+    <?php while (have_posts()) : the_post(); 
+        // Get post display options
+        $show_toc = get_post_meta(get_the_ID(), '_show_table_of_contents', true);
+        $show_share = get_post_meta(get_the_ID(), '_show_share_buttons', true);
+        
+        // Get default settings from theme customizer
+        $default_show_toc = get_theme_mod('dark_theme_simplicity_default_show_toc', 'yes');
+        $default_show_share = get_theme_mod('dark_theme_simplicity_default_show_share', 'yes');
+        
+        // Use defaults if not set on individual post
+        if ($show_toc === '') $show_toc = $default_show_toc;
+        if ($show_share === '') $show_share = $default_show_share;
+    ?>
             <!-- Title/Hero Section Card -->
             <div class="max-w-6xl mx-auto mb-8" style="overflow: visible;">
                 <div class="page-header bg-dark-300 rounded-xl shadow-xl relative" style="overflow: visible;">
@@ -15,10 +104,18 @@
                 <?php endif; ?>
 
                     <!-- Content Grid -->
-                    <div class="grid grid-cols-1 md:grid-cols-3 min-h-[400px] relative z-10">
-                        <!-- Content Column - Takes up 2/3 on desktop -->
-                        <div class="md:col-span-2 p-8 md:p-12 flex flex-col justify-center relative z-20" style="overflow: visible;">
-                            <div class="relative z-10 bg-black/60 md:bg-transparent p-4 md:p-0 rounded-lg md:rounded-none" style="overflow: visible;">
+                    <div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 min-h-[400px] relative z-10">
+                        <!-- Background Image Layer for Medium Screens (860px or less) -->
+                        <?php if (has_post_thumbnail()) : ?>
+                            <div class="absolute inset-0 hidden small-medium:block md:hidden z-0">
+                                <?php the_post_thumbnail('large', ['class' => 'w-full h-full object-contain']); ?>
+                                <div class="absolute inset-0 bg-black opacity-75"></div>
+                            </div>
+                        <?php endif; ?>
+                        
+                        <!-- Content Column - Takes up 2/3 on medium screens, 3/5 on large screens -->
+                        <div class="md:col-span-2 lg:col-span-3 p-8 md:p-10 flex flex-col justify-center relative z-20" style="overflow: visible;">
+                            <div class="relative z-10 bg-black/60 small-medium:bg-black/60 md:bg-transparent p-4 small-medium:p-4 md:p-0 rounded-lg small-medium:rounded-lg md:rounded-none" style="overflow: visible;">
                                 <!-- Breadcrumbs -->
                                 <nav class="flex items-center gap-2 text-sm mb-6 text-light-100/70">
                                     <a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-blue-400 transition-colors">Home</a>
@@ -85,16 +182,12 @@
                             </div>
                         </div>
                         
-                        <!-- Featured Image Column - Takes up 1/3 on desktop, hidden on mobile -->
+                        <!-- Featured Image Column - Takes up 1/3 on medium screens, 2/5 on large screens -->
                         <?php if (has_post_thumbnail()) : ?>
-                            <div class="hidden md:flex md:col-span-1 p-4 items-center justify-center">
-                                <div class="w-full h-full flex items-center justify-center max-h-96">
-                                    <div class="aspect-video relative bg-gradient-to-tr from-blue-300/20 to-purple-300/20">
-                                        <?php if (has_post_thumbnail()) : ?>
-                                            <?php the_post_thumbnail('medium', ['class' => 'w-full h-full object-cover opacity-60']); ?>
-                                        <?php else: ?>
-                                            <div class="w-full h-full bg-gradient-to-tr from-blue-300/20 to-purple-300/20"></div>
-                                        <?php endif; ?>
+                            <div class="hidden md:flex md:col-span-1 lg:col-span-2 p-4 md:p-5 items-center justify-center">
+                                <div class="w-full h-full flex items-center justify-center">
+                                    <div class="w-full h-full relative bg-gradient-to-tr from-blue-300/20 to-purple-300/20 rounded-lg overflow-hidden shadow-lg">
+                                        <?php the_post_thumbnail('large', ['class' => 'w-full h-full object-contain opacity-90 hover:opacity-100 transition-all duration-300']); ?>
                                     </div>
                                 </div>
                             </div>
@@ -104,7 +197,7 @@
             </div>
 
             <!-- Content Section Card -->
-            <article <?php post_class('max-w-6xl mx-auto bg-dark-300 rounded-xl shadow-xl overflow-hidden'); ?>>
+            <article <?php post_class('max-w-6xl mx-auto bg-dark-300 rounded-xl shadow-xl overflow-hidden ' . $visibility_classes . ' ' . $centered_layout . ' ' . $responsive_class); ?>>
                 <div class="p-8 md:p-12">
                 <?php
                     // Extract headings for table of contents - improved version
@@ -112,8 +205,8 @@
                     $pattern = '/<h2.*?>(.*?)<\/h2>/i';
                     $h2_found = preg_match_all($pattern, $content, $headings);
                     
-                    // Only process TOC if we have H2 headings
-                    $has_toc = $h2_found && count($headings[1]) > 0;
+                    // Only process TOC if we have H2 headings and TOC is enabled
+                    $has_toc = $h2_found && count($headings[1]) > 0 && $show_toc === 'yes';
                     $toc_content = '';
                     
                     if ($has_toc) {
@@ -129,9 +222,9 @@
                             $heading_id = sanitize_title($clean_heading);
                             
                             $toc_content .= '<li class="toc-item text-light-100/80 hover:text-blue-300">';
-                            $toc_content .= '<a href="#' . $heading_id . '" class="toc-link flex items-center gap-2 transition-colors">';
-                            $toc_content .= '<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-                            $toc_content .= '<span class="toc-text">' . $clean_heading . '</span>';
+                            $toc_content .= '<a href="#' . $heading_id . '" class="toc-link flex items-start gap-1 transition-colors">';
+                            $toc_content .= '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret mt-1 flex-shrink-0"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+                            $toc_content .= '<span class="toc-text break-words">' . $clean_heading . '</span>';
                             $toc_content .= '</a></li>';
                         }
                         
@@ -142,111 +235,117 @@
 
                     <!-- Mobile TOC (shows only on mobile) -->
                     <?php if ($has_toc) : ?>
-                    <div class="md:hidden mb-6">
-                        <!-- Mobile Sharing Buttons -->
-                        <div class="flex justify-between items-center p-3 bg-dark-400 rounded-lg border border-white/10 mb-3">
-                            <div class="font-medium text-white text-sm">Share this article</div>
-                            <div class="flex gap-2">
-                                <div class="relative" id="share-container-mobile">
-                                    <button class="flex items-center justify-center w-10 h-10 bg-dark-300/80 hover:bg-dark-300 rounded-full transition-colors" id="share-btn-mobile">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300">
-                                            <circle cx="18" cy="5" r="3"></circle>
-                                            <circle cx="6" cy="12" r="3"></circle>
-                                            <circle cx="18" cy="19" r="3"></circle>
-                                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
-                                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
-                                        </svg>
-                                    </button>
-                                    <!-- Mobile Share Dropdown -->
-                                    <div class="hidden absolute top-full mt-2 right-0 bg-dark-400 border border-white/10 rounded-lg shadow-2xl py-2 min-w-[220px] z-[9999] max-h-[400px] overflow-y-auto" id="share-dropdown-mobile">
-                                        <div class="flex flex-col">
-                                            <!-- Facebook Share -->
-                                            <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" 
-                                               target="_blank" 
-                                               rel="noopener noreferrer"
-                                               class="flex items-center gap-3 px-4 py-3 hover:bg-dark-300/80 text-white text-sm transition-colors">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-[#1877F2] flex-shrink-0">
-                                                    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                                                </svg>
-                                                <span>Facebook</span>
-                                            </a>
-                                            
-                                            <!-- X (Twitter) Share -->
-                                            <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" 
-                                               target="_blank" 
-                                               rel="noopener noreferrer"
-                                               class="flex items-center gap-3 px-4 py-3 hover:bg-dark-300/80 text-white text-sm transition-colors">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-white flex-shrink-0">
-                                                    <path d="M18.244 2.25h3.308l-7.227 8.259 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                                                </svg>
-                                                <span>X</span>
-                                            </a>
-                                            
-                                            <!-- LinkedIn Share -->
-                                            <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(get_permalink()); ?>&title=<?php echo urlencode(get_the_title()); ?>" 
-                                               target="_blank" 
-                                               rel="noopener noreferrer"
-                                               class="flex items-center gap-3 px-4 py-3 hover:bg-dark-300/80 text-white text-sm transition-colors">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-[#0A66C2] flex-shrink-0">
-                                                    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-                                                </svg>
-                                                <span>LinkedIn</span>
-                                            </a>
-                                            
-                                            <!-- Reddit Share -->
-                                            <a href="https://www.reddit.com/submit?url=<?php echo urlencode(get_permalink()); ?>&title=<?php echo urlencode(get_the_title()); ?>" 
-                                               target="_blank" 
-                                               rel="noopener noreferrer"
-                                               class="flex items-center gap-3 px-4 py-3 hover:bg-dark-300/80 text-white text-sm transition-colors">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="text-[#FF4500] flex-shrink-0">
-                                                    <path d="M12 0A12 12 0 0 0 0 12a12 12 0 0 0 12 12 12 12 0 0 0 12-12A12 12 0 0 0 12 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 0 1-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 0 1 .042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 0 1 4.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 0 1 .14-.197.35.35 0 0 1 .238-.042l2.906.617a1.214 1.214 0 0 1 1.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 0 0-.231.094.33.33 0 0 0 0 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 0 0 .029-.463.33.33 0 0 0-.464 0c-.547.533-1.684.73-2.512.73-.828 0-1.979-.196-2.526-.73a.326.326 0 0 0-.218-.094z"/>
-                                                </svg>
-                                                <span>Reddit</span>
-                                            </a>
-                                            
-                                            <!-- Copy Link Option -->
-                                            <button onclick="copyToClipboard('<?php echo esc_js(get_permalink()); ?>')" 
-                                                    class="flex items-center gap-3 px-4 py-3 hover:bg-dark-300/80 text-white text-sm transition-colors w-full text-left">
-                                                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-300 flex-shrink-0">
-                                                    <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
-                                                    <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
-                                                </svg>
-                                                <span>Copy Link</span>
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                    <div class="md:hidden sticky top-[70px] z-40 mb-6">
+                        <!-- Mobile Sticky Navigation Bar -->
+                        <div class="mobile-sticky-nav bg-dark-200/95 backdrop-blur-md shadow-lg rounded-lg border border-white/10 p-2 flex items-center justify-between">
+                            <?php if ($show_share === 'yes') : ?>
+                            <!-- Mobile Share Button -->
+                            <button class="mobile-share-toggle flex items-center gap-2 px-3 py-2 rounded-md hover:bg-dark-300/80 text-white text-sm transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300">
+                                    <circle cx="18" cy="5" r="3"></circle>
+                                    <circle cx="6" cy="12" r="3"></circle>
+                                    <circle cx="18" cy="19" r="3"></circle>
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                                </svg>
+                                <span>Share</span>
+                            </button>
+                            <?php endif; ?>
+                            
+                            <?php if ($has_toc) : ?>
+                            <!-- Mobile TOC Button -->
+                            <button class="mobile-toc-toggle flex items-center gap-2 px-3 py-2 rounded-md hover:bg-dark-300/80 text-white text-sm transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300">
+                                    <line x1="3" y1="6" x2="21" y2="6"></line>
+                                    <line x1="3" y1="12" x2="21" y2="12"></line>
+                                    <line x1="3" y1="18" x2="21" y2="18"></line>
+                                </svg>
+                                <span>Contents</span>
+                            </button>
+                            <?php endif; ?>
                         </div>
                         
-                        <!-- Compact mobile TOC -->
-                        <div class="table-of-contents p-4 bg-dark-400 rounded-lg border border-white/10">
-                            <h2 class="text-lg font-medium mb-3 text-white">Contents</h2>
-                            <ul class="space-y-1 toc-list">
-                            <?php 
-                            foreach ($headings[1] as $index => $heading) {
-                                // Strip any HTML tags
-                                $clean_heading = strip_tags($heading);
-                                // Use the same sanitize_title function as in the functions.php
-                                $heading_id = sanitize_title($clean_heading);
+                        <!-- Mobile Share Dropdown (hidden by default) -->
+                        <?php if ($show_share === 'yes') : ?>
+                        <div class="mobile-share-dropdown hidden mt-2 bg-dark-200/95 backdrop-blur-md border border-white/10 rounded-lg shadow-lg p-4">
+                            <h3 class="text-sm font-medium mb-3 text-white">Share this article</h3>
+                            <div class="grid grid-cols-2 gap-2">
+                                <!-- Facebook Share -->
+                                <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   class="flex items-center gap-2 p-2 hover:bg-dark-300/80 text-white text-sm transition-colors rounded-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-[#1877F2] flex-shrink-0">
+                                        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+                                    </svg>
+                                    <span>Facebook</span>
+                                </a>
                                 
-                                echo '<li class="toc-item text-light-100/80 hover:text-blue-300 text-sm">';
-                                echo '<a href="#' . $heading_id . '" class="toc-link flex items-center gap-1 transition-colors">';
-                                echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-                                echo '<span class="toc-text">' . $clean_heading . '</span>';
-                                echo '</a></li>';
-                            }
-                            ?>
+                                <!-- X (Twitter) Share -->
+                                <a href="https://twitter.com/intent/tweet?url=<?php echo urlencode(get_permalink()); ?>&text=<?php echo urlencode(get_the_title()); ?>" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   class="flex items-center gap-2 p-2 hover:bg-dark-300/80 text-white text-sm transition-colors rounded-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-white flex-shrink-0">
+                                        <path d="M18.244 2.25h3.308l-7.227 8.259 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                    </svg>
+                                    <span>X</span>
+                                </a>
+                                
+                                <!-- LinkedIn Share -->
+                                <a href="https://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(get_permalink()); ?>&title=<?php echo urlencode(get_the_title()); ?>" 
+                                   target="_blank" 
+                                   rel="noopener noreferrer"
+                                   class="flex items-center gap-2 p-2 hover:bg-dark-300/80 text-white text-sm transition-colors rounded-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="text-[#0A66C2] flex-shrink-0">
+                                        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                                    </svg>
+                                    <span>LinkedIn</span>
+                                </a>
+                                
+                                <!-- Copy Link Option -->
+                                <button onclick="copyToClipboard('<?php echo esc_js(get_permalink()); ?>')" 
+                                        class="flex items-center gap-2 p-2 hover:bg-dark-300/80 text-white text-sm transition-colors rounded-md">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-300 flex-shrink-0">
+                                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                                    </svg>
+                                    <span>Copy Link</span>
+                                </button>
+                            </div>
+                        </div>
+                        <?php endif; ?>
+                        
+                        <!-- Mobile TOC Dropdown (hidden by default) -->
+                        <?php if ($has_toc) : ?>
+                        <div class="mobile-toc-dropdown hidden mt-2 bg-dark-200/95 backdrop-blur-md border border-white/10 rounded-lg shadow-lg p-4">
+                            <h3 class="text-sm font-medium mb-3 text-white">Table of Contents</h3>
+                            <ul class="space-y-1 mobile-toc-list max-h-[60vh] overflow-y-auto">
+                                <?php
+                                foreach ($headings[1] as $index => $heading) {
+                                    // Strip any HTML tags
+                                    $clean_heading = strip_tags($heading);
+                                    // Use the same sanitize_title function as in the functions.php
+                                    $heading_id = sanitize_title($clean_heading);
+                                    
+                                    echo '<li class="toc-item text-light-100/80 hover:text-blue-300 text-sm">';
+                                    echo '<a href="#' . $heading_id . '" class="toc-link flex items-start gap-1 transition-colors p-1 rounded-md hover:bg-dark-300/50">';
+                                    echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret mt-1 flex-shrink-0"><polyline points="9 18 15 12 9 6"></polyline></svg>';
+                                    echo '<span class="toc-text break-words">' . $clean_heading . '</span>';
+                                    echo '</a></li>';
+                                }
+                                ?>
                             </ul>
                         </div>
+                        <?php endif; ?>
                     </div>
                     <?php endif; ?>
 
                     <!-- Two-column layout for content and TOC on desktop -->
-                    <div class="flex flex-col md:flex-row gap-8">
-                        <!-- Main content column - Further increase width -->
-                        <div class="flex-1 md:w-4/5 lg:w-5/6">
-                            <div class="entry-content prose prose-invert prose-lg max-w-none text-light-100/80 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4">
+                    <div class="flex flex-col md:flex-row gap-8 <?php echo ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') ? 'justify-center' : ''; ?>">
+                        <!-- Main content column - Using dynamic width class -->
+                        <div class="flex-1 content-container <?php echo $content_width_class; ?> <?php echo $content_class; ?>">
+                            <div class="entry-content prose prose-invert max-w-none text-light-100/80 prose-p:leading-relaxed prose-headings:mt-8 prose-headings:mb-4">
                                 <?php the_content(); ?>
                             </div>
 
@@ -255,12 +354,14 @@
                             </footer>
                         </div>
                         
-                        <!-- Desktop TOC, Sharing, and Widgets - Further decrease width -->
-                        <div class="hidden md:block md:w-1/5 lg:w-1/6 flex-shrink-0">
+                        <!-- Desktop TOC, Sharing, and Widgets - Using dynamic width class -->
+                        <?php if ($show_toc === 'yes' || $show_share === 'yes' || $show_widgets === 'yes') : ?>
+                        <div class="hidden md:block <?php echo $sidebar_width_class; ?> flex-shrink-0">
                             <div class="sticky top-24 space-y-4">
-                                <!-- Desktop Sharing Buttons - Make even more compact -->
+                                <!-- Desktop Sharing Buttons -->
+                                <?php if ($show_share === 'yes') : ?>
                                 <div class="p-3 bg-dark-400 rounded-lg border border-white/10">
-                                    <h2 class="text-base font-medium mb-2 text-white">Share Article</h2>
+                                    <h2 class="text-base font-medium mb-2 text-white">Share this</h2>
                                     <div class="flex flex-col gap-2">
                                         <!-- Share Dropdown -->
                                         <div class="relative w-full" id="share-container">
@@ -336,42 +437,39 @@
                                         </div>
                                     </div>
                                 </div>
+                                <?php endif; ?>
                                 
-                                <!-- Table of Contents - Make even more compact -->
-                                <?php if ($has_toc) : ?>
-                                    <?php 
-                                    // Instead of string replacement, which might be unreliable,
-                                    // Let's manually create the desktop TOC with our consistent styling
-                                    ?>
-                                    <div class="table-of-contents p-3 bg-dark-400 rounded-lg border border-white/10">
-                                        <h2 class="text-base font-medium mb-2 text-light-100">Table of Contents</h2>
-                                        <ul class="space-y-1 toc-list">
-                                            <?php
-                                            foreach ($headings[1] as $index => $heading) {
+                                <!-- Table of Contents -->
+                                <?php if ($has_toc && $show_toc === 'yes') : ?>
+                                    <div class="toc-desktop p-4 bg-dark-400 rounded-lg border border-white/10 mb-4">
+                                        <h2 class="text-base font-medium mb-2 text-white">Table of Contents</h2>
+                                        <ul class="space-y-1 toc-list text-sm">
+                                            <?php foreach ($headings[1] as $index => $heading) : 
                                                 // Strip any HTML tags
                                                 $clean_heading = strip_tags($heading);
                                                 // Use the same sanitize_title function as in the functions.php
                                                 $heading_id = sanitize_title($clean_heading);
-                                                
-                                                echo '<li class="toc-item text-light-100/80 hover:text-blue-300">';
-                                                echo '<a href="#' . $heading_id . '" class="toc-link flex items-center gap-1 transition-colors">';
-                                                echo '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret"><polyline points="9 18 15 12 9 6"></polyline></svg>';
-                                                echo '<span class="toc-text">' . $clean_heading . '</span>';
-                                                echo '</a></li>';
-                                            }
                                             ?>
+                                            <li class="toc-item text-light-100/80 hover:text-blue-300">
+                                                <a href="#<?php echo $heading_id; ?>" class="toc-link flex items-start gap-1 transition-colors">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-blue-300 toc-caret mt-1 flex-shrink-0"><polyline points="9 18 15 12 9 6"></polyline></svg>
+                                                    <span class="toc-text break-words"><?php echo $clean_heading; ?></span>
+                                                </a>
+                                            </li>
+                                            <?php endforeach; ?>
                                         </ul>
                                     </div>
                                 <?php endif; ?>
 
-                                <!-- Sidebar Widgets - Make more compact -->
-                                <?php if (is_active_sidebar('sidebar-post') || is_active_sidebar('sidebar-1')) : ?>
+                                <!-- Sidebar Widgets -->
+                                <?php if ($show_widgets === 'yes' && (is_active_sidebar('sidebar-post') || is_active_sidebar('sidebar-1'))) : ?>
                                     <div class="mt-4 text-sm">
                                         <?php get_sidebar(); ?>
                                     </div>
                                 <?php endif; ?>
                             </div>
                         </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             </article>
@@ -562,18 +660,19 @@
         margin-top: 2rem !important;
     }
     
-    /* Ensure mobile content is optimized */
-    .entry-content {
+    /* Remove the font-size override for mobile content */
+    /* .entry-content {
         font-size: 1rem !important;
-    }
+    } */
     
-    /* Make mobile TOC more compact */
+    /* Make mobile TOC more compact, but keep our font size */
     .table-of-contents {
         padding: 0.75rem !important;
     }
     
+    /* Remove font-size overrides for TOC */
     .table-of-contents h2 {
-        font-size: 1rem !important;
+        /* font-size: 1rem !important; */
         margin-bottom: 0.5rem !important;
     }
     
@@ -584,7 +683,53 @@
     
     .table-of-contents li {
         margin-bottom: 0.25rem !important;
-        font-size: 0.875rem !important;
+        /* font-size: 0.875rem !important; */
+    }
+    
+    /* Additional mobile TOC fixes */
+    .table-of-contents .toc-item {
+        margin-bottom: 0.5rem !important;
+    }
+    
+    .table-of-contents .toc-link {
+        display: flex !important;
+        align-items: flex-start !important;
+        flex-wrap: wrap !important;
+    }
+    
+    .table-of-contents .toc-caret {
+        margin-top: 0.25rem !important;
+    }
+    
+    .table-of-contents .toc-text {
+        max-width: calc(100% - 24px) !important;
+        word-break: break-word !important;
+        /* font-size: 0.875rem !important; */
+    }
+    
+    /* Mobile TOC toggle button styling */
+    .toc-mobile-toggle {
+        background: transparent;
+        border: none;
+        cursor: pointer;
+        padding: 0.5rem 0;
+        text-align: left;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .toc-mobile-toggle:focus {
+        outline: none;
+    }
+    
+    .toc-mobile-toggle:hover {
+        color: #60a5fa;
+    }
+    
+    .toc-mobile-toggle:hover .toc-mobile-caret {
+        color: #60a5fa;
     }
 }
 
@@ -593,9 +738,33 @@
         margin-top: 2rem !important;
     }
     
-    /* Ensure tablet content is optimized */
-    .entry-content {
+    /* Remove font size override for tablet content */
+    /* .entry-content {
         font-size: 1.05rem !important;
+    } */
+    
+    /* Adjust TOC width for tablets */
+    .table-of-contents {
+        padding: 0.85rem !important;
+    }
+    
+    .table-of-contents .toc-text {
+        /* font-size: 0.85rem !important; */
+        line-height: 1.3 !important;
+    }
+    
+    .table-of-contents .toc-caret {
+        width: 12px !important;
+        height: 12px !important;
+    }
+    
+    /* Hide mobile toggle on tablets and larger */
+    .toc-mobile-toggle {
+        display: none !important;
+    }
+    
+    .toc-mobile-content {
+        display: block !important;
     }
 }
 
@@ -604,13 +773,13 @@
         margin-top: 2rem !important;
     }
     
-    /* Ensure desktop content has proper width */
-    .flex-1.md\:w-4\/5.lg\:w-5\/6 {
-        width: 82% !important;
+    /* Hide mobile toggle on desktop */
+    .toc-mobile-toggle {
+        display: none !important;
     }
     
-    .md\:w-1\/5.lg\:w-1\/6 {
-        width: 18% !important;
+    .toc-mobile-content {
+        display: block !important;
     }
 }
 
@@ -633,14 +802,9 @@
 
 /* Make TOC text smaller and with proper spacing */
 .table-of-contents li a {
-    font-size: 0.9rem;
+    /* font-size: 0.9rem; */
     line-height: 1.3;
     padding: 0.25rem 0;
-}
-
-/* Make content wider by limiting right sidebar width */
-.md\:w-1\/5.lg\:w-1\/6 {
-    max-width: 220px;
 }
 
 /* Enhanced hover states for sidebar elements */
@@ -763,6 +927,13 @@
     flex-shrink: 0;
 }
 
+/* Share button hover effect */
+#share-btn:hover,
+#share-btn-mobile:hover,
+#share-text-btn-mobile:hover {
+    color: #60a5fa !important;
+}
+
 /* Ensure dropdown appears above other elements */
 .relative {
     position: relative;
@@ -839,20 +1010,35 @@ article,
 }
 
 /* Consistently style Table of Contents */
+.table-of-contents {
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    hyphens: auto !important;
+    max-width: 100% !important;
+    padding-right: 4px !important;
+}
+
+.table-of-contents ul {
+    padding-right: 6px !important;
+}
+
 .toc-list {
     list-style: none !important;
     padding-left: 0 !important;
     margin-left: 0 !important;
+    width: 100% !important;
 }
 
 .toc-item {
     margin-bottom: 0.25rem !important;
+    width: 100% !important;
 }
 
 .toc-link {
     display: flex !important;
-    align-items: center !important;
+    align-items: flex-start !important;
     text-decoration: none !important;
+    width: 100% !important;
 }
 
 .toc-caret {
@@ -863,13 +1049,14 @@ article,
 }
 
 .toc-text {
-    font-size: 0.9rem;
+    /* font-size: 0.9rem; */
     line-height: 1.3;
-}
-
-/* Make content wider by limiting right sidebar width */
-.md\:w-1\/5.lg\:w-1\/6 {
-    max-width: 220px;
+    overflow-wrap: break-word !important;
+    word-wrap: break-word !important;
+    word-break: break-word !important;
+    hyphens: auto !important;
+    max-width: calc(100% - 20px) !important;
+    padding-right: 8px !important;
 }
 
 /* Enhanced hover states for TOC items */
@@ -882,9 +1069,136 @@ article,
     transform: translateX(2px);
     transition: transform 0.2s ease;
 }
+
+/* For mobile TOC specific adjustments */
+@media (max-width: 768px) {
+    /* ... existing mobile styles ... */
+    
+    /* Additional mobile TOC fixes */
+    .table-of-contents .toc-item {
+        margin-bottom: 0.5rem !important;
+        padding-right: 6px !important;
+    }
+    
+    .table-of-contents .toc-text {
+        max-width: calc(100% - 24px) !important;
+        word-break: break-word !important;
+        padding-right: 10px !important;
+        /* Remove font size override */
+        /* font-size: 0.875rem !important; */
+    }
+}
+
+/* Additional CSS for blog post hero section on large screens */
+@media (min-width: 1025px) {
+    /* Improved thumbnail display on larger screens */
+    .aspect-[16\/9] {
+        aspect-ratio: 16/9;
+    }
+    
+    /* Add some padding to the image container */
+    .lg\:col-span-2 {
+        padding: 1rem;
+    }
+    
+    /* Improve image quality */
+    .lg\:col-span-2 img {
+        object-fit: cover;
+        object-position: center;
+        transition: all 0.3s ease-in-out;
+    }
+}
+
+/* Additional CSS for blog post hero section */
+@media (min-width: 768px) {
+    /* Thumbnail enhancements for all desktop and tablet sizes */
+    .md\:col-span-1, .lg\:col-span-2 {
+        padding: 1rem;
+    }
+    
+    /* Ensure proper image container for larger screens */
+    .md\:flex .relative {
+        max-height: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Make sure image shows in full without being cropped */
+    .md\:flex img {
+        object-fit: contain;
+        max-height: 100%;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lg\:col-span-2 {
+        padding: 1.25rem;
+    }
+}
+
+/* Custom breakpoint for small-medium screens */
+@media (min-width: 640px) and (max-width: 860px) {
+    .small-medium\:block {
+        display: block !important;
+    }
+    
+    .small-medium\:bg-black\/60 {
+        background-color: rgba(0, 0, 0, 0.6) !important;
+    }
+    
+    .small-medium\:p-4 {
+        padding: 1rem !important;
+    }
+    
+    .small-medium\:rounded-lg {
+        border-radius: 0.5rem !important;
+    }
+    
+    /* Ensure background image displays properly */
+    .absolute.inset-0 img {
+        object-fit: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+}
+
+@media (min-width: 768px) {
+    .md\:col-span-1, .lg\:col-span-2 {
+        padding: 0.75rem;
+    }
+    
+    /* Ensure proper image container for larger screens */
+    .md\:flex .relative {
+        max-height: none;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    /* Make sure image shows in full without being cropped */
+    .md\:flex img {
+        object-fit: contain;
+        max-height: 100%;
+        max-width: 100%;
+        width: auto;
+        height: auto;
+    }
+}
+
+@media (min-width: 1024px) {
+    .lg\:col-span-2 {
+        padding: 1.25rem;
+    }
+}
 </style>
 
-<?php get_footer(); ?> 
+<?php get_footer(); ?>
 
 <script>
 // Enhanced share button functionality with copy to clipboard
@@ -892,7 +1206,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const shareBtn = document.getElementById('share-btn');
     const shareDropdown = document.getElementById('share-dropdown');
     const shareBtnMobile = document.getElementById('share-btn-mobile');
+    const shareTextBtnMobile = document.getElementById('share-text-btn-mobile');
     const shareDropdownMobile = document.getElementById('share-dropdown-mobile');
+    
+    // Collapsible TOC for mobile
+    const tocMobileToggle = document.querySelector('.toc-mobile-toggle');
+    const tocMobileContent = document.querySelector('.toc-mobile-content');
+    const tocMobileCaret = document.querySelector('.toc-mobile-caret');
+    
+    if (tocMobileToggle && tocMobileContent && tocMobileCaret) {
+        // Check if user preference for TOC state exists
+        const tocExpandedState = localStorage.getItem('tocMobileExpanded');
+        
+        // Apply stored state if it exists
+        if (tocExpandedState === 'true') {
+            tocMobileContent.classList.remove('hidden');
+            tocMobileCaret.style.transform = 'rotate(180deg)';
+        }
+        
+        tocMobileToggle.addEventListener('click', function() {
+            tocMobileContent.classList.toggle('hidden');
+            
+            // Toggle caret rotation
+            if (tocMobileContent.classList.contains('hidden')) {
+                tocMobileCaret.style.transform = 'rotate(0deg)';
+                localStorage.setItem('tocMobileExpanded', 'false');
+            } else {
+                tocMobileCaret.style.transform = 'rotate(180deg)';
+                localStorage.setItem('tocMobileExpanded', 'true');
+            }
+        });
+        
+        // Close TOC when clicking a link
+        const tocLinks = tocMobileContent.querySelectorAll('a');
+        tocLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                // Small delay to allow the browser to navigate to the anchor first
+                setTimeout(function() {
+                    tocMobileContent.classList.add('hidden');
+                    tocMobileCaret.style.transform = 'rotate(0deg)';
+                    localStorage.setItem('tocMobileExpanded', 'false');
+                }, 100);
+            });
+        });
+    }
     
     // Helper function to handle share dropdown
     function handleShareDropdown(btn, dropdown) {
@@ -924,11 +1281,30 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
     
-    // Desktop Share button
-    handleShareDropdown(shareBtn, shareDropdown);
+    // Only initialize desktop share button if it exists
+    if (shareBtn && shareDropdown) {
+        handleShareDropdown(shareBtn, shareDropdown);
+    }
     
-    // Mobile share button
-    handleShareDropdown(shareBtnMobile, shareDropdownMobile);
+    // Only initialize mobile share button if it exists
+    if (shareBtnMobile && shareDropdownMobile) {
+        handleShareDropdown(shareBtnMobile, shareDropdownMobile);
+        
+        // Also make the "Share this" text clickable on mobile
+        if (shareTextBtnMobile) {
+            shareTextBtnMobile.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                if (shareDropdownMobile.classList.contains('hidden')) {
+                    shareDropdownMobile.classList.remove('hidden');
+                    shareDropdownMobile.classList.remove('dropdown-up');
+                } else {
+                    shareDropdownMobile.classList.add('hidden');
+                    shareDropdownMobile.classList.remove('dropdown-up');
+                }
+            });
+        }
+    }
     
     // Close dropdown when clicking outside
     document.addEventListener('click', function(e) {
@@ -936,7 +1312,10 @@ document.addEventListener('DOMContentLoaded', function() {
             shareDropdown.classList.add('hidden');
             shareDropdown.classList.remove('dropdown-up');
         }
-        if (shareBtnMobile && shareDropdownMobile && !shareBtnMobile.contains(e.target) && !shareDropdownMobile.contains(e.target)) {
+        if ((shareBtnMobile || shareTextBtnMobile) && shareDropdownMobile && 
+            !shareBtnMobile.contains(e.target) && 
+            (shareTextBtnMobile ? !shareTextBtnMobile.contains(e.target) : true) && 
+            !shareDropdownMobile.contains(e.target)) {
             shareDropdownMobile.classList.add('hidden');
             shareDropdownMobile.classList.remove('dropdown-up');
         }
