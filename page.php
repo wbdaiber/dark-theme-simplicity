@@ -32,7 +32,7 @@ if ($show_share === '') {
         <!-- Main content column -->
         <div class="<?php echo esc_attr($content_class); ?>">
             <?php while (have_posts()) : the_post(); ?>
-                <article <?php post_class('page-content bg-dark-300 p-6 rounded-lg border border-white/10'); ?>>
+                <article <?php post_class('page-content bg-dark-300 p-6 rounded-lg'); ?>>
                     <header class="entry-header mb-8">
                         <!-- Add breadcrumbs -->
                         <div class="page-breadcrumbs mb-6">
@@ -155,7 +155,7 @@ if ($show_share === '') {
             <div class="md:w-64 lg:w-80 flex-shrink-0">
                 <?php 
                 // First sidebar wrapper - use sidebar-page if active, otherwise fallback to sidebar-1
-                echo '<aside id="secondary" class="widget-area bg-dark-400 p-6 rounded-lg border border-white/10">';
+                echo '<aside id="secondary" class="widget-area bg-dark-400 p-6 rounded-lg">';
                 if (is_active_sidebar('sidebar-page')) {
                     dynamic_sidebar('sidebar-page');
                 } else {

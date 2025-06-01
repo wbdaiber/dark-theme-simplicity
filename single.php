@@ -211,7 +211,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                     
                     if ($has_toc) {
                         // Build TOC HTML with consistent styling
-                        $toc_content .= '<div class="table-of-contents p-6 bg-dark-400 rounded-lg border border-white/10 mt-4">';
+                        $toc_content .= '<div class="table-of-contents p-6 bg-dark-400 rounded-lg mt-4">';
                         $toc_content .= '<div class="toc-heading text-xl font-bold mb-4 text-white" role="heading" aria-level="2">Table of Contents</div>';
                         $toc_content .= '<ul class="space-y-2 toc-list">';
                         
@@ -237,7 +237,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                     <?php if ($has_toc) : ?>
                     <div class="md:hidden sticky top-[70px] z-40 mb-4">
                         <!-- Mobile Sticky Navigation Bar -->
-                        <div class="mobile-sticky-nav bg-dark-200/95 backdrop-blur-md shadow-lg rounded-lg border border-white/10 p-1.5 flex items-center justify-between">
+                        <div class="mobile-sticky-nav bg-dark-200/95 backdrop-blur-md shadow-lg rounded-lg p-1.5 flex items-center justify-between">
                             <?php if ($show_share === 'yes') : ?>
                             <!-- Mobile Share Button -->
                             <button class="mobile-share-toggle flex items-center gap-1.5 px-2 py-1 rounded-md hover:bg-dark-300/80 text-white text-xs transition-colors">
@@ -267,7 +267,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                         
                         <!-- Mobile Share Dropdown (hidden by default) -->
                         <?php if ($show_share === 'yes') : ?>
-                        <div class="mobile-share-dropdown hidden mt-2 bg-dark-200/95 backdrop-blur-md border border-white/10 rounded-lg shadow-lg p-3">
+                        <div class="mobile-share-dropdown hidden mt-2 bg-dark-200/95 backdrop-blur-md rounded-lg shadow-lg p-3">
                             <div class="share-heading text-xs font-medium mb-2 text-white" role="heading" aria-level="3">Share this article</div>
                             <div class="grid grid-cols-2 gap-2">
                                 <!-- Facebook Share -->
@@ -318,7 +318,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                         
                         <!-- Mobile TOC Dropdown (hidden by default) -->
                         <?php if ($has_toc) : ?>
-                        <div class="mobile-toc-dropdown hidden mt-2 bg-dark-200/95 backdrop-blur-md border border-white/10 rounded-lg shadow-lg p-3">
+                        <div class="mobile-toc-dropdown hidden mt-2 bg-dark-200/95 backdrop-blur-md rounded-lg shadow-lg p-3">
                             <div class="toc-heading text-xs font-medium mb-2 text-white" role="heading" aria-level="2">Contents</div>
                             <ul class="space-y-0.5 mobile-toc-list max-h-[40vh] overflow-y-auto">
                                 <?php
@@ -360,7 +360,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                             <div class="sticky top-24 space-y-2">
                                 <!-- Desktop Sharing Buttons -->
                                 <?php if ($show_share === 'yes') : ?>
-                                <div class="p-1.5 bg-dark-400 rounded-lg border border-white/10">
+                                <div class="p-1.5 bg-dark-400 rounded-lg">
                                     <div class="share-heading share-label text-xs font-medium mb-1 px-1" role="heading" aria-level="3">Share</div>
                                     <div class="flex flex-col gap-1">
                                         <!-- Share Dropdown -->
@@ -377,7 +377,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                                             </button>
                                             
                                             <!-- Desktop Share Dropdown -->
-                                            <div class="hidden absolute top-full mt-2 right-0 bg-dark-400 border border-white/10 rounded-lg shadow-2xl py-2 min-w-[180px] z-[9999] max-h-[400px] overflow-y-auto" id="share-dropdown">
+                                            <div class="hidden absolute top-full mt-2 right-0 bg-dark-400 rounded-lg shadow-2xl py-2 min-w-[180px] z-[9999] max-h-[400px] overflow-y-auto" id="share-dropdown">
                                                 <div class="flex flex-col">
                                                     <!-- Facebook Share -->
                                                     <a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>" 
@@ -430,7 +430,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                                 
                                 <!-- Table of Contents -->
                                 <?php if ($has_toc && $show_toc === 'yes') : ?>
-                                    <div class="toc-desktop p-1.5 bg-dark-400 rounded-lg border border-white/10">
+                                    <div class="toc-desktop p-1.5 bg-dark-400 rounded-lg">
                                      <div class="toc-label toc-heading text-xs font-medium mb-1 px-1" role="heading" aria-level="2">Contents</div>
                                         <ul class="space-y-0.5 toc-list text-xs">
                                             <?php foreach ($headings[1] as $index => $heading) : 
@@ -456,15 +456,15 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                                         <?php 
                                         // Include sidebar directly to debug and fix widget display
                                         if (is_active_sidebar('sidebar-post')) {
-                                            echo '<div class="widget-area bg-dark-400 p-4 rounded-lg border border-white/10 text-sm">';
+                                            echo '<div class="widget-area bg-dark-400 p-4 rounded-lg text-sm">';
                                             dynamic_sidebar('sidebar-post');
                                             echo '</div>';
                                         } elseif (is_active_sidebar('sidebar-1')) {
-                                            echo '<div class="widget-area bg-dark-400 p-4 rounded-lg border border-white/10 text-sm">';
+                                            echo '<div class="widget-area bg-dark-400 p-4 rounded-lg text-sm">';
                                             dynamic_sidebar('sidebar-1');
                                             echo '</div>';
                                         } else {
-                                            echo '<div class="widget-area bg-dark-400 p-4 rounded-lg border border-white/10 text-sm">';
+                                            echo '<div class="widget-area bg-dark-400 p-4 rounded-lg text-sm">';
                                             echo '<div class="widget">';
                                             echo '<div class="widget-title text-sm font-bold mb-2 text-white">No Widgets Found</div>';
                                             echo '<p class="text-light-100/70 text-xs">Add widgets to the Post Sidebar area in the WordPress dashboard.</p>';
@@ -562,7 +562,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                                 $first_category = !empty($post_categories) ? $post_categories[0] : null;
                         ?>
                             <a href="<?php the_permalink(); ?>" class="block h-full">
-                                <div class="overflow-hidden border border-white/10 backdrop-blur-lg bg-dark-100/50 rounded-xl transition-all duration-300 hover:bg-dark-100 h-full flex flex-col">
+                                <div class="overflow-hidden backdrop-blur-lg bg-dark-100/50 rounded-xl transition-all duration-300 hover:bg-dark-100 h-full flex flex-col">
                                     <div class="aspect-video relative bg-gradient-to-tr from-blue-300/20 to-purple-300/20">
                                         <?php if (has_post_thumbnail()) : ?>
                                             <?php the_post_thumbnail('medium', ['class' => 'w-full h-full object-cover opacity-60']); ?>
