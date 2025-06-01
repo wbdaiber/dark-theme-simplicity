@@ -29,9 +29,14 @@ function dark_theme_simplicity_scripts() {
         wp_enqueue_style('blog-accessibility', get_template_directory_uri() . '/css/blog-accessibility.css', array(), '1.0.13');
     }
     
-    // Enqueue custom page styles
+    // Enqueue custom page styles for regular pages and child pages of Tools template
     if (is_page()) {
         wp_enqueue_style('page-styles', get_template_directory_uri() . '/css/page-styles.css', array(), '1.0.6');
+        
+        // Add tools child page styles for child pages of tool template pages
+        if (is_tools_child_page()) {
+            wp_enqueue_style('tools-child-styles', get_template_directory_uri() . '/css/tools-child-styles.css', array('page-styles'), '1.0.0');
+        }
     }
     
     // Enqueue widget styles
@@ -57,6 +62,38 @@ function dark_theme_simplicity_scripts() {
     ');
 }
 add_action('wp_enqueue_scripts', 'dark_theme_simplicity_scripts');
+
+/**
+ * Function to check if current page is a child of a page using the Tools template
+ */
+function is_tools_child_page() {
+    if (!is_page()) {
+        return false;
+    }
+    
+    $page_id = get_the_ID();
+    $parent_id = wp_get_post_parent_id($page_id);
+    
+    // If no parent, it's not a child page
+    if (!$parent_id) {
+        return false;
+    }
+    
+    // Check if parent page uses the Tools template
+    $template = get_page_template_slug($parent_id);
+    return $template === 'page-templates/tools-template.php';
+}
+
+/**
+ * Add a special body class for tools child pages
+ */
+function dark_theme_simplicity_body_classes($classes) {
+    if (is_tools_child_page()) {
+        $classes[] = 'tools-child-page';
+    }
+    return $classes;
+}
+add_filter('body_class', 'dark_theme_simplicity_body_classes');
 
 /**
  * Enqueue admin scripts and styles
