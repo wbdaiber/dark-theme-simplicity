@@ -1,0 +1,109 @@
+/* Homepage Specific Styles */
+
+/* Hero Button Styles */
+.hero-btn {
+    background-color: #0085ff !important;
+    border-radius: 0px !important;
+    padding: 16px 32px !important;
+    font-size: 18px !important;
+    font-weight: 500 !important;
+    border-width: 0px !important;
+    border-style: solid !important;
+    border-color: #ffffff !important;
+    display: inline-flex !important;
+    color: white !important;
+}
+
+.hero-btn:hover {
+    background-color: #0057a7 !important;
+}
+
+/* Section Label Styles */
+.section-label {
+    color: #0085ff !important;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fade-in-up {
+    animation: fadeInUp 0.5s ease-out forwards;
+}
+
+/* Animation Delays */
+.animation-delay-200 {
+    animation-delay: 0.2s;
+}
+
+.animation-delay-300 {
+    animation-delay: 0.3s;
+}
+
+.animation-delay-400 {
+    animation-delay: 0.4s;
+}
+
+/* Glass Cards */
+.glass-card {
+    background-color: rgba(30, 30, 36, 0.7);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+.glass-card:hover {
+    border-color: #0085ff !important;
+    border-width: 2px !important;
+    background-color: rgba(0, 133, 255, 0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px -5px rgba(0, 133, 255, 0.2) !important;
+}
+
+/* Services cards should only have border hover, not background */
+#what-we-do .bg-\[#1e1e24\]:hover {
+    background-color: #1e1e24 !important;
+    border-color: #0085ff !important;
+    border-width: 2px !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 133, 255, 0.2) !important;
+}
+
+/* Make absolutely sure services cards get the blue border hover effect */
+#what-we-do [class*="border-zinc-700"]:hover {
+    border-color: #0085ff !important;
+    border-width: 2px !important;
+}
+
+/* Social Menu Styles */
+.social-menu-item {
+    margin-bottom: 0.75rem;
+}
+
+.social-menu-item:last-child {
+    margin-bottom: 0;
+}
+
+.social-menu-item a {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    color: rgba(255, 255, 255, 0.7);
+    transition: color 0.2s ease;
+}
+
+.social-menu-item a:hover {
+    color: #0085ff;
+}
+
+.social-menu-item svg {
+    flex-shrink: 0;
+} 

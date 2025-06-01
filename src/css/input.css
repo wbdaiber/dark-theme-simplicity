@@ -1,0 +1,58 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-dark-100: #1a1a1a;
+        --color-dark-200: #2d2d2d;
+        --color-dark-300: #404040;
+        --color-light-100: #ffffff;
+        --color-light-200: #f5f5f5;
+        --color-blue-300: #60a5fa;
+        --color-blue-600: #2563eb;
+    }
+
+    body {
+        @apply bg-dark-200 text-light-100;
+    }
+}
+
+@layer components {
+    .glass-card {
+        @apply bg-dark-300/50 backdrop-blur-sm border border-white/10;
+    }
+
+    .reveal-text {
+        @apply opacity-0 translate-y-4 transition-all duration-700;
+    }
+
+    .reveal-text.revealed {
+        @apply opacity-100 translate-y-0;
+    }
+
+    .animation-delay-200 {
+        animation-delay: 200ms;
+    }
+
+    .animation-delay-400 {
+        animation-delay: 400ms;
+    }
+}
+
+@layer utilities {
+    .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}

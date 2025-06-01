@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Theme Simplicity - WordPress Theme</title>
+    <style>
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background-color: #121214;
+            color: #e2e8f0;
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: #60a5fa;
+            margin-bottom: 1.5rem;
+            border-bottom: 1px solid #2d3748;
+            padding-bottom: 0.5rem;
+        }
+        h2 {
+            color: #60a5fa;
+            margin-top: 2rem;
+        }
+        p {
+            margin-bottom: 1rem;
+        }
+        code {
+            background-color: #1a1a1c;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        pre {
+            background-color: #1a1a1c;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+        .card {
+            background-color: #1a1a1c;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 3px solid #60a5fa;
+        }
+        ul {
+            margin-bottom: 1.5rem;
+        }
+        li {
+            margin-bottom: 0.5rem;
+        }
+        a {
+            color: #60a5fa;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        .button {
+            display: inline-block;
+            background-color: #60a5fa;
+            color: #121214;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.25rem;
+            font-weight: bold;
+            transition: background-color 0.2s;
+            margin-top: 1rem;
+        }
+        .button:hover {
+            background-color: #3b82f6;
+            text-decoration: none;
+        }
+        .warning {
+            background-color: rgba(245, 158, 11, 0.1);
+            border-left: 3px solid #f59e0b;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Dark Theme Simplicity</h1>
+    
+    <div class="warning">
+        <p><strong>This is a WordPress theme that needs to be installed in a WordPress environment.</strong></p>
+        <p>You are currently accessing the theme files directly, which won't work properly.</p>
+    </div>
+
+    <h2>Installation Instructions</h2>
+    <p>To use this theme, you need to install it in a WordPress site:</p>
+    <ol>
+        <li>Install WordPress on your server</li>
+        <li>Zip this entire directory</li>
+        <li>Go to WordPress Admin → Appearance → Themes → Add New → Upload Theme</li>
+        <li>Upload the zip file and activate the theme</li>
+    </ol>
+
+    <h2>Quick Start with Local WordPress</h2>
+    <p>If you want to test this theme locally, you can use tools like:</p>
+    <ul>
+        <li><a href="https://localwp.com/" target="_blank">Local by Flywheel</a> - Easy WordPress local development</li>
+        <li><a href="https://www.mamp.info/" target="_blank">MAMP</a> - Local server environment for Mac</li>
+        <li><a href="https://wordpress.org/documentation/article/how-to-install-wordpress/" target="_blank">Manual WordPress Installation</a></li>
+    </ul>
+
+    <div class="card">
+        <h3>Using Docker (recommended)</h3>
+        <p>This theme includes a docker-compose.yml file for easy setup:</p>
+        <pre><code>cd /path/to/parent/directory
+docker-compose up -d
+# Visit http://localhost:8000 to install WordPress
+# Then install the theme from the WordPress admin</code></pre>
+        <p>This will create a complete WordPress environment with the theme already installed.</p>
+    </div>
+
+    <h2>Theme Fixes</h2>
+    <p>The recent theme fixes for blank pages will work once the theme is properly installed in WordPress. They include:</p>
+    <ul>
+        <li>Fixed front-page.php template</li>
+        <li>Updated section-approach.php to use correct theme mod keys</li>
+        <li>Added CSS fixes for customizer display</li>
+        <li>Created emergency diagnostic tools</li>
+    </ul>
+
+    <p>
+        <a href="theme-fixes-guide.md" class="button">View Fix Guide</a>
+    </p>
+</body>
+</html> 
