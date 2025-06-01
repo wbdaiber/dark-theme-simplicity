@@ -1102,6 +1102,147 @@ if (!function_exists('dark_theme_simplicity_customize_register')) {
             ),
         ) );
 
+        // Tools Template Section
+        $wp_customize->add_section( 'dark_theme_simplicity_tools_section', array(
+            'title'       => __( 'Tools Template', 'dark-theme-simplicity' ),
+            'description' => __( 'Customize the Tools Template page', 'dark-theme-simplicity' ),
+            'priority'    => 130,
+        ) );
+        
+        // Tools Hero Title
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_hero_title', array(
+            'default'           => __( 'Tools & Resources', 'dark-theme-simplicity' ),
+            'sanitize_callback' => 'sanitize_text_field',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( 'dark_theme_simplicity_tools_hero_title', array(
+            'label'       => __( 'Tools Hero Title', 'dark-theme-simplicity' ),
+            'description' => __( 'The default title for the Tools Template hero section', 'dark-theme-simplicity' ),
+            'section'     => 'dark_theme_simplicity_tools_section',
+            'settings'    => 'dark_theme_simplicity_tools_hero_title',
+            'type'        => 'text',
+        ) );
+        
+        // Tools Hero Description
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_hero_description', array(
+            'default'           => __( 'Explore our collection of tools designed to help you optimize your digital presence.', 'dark-theme-simplicity' ),
+            'sanitize_callback' => 'sanitize_textarea_field',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( 'dark_theme_simplicity_tools_hero_description', array(
+            'label'       => __( 'Tools Hero Description', 'dark-theme-simplicity' ),
+            'description' => __( 'The default description for the Tools Template hero section', 'dark-theme-simplicity' ),
+            'section'     => 'dark_theme_simplicity_tools_section',
+            'settings'    => 'dark_theme_simplicity_tools_hero_description',
+            'type'        => 'textarea',
+        ) );
+        
+        // Tools Section Title
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_section_title', array(
+            'default'           => __( 'Available Tools', 'dark-theme-simplicity' ),
+            'sanitize_callback' => 'sanitize_text_field',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( 'dark_theme_simplicity_tools_section_title', array(
+            'label'       => __( 'Tools Section Title', 'dark-theme-simplicity' ),
+            'description' => __( 'The heading for the tools grid section', 'dark-theme-simplicity' ),
+            'section'     => 'dark_theme_simplicity_tools_section',
+            'settings'    => 'dark_theme_simplicity_tools_section_title',
+            'type'        => 'text',
+        ) );
+        
+        // Tools Contact Title
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_contact_title', array(
+            'default'           => __( 'Get Support', 'dark-theme-simplicity' ),
+            'sanitize_callback' => 'sanitize_text_field',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( 'dark_theme_simplicity_tools_contact_title', array(
+            'label'       => __( 'Contact Section Title', 'dark-theme-simplicity' ),
+            'description' => __( 'The heading for the contact section', 'dark-theme-simplicity' ),
+            'section'     => 'dark_theme_simplicity_tools_section',
+            'settings'    => 'dark_theme_simplicity_tools_contact_title',
+            'type'        => 'text',
+        ) );
+        
+        // Tools Contact Description
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_contact_description', array(
+            'default'           => __( 'Questions about our tools? Reach out for assistance.', 'dark-theme-simplicity' ),
+            'sanitize_callback' => 'sanitize_text_field',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( 'dark_theme_simplicity_tools_contact_description', array(
+            'label'       => __( 'Contact Section Description', 'dark-theme-simplicity' ),
+            'description' => __( 'The description text for the contact section', 'dark-theme-simplicity' ),
+            'section'     => 'dark_theme_simplicity_tools_section',
+            'settings'    => 'dark_theme_simplicity_tools_contact_description',
+            'type'        => 'textarea',
+        ) );
+        
+        // Tools Hero Background Image
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_hero_bg_image', array(
+            'default'           => '',
+            'sanitize_callback' => 'esc_url_raw',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'dark_theme_simplicity_tools_hero_bg_image', array(
+            'label'       => __( 'Tools Hero Background Image', 'dark-theme-simplicity' ),
+            'description' => __( 'Upload or select an image for the tools hero section background', 'dark-theme-simplicity' ),
+            'section'     => 'dark_theme_simplicity_tools_section',
+            'settings'    => 'dark_theme_simplicity_tools_hero_bg_image',
+        ) ) );
+
+        // Tools Hero Background Overlay Opacity
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_hero_overlay_opacity', array(
+            'default'           => '70',
+            'sanitize_callback' => 'absint',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( 'dark_theme_simplicity_tools_hero_overlay_opacity', array(
+            'label'       => __( 'Background Overlay Opacity (%)', 'dark-theme-simplicity' ),
+            'description' => __( 'Adjust the opacity of the dark overlay on the background image (0-100)', 'dark-theme-simplicity' ),
+            'section'     => 'dark_theme_simplicity_tools_section',
+            'settings'    => 'dark_theme_simplicity_tools_hero_overlay_opacity',
+            'type'        => 'range',
+            'input_attrs' => array(
+                'min'  => 0,
+                'max'  => 100,
+                'step' => 5,
+            ),
+        ) );
+        
+        // Tools Hero Title Color
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_hero_title_color', array(
+            'default'           => '#ffffff',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'dark_theme_simplicity_tools_hero_title_color', array(
+            'label'    => __( 'Tools Hero Title Color', 'dark-theme-simplicity' ),
+            'section'  => 'dark_theme_simplicity_tools_section',
+            'settings' => 'dark_theme_simplicity_tools_hero_title_color',
+        ) ) );
+
+        // Tools Hero Description Color
+        $wp_customize->add_setting( 'dark_theme_simplicity_tools_hero_desc_color', array(
+            'default'           => '#ffffff',
+            'sanitize_callback' => 'sanitize_hex_color',
+            'transport'         => 'refresh',
+        ) );
+
+        $wp_customize->add_control( new WP_Customize_Color_Control( $wp_customize, 'dark_theme_simplicity_tools_hero_desc_color', array(
+            'label'    => __( 'Tools Hero Description Color', 'dark-theme-simplicity' ),
+            'section'  => 'dark_theme_simplicity_tools_section',
+            'settings' => 'dark_theme_simplicity_tools_hero_desc_color',
+        ) ) );
 
         // Add Blog Post Display Options section to customizer
         $wp_customize->add_section('dark_theme_simplicity_post_display', array(

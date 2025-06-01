@@ -13,23 +13,81 @@ get_header();
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="max-w-5xl mx-auto text-center">
                 <h1 class="text-4xl md:text-6xl font-bold tracking-tight mb-6 text-white reveal-text">
-                    <?php the_title(); ?>
+                    <?php 
+                    // Use page title if set, otherwise fall back to customizer setting
+                    echo get_the_title() ?: esc_html(get_theme_mod('dark_theme_simplicity_tools_hero_title', 'Tools & Resources'));
+                    ?>
                 </h1>
                 <?php if (get_the_content()) : ?>
                     <div class="text-xl md:text-2xl max-w-3xl mx-auto reveal-text tools-hero-description text-light-100/70">
                         <?php the_content(); ?>
+                    </div>
+                <?php else: ?>
+                    <div class="text-xl md:text-2xl max-w-3xl mx-auto reveal-text tools-hero-description text-light-100/70">
+                        <?php echo esc_html(get_theme_mod('dark_theme_simplicity_tools_hero_description', 'Explore our collection of tools designed to help you optimize your digital presence.')); ?>
                     </div>
                 <?php endif; ?>
             </div>
         </div>
     </section>
 
+    <?php 
+    // Output custom CSS for tools hero background and colors
+    $tools_hero_bg = get_theme_mod('dark_theme_simplicity_tools_hero_bg_image', '');
+    $tools_hero_overlay_opacity = get_theme_mod('dark_theme_simplicity_tools_hero_overlay_opacity', 70);
+    $overlay_opacity_decimal = $tools_hero_overlay_opacity / 100;
+    $title_color = get_theme_mod('dark_theme_simplicity_tools_hero_title_color', '#ffffff');
+    $desc_color = get_theme_mod('dark_theme_simplicity_tools_hero_desc_color', '#ffffff');
+    ?>
+    <style>
+        .tools-hero-section {
+            position: relative;
+            background-color: #121214; /* Base dark color */
+            <?php if (!empty($tools_hero_bg)) : ?>
+            background-image: url('<?php echo esc_url($tools_hero_bg); ?>');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            <?php endif; ?>
+        }
+        
+        <?php if (!empty($tools_hero_bg)) : ?>
+        .tools-hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(18, 18, 20, <?php echo esc_attr($overlay_opacity_decimal); ?>);
+            z-index: 1;
+        }
+        
+        .tools-hero-section .container {
+            position: relative;
+            z-index: 2;
+        }
+        <?php endif; ?>
+        
+        .tools-hero-section h1 {
+            color: <?php echo esc_attr($title_color); ?> !important;
+        }
+        
+        .tools-hero-description {
+            color: <?php echo esc_attr($desc_color); ?> !important;
+        }
+    </style>
+
     <!-- Tools Grid Section -->
     <section class="py-16">
         <div class="container mx-auto px-4 sm:px-6 lg:px-8">
             <div class="mb-10">
                 <h2 class="text-3xl md:text-4xl font-bold text-white">
-                    <?php echo esc_html(get_post_meta(get_the_ID(), 'tools_section_title', true) ?: 'Available Tools'); ?>
+                    <?php 
+                    // Use meta field if set, otherwise fall back to customizer setting
+                    $section_title = get_post_meta(get_the_ID(), 'tools_section_title', true);
+                    echo esc_html($section_title ?: get_theme_mod('dark_theme_simplicity_tools_section_title', 'Available Tools')); 
+                    ?>
                 </h2>
             </div>
 
@@ -140,10 +198,18 @@ get_header();
                     Need Help?
                 </span>
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-light-100">
-                    <?php echo esc_html(get_post_meta(get_the_ID(), 'contact_title', true) ?: 'Get Support'); ?>
+                    <?php 
+                    // Use meta field if set, otherwise fall back to customizer setting
+                    $contact_title = get_post_meta(get_the_ID(), 'contact_title', true);
+                    echo esc_html($contact_title ?: get_theme_mod('dark_theme_simplicity_tools_contact_title', 'Get Support')); 
+                    ?>
                 </h2>
                 <p class="text-xl text-light-100/70 max-w-2xl mx-auto">
-                    <?php echo esc_html(get_post_meta(get_the_ID(), 'contact_description', true) ?: 'Questions about our tools? Reach out for assistance.'); ?>
+                    <?php 
+                    // Use meta field if set, otherwise fall back to customizer setting
+                    $contact_description = get_post_meta(get_the_ID(), 'contact_description', true);
+                    echo esc_html($contact_description ?: get_theme_mod('dark_theme_simplicity_tools_contact_description', 'Questions about our tools? Reach out for assistance.')); 
+                    ?>
                 </p>
             </div>
 
