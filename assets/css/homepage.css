@@ -106,4 +106,90 @@
 
 .social-menu-item svg {
     flex-shrink: 0;
+}
+
+/* Homepage Section Styles */
+
+/* Service Section Styles */
+.services-section .bg-\[\#1e1e24\] {
+    background-color: #1e1e24 !important;
+    border-radius: 0.5rem !important;
+}
+
+.services-section .bg-\[\#1e1e24\]:hover {
+    border: 2px solid #3b82f6 !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+.services-section .w-10 {
+    width: 2.5rem !important;
+    height: 2.5rem !important;
+}
+
+.services-section .text-2xl {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
+}
+
+.services-section .service-card {
+    background-color: #1e1e24 !important;
+    border-radius: 0.5rem !important;
+}
+
+.services-section .service-card:hover {
+    border: 2px solid #3b82f6 !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Benefits Section Styles */
+.benefits-section .bg-\[\#1e1e24\] {
+    background-color: #1e1e24 !important;
+    border-radius: 0.5rem !important;
+}
+
+.benefits-section .bg-\[\#1e1e24\]:hover {
+    border: 2px solid #3b82f6 !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Approach Section Styles */
+.approach-section .bg-\[\#1e1e24\] {
+    background-color: #1e1e24 !important;
+    border-radius: 0.5rem !important;
+}
+
+.approach-section .bg-\[\#1e1e24\]:hover {
+    border: 2px solid #3b82f6 !important;
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 15px -3px rgba(59, 130, 246, 0.2) !important;
+    transition: all 0.3s ease !important;
+}
+
+/* Homepage paragraph styling */
+.services-section p, 
+.benefits-section p,
+.approach-section p {
+    color: hsla(0,0%,100%,.7) !important;
+    font-size: 1.25rem !important; /* text-xl equivalent */
+    line-height: 1.75rem !important;
+}
+
+/* Tailwind utilities that might not be compiled yet */
+.homepage-section .w-10 {
+    width: 2.5rem !important;
+}
+
+.homepage-section .h-10 {
+    height: 2.5rem !important;
+}
+
+.homepage-section .text-2xl {
+    font-size: 1.5rem !important;
+    line-height: 2rem !important;
 } 

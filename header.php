@@ -6,7 +6,8 @@
     <link rel="profile" href="https://gmpg.org/xfn/11">
     <title><?php wp_title('|', true, 'right'); ?><?php bloginfo('name'); ?></title>
     
-    <!-- Force service card styles -->
+    <?php if (is_front_page()): ?>
+    <!-- Homepage section styles - only loaded on front page -->
     <style>
         .services-section .bg-\[\#1e1e24\] {
             background-color: #1e1e24 !important;
@@ -124,6 +125,7 @@
             line-height: 2rem !important;
         }
     </style>
+    <?php endif; ?>
 
     <?php wp_head(); ?>
 </head>

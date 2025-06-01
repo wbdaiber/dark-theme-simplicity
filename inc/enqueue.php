@@ -14,9 +14,9 @@ function dark_theme_simplicity_scripts() {
     // Enqueue the main stylesheet with a static version number
     wp_enqueue_style('dark-theme-simplicity-style', get_stylesheet_uri(), array(), '1.0.0');
     
-    // Enqueue homepage animation styles
+    // Enqueue homepage styles and animations only on front page
     if (is_front_page()) {
-        wp_enqueue_style('homepage-animations', get_template_directory_uri() . '/assets/css/homepage.css', array(), '1.0.0');
+        wp_enqueue_style('homepage-styles', get_template_directory_uri() . '/assets/css/homepage.css', array(), '1.0.1');
     }
     
     // Enqueue common content styles for both posts and pages
