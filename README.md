@@ -1,27 +1,96 @@
 # Dark Theme Simplicity
 
-A clean, modern dark theme for WordPress focused on readability and performance.
+A clean, modern, and elegant dark WordPress theme designed for professional websites and blogs.
 
-## IMPORTANT: WordPress Theme
+## Features
 
-This is a WordPress theme and must be installed in a WordPress environment to function correctly. 
+- Modern dark theme with clean and minimal design
+- Fully responsive layout for all devices
+- Customizable homepage sections
+- Built with Tailwind CSS for modern styling
+- Custom navigation menus with mobile-friendly design
+- Widget-ready sidebars and footer areas
+- Accessibility features for improved usability
+- SEO-friendly code and structure
 
-## Quick Start (Using Docker)
+## Installation
 
-1. Run the included setup script:
-   ```bash
-   ./start-wordpress.sh
-   ```
+### Option 1: Direct Upload
 
-2. Visit http://localhost:8000 to complete the WordPress installation
+1. Download the `dark-theme-simplicity.zip` file
+2. Log in to your WordPress admin dashboard
+3. Navigate to Appearance > Themes
+4. Click "Add New" at the top of the page
+5. Click "Upload Theme"
+6. Choose the downloaded zip file and click "Install Now"
+7. After installation completes, click "Activate" to activate the theme
 
-3. Go to Appearance > Themes and activate "Dark Theme Simplicity"
+### Option 2: FTP Upload
 
-## Manual Installation
+1. Extract the `dark-theme-simplicity.zip` file to your computer
+2. Upload the `dark-theme-simplicity` folder to the `/wp-content/themes/` directory on your server
+3. Log in to your WordPress admin dashboard
+4. Navigate to Appearance > Themes
+5. Find "Dark Theme Simplicity" and click "Activate"
 
-1. Install WordPress on your server
-2. Copy this entire directory to: `wp-content/themes/dark-theme-simplicity`
-3. Activate the theme from WordPress admin
+## Theme Setup
+
+### Homepage Sections
+
+The theme includes customizable homepage sections that can be configured in the Customizer:
+
+1. Go to Appearance > Customize
+2. Navigate to "Homepage Sections"
+3. Configure each section (Services, Benefits, Approach, Contact)
+
+### Navigation Menus
+
+This theme supports multiple navigation areas:
+
+1. Primary Menu - Main navigation in the header
+2. Footer Menu - Links in the footer
+3. Social Menu - Social media links
+4. Legal Menu - Privacy policy and terms links
+
+To set up menus:
+1. Go to Appearance > Menus
+2. Create a new menu or edit an existing one
+3. Assign the menu to one of the theme locations
+
+### Widgets
+
+The theme includes several widget areas:
+
+- Sidebar (for blog posts)
+- Page Sidebar (for pages)
+- Post Sidebar (for single posts)
+- Footer 1, 2, and 3 (for footer content)
+
+Add widgets by going to Appearance > Widgets.
+
+## Customization
+
+Use the WordPress Customizer (Appearance > Customize) to modify:
+
+- Site identity (logo, site title, tagline)
+- Colors and background
+- Homepage section content
+- Default display options for posts and pages
+- Menu locations
+- Widget areas
+- And more!
+
+## Need Help?
+
+If you need assistance with this theme, please contact us at [support@example.com](mailto:support@example.com).
+
+## License
+
+This theme is licensed under the GPL v2 or later.
+
+---
+
+Theme by Brad Daiber
 
 ## Recent Fixes
 
@@ -45,25 +114,6 @@ If you experience blank pages or other issues after making customizer changes:
 2. Review the issues found and click "Apply Automatic Fixes"
 3. Delete emergency-fix.php after use
 
-## Features
-
-- Dark mode optimized design
-- Clean, minimalist aesthetic
-- Modern typography
-- Responsive layout
-- Customizable homepage sections
-- Performance optimized
-- Accessibility focused
-
-## Customization
-
-Use the WordPress Customizer to modify:
-
-- Homepage sections visibility and order
-- Approach items and other repeater fields
-- Colors and typography settings
-- Header and footer options
-
 ## Development
 
 This theme uses:
@@ -74,10 +124,6 @@ This theme uses:
 ## Support
 
 For assistance, please see the [Theme Fixes Guide](theme-fixes-guide.md) or open an issue on the repository.
-
-## License
-
-This theme is licensed under the GNU General Public License v2 or later.
 
 ## Credits
 
