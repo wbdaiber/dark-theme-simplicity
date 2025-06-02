@@ -1,0 +1,213 @@
+/* 
+ * Tools Template Child Pages Styles
+ * Ensure that child pages of the Tools template have the same styling as regular pages 
+ */
+
+/* Apply regular page styles to child pages of tools template */
+.tools-child-page .entry-content {
+    font-size: 1.25rem;
+    line-height: 1.6;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+/* Optimize text container width for readability */
+.tools-child-page .entry-content p,
+.tools-child-page .entry-content ul,
+.tools-child-page .entry-content ol,
+.tools-child-page .entry-content h2,
+.tools-child-page .entry-content h3,
+.tools-child-page .entry-content h4,
+.tools-child-page .entry-content h5,
+.tools-child-page .entry-content h6,
+.tools-child-page .entry-content blockquote {
+    max-width: 100%;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Improved headings for better readability */
+.tools-child-page .entry-content h2 {
+    font-size: 2.25rem;
+    margin-top: 2rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.tools-child-page .entry-content h3 {
+    font-size: 1.875rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.tools-child-page .entry-content h4 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+    font-weight: 600;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Use the blue bullet points and numbers from common-content.css */
+.tools-child-page .entry-content ul,
+.tools-child-page .entry-content ol {
+    padding-left: 1rem;
+    margin: 2.5rem 0;
+    font-size: 1.25rem;
+    line-height: 1.6;
+}
+
+/* Override padding for ordered lists */
+.tools-child-page .entry-content ol {
+    list-style: none;
+    counter-reset: item;
+    padding-left: 2.5rem !important; /* Increased padding for custom numbers */
+}
+
+.tools-child-page .entry-content li {
+    margin-bottom: 0.75rem;
+}
+
+/* Ensure lists match blog post lists */
+.tools-child-page .entry-content ul li {
+    position: relative;
+    padding-left: 2.5rem;
+}
+
+.tools-child-page .entry-content ul li::before {
+    content: "•";
+    position: absolute;
+    left: 0.75rem;
+    top: 0;
+    color: rgba(0, 133, 255, 1); /* Blue bullet */
+    font-size: 1.2em;
+    line-height: 1.6;
+}
+
+/* Style for ordered list items */
+.tools-child-page .entry-content ol li {
+    counter-increment: item;
+    position: relative;
+    padding-left: 0.5rem;
+}
+
+.tools-child-page .entry-content ol li::before {
+    content: counter(item) ".";
+    position: absolute;
+    left: -2rem; /* Position number to the left of text */
+    color: rgba(0, 133, 255, 1); /* Blue numbers */
+    font-weight: 600;
+}
+
+/* Style blockquotes the same as blog posts */
+.tools-child-page .entry-content blockquote {
+    border-left: 4px solid rgba(0, 133, 255, 0.6);
+    padding: 1.75rem 2.25rem;
+    margin: 2rem 0;
+    font-style: italic;
+    font-size: 1.35rem;
+    line-height: 1.8;
+    color: rgba(255, 255, 255, 0.8);
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.05));
+    border-radius: 0.5rem;
+    position: relative;
+    /* Add overflow handling */
+    overflow: hidden;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    contain: layout style;
+    box-sizing: border-box;
+}
+
+/* Keep quotation marks inside container */
+.tools-child-page .entry-content blockquote::before,
+.tools-child-page .entry-content blockquote::after {
+    position: absolute;
+    z-index: 1;
+    font-size: 3rem;
+    color: rgba(0, 133, 255, 0.3);
+    font-family: Georgia, serif;
+}
+
+.tools-child-page .entry-content blockquote::before {
+    content: '"';
+    left: 0.5rem;
+    top: 0.5rem;
+}
+
+.tools-child-page .entry-content blockquote::after {
+    content: '"';
+    right: 0.5rem;
+    bottom: 0.5rem;
+}
+
+/* Video styling for tools child pages */
+.tools-child-page .entry-content video,
+.tools-child-page .entry-content iframe,
+.tools-child-page .entry-content .wp-block-video,
+.tools-child-page .entry-content .responsive-video-wrapper {
+    margin: 1rem auto !important;
+    border-radius: 0.75rem !important; /* Rounded corners */
+    overflow: hidden !important; /* Ensure content respects border radius */
+    border: none !important; /* Remove border completely */
+    background: transparent !important; /* Remove background - no lines */
+    box-shadow: none !important; /* Remove shadow for cleaner look */
+}
+
+.tools-child-page .entry-content .wp-block-embed {
+    margin: 1rem 0 !important; /* Reduced from 2.5rem */
+    border-radius: 0.75rem !important; /* Rounded corners */
+    overflow: hidden !important; /* Ensure content respects border radius */
+    border: none !important; /* Remove border completely */
+    background: transparent !important; /* Remove background - no lines */
+    box-shadow: none !important; /* Remove shadow for cleaner look */
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+    .tools-child-page .entry-content {
+        font-size: 1.125rem;
+    }
+    
+    .tools-child-page .entry-content h2 {
+        font-size: 1.75rem;
+        margin-top: 1.75rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .tools-child-page .entry-content h3 {
+        font-size: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .tools-child-page .entry-content ul,
+    .tools-child-page .entry-content ol {
+        padding-left: 0.5rem;
+        margin: 1.5rem 0;
+        font-size: 1.125rem;
+    }
+    
+    .tools-child-page .entry-content p {
+        margin-bottom: 1rem;
+    }
+    
+    .tools-child-page .entry-content blockquote {
+        padding: 1rem 1.5rem;
+        margin: 1.75rem 0;
+        font-size: 1.125rem;
+        line-height: 1.7;
+    }
+    
+    .tools-child-page .entry-content blockquote::before,
+    .tools-child-page .entry-content blockquote::after {
+        font-size: 2rem;
+    }
+} 

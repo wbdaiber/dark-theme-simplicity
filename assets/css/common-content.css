@@ -1,0 +1,1446 @@
+/* Common Content Styles */ 
+
+/* 
+ * Common Content Styles for Dark Theme Simplicity
+ * Shared between pages and posts for consistent styling
+ */
+
+/* ============================================
+   NO SIDEBAR OPTIMIZATIONS
+   ============================================ */
+
+/* When sidebar is disabled, optimize content layout */
+.no-sidebar .entry-content {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  /* Medium screens */
+  .no-sidebar .entry-content {
+    max-width: 90%;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 1024px) {
+  /* Large screens */
+  .no-sidebar .entry-content {
+    max-width: 80%;
+    margin: 0 auto;
+  }
+  
+  /* Larger font size when no sidebar for better readability */
+  .no-sidebar .entry-content {
+    font-size: 1.2rem;
+  }
+}
+
+@media (min-width: 1280px) {
+  /* Extra large screens */
+  .no-sidebar .entry-content {
+    max-width: 70%;
+  }
+}
+
+/* ============================================
+   RESPONSIVE CONTENT WHEN ELEMENTS ARE HIDDEN
+   ============================================ */
+
+/* Fix for narrow content when all elements are hidden */
+.full-width-content {
+  width: 100% !important;
+  max-width: 800px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.no-toc.no-sidebar.no-share .entry-content {
+  max-width: 100% !important;
+}
+
+/* Make content responsive when specific elements are hidden */
+@media (min-width: 768px) {
+  /* When TOC is hidden but sidebar is visible */
+  .no-toc:not(.no-sidebar) .flex-1 {
+    width: 80% !important; 
+  }
+  
+  /* When sidebar is hidden but TOC is visible */
+  .no-sidebar:not(.no-toc) .flex-1 {
+    width: 90% !important; 
+  }
+  
+  /* When share buttons are hidden but other elements exist */
+  .no-share:not(.no-sidebar):not(.no-toc) .flex-1 {
+    width: 85% !important; 
+  }
+  
+  /* When both TOC and sidebar are hidden */
+  .no-toc.no-sidebar .flex-1 {
+    width: 100% !important;
+    max-width: 1000px !important;
+    margin: 0 auto !important;
+  }
+  
+  /* When all elements are hidden - critical fix */
+  .no-toc.no-sidebar.no-share .flex-1,
+  .full-width-content {
+    width: 100% !important;
+    max-width: 960px !important;
+    margin: 0 auto !important;
+  }
+  
+  /* Adjust font size based on available space */
+  .no-toc.no-sidebar .entry-content {
+    font-size: 1.25rem;
+  }
+  
+  /* Fix to ensure content is actually centered */
+  .no-sidebar .flex-col.md\:flex-row,
+  .no-toc .flex-col.md\:flex-row,
+  .no-share .flex-col.md\:flex-row {
+    justify-content: center !important;
+  }
+}
+
+/* Additional larger screen optimizations */
+@media (min-width: 1200px) {
+  /* Wider content on larger screens */
+  .no-toc:not(.no-sidebar) .flex-1 {
+    width: 85% !important;
+  }
+  
+  .no-sidebar:not(.no-toc) .flex-1 {
+    width: 95% !important;
+  }
+  
+  .no-toc.no-sidebar .flex-1 {
+    max-width: 1200px !important;
+  }
+  
+  .no-toc.no-sidebar.no-share .flex-1 {
+    max-width: 1100px !important;
+  }
+  
+  /* Default post content should be wider on large screens */
+  .entry-content {
+    max-width: 100%;
+  }
+}
+
+/* Extra large screens */
+@media (min-width: 1440px) {
+  /* Even wider content on extra large screens */
+  .flex-1 {
+    width: 85% !important;
+  }
+  
+  .no-toc.no-sidebar .flex-1,
+  .no-toc.no-sidebar.no-share .flex-1 {
+    max-width: 1300px !important;
+  }
+}
+
+/* Ensure the main content area expands when TOC/sidebar not shown */
+.no-toc .flex-col.md\:flex-row,
+.no-sidebar .flex-col.md\:flex-row {
+  justify-content: center;
+}
+
+/* ============================================
+   CONTENT ELEMENT SPACING
+   ============================================ */
+
+/* Enhanced spacing for images */
+.entry-content img {
+  margin: 2.5rem auto;
+}
+
+/* Enhanced spacing for blockquotes */
+.entry-content blockquote {
+  margin: 2.5rem 0;
+  padding: 2rem;
+  border-left: 4px solid rgba(0, 133, 255, 0.6);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.05));
+  border-radius: 0.5rem;
+  font-style: italic;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.8);
+  position: relative;
+  /* Add overflow handling */
+  overflow: hidden;
+  /* Ensure content stays within bounds */
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  contain: layout style;
+  box-sizing: border-box;
+}
+
+/* Single post blockquote style */
+.single .entry-content blockquote {
+  border-left: 4px solid rgba(0, 133, 255, 0.6);
+  padding: 1.75rem 2.25rem;
+  margin: 2rem 0;
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  /* Add overflow handling */
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* If using CSS-generated quotation marks (::before/::after) */
+.entry-content blockquote::before,
+.entry-content blockquote::after {
+  position: absolute;
+  /* Ensure quotes stay within container bounds */
+  z-index: 1;
+  font-size: 3rem;
+  color: rgba(0, 133, 255, 0.3);
+  font-family: Georgia, serif;
+}
+
+.entry-content blockquote::before {
+  content: '"';
+  left: 0.5rem; /* Adjust as needed to keep inside */
+  top: 0.5rem;
+}
+
+.entry-content blockquote::after {
+  content: '"';
+  right: 0.5rem; /* Adjust as needed to keep inside */
+  bottom: 0.5rem;
+}
+
+/* Ensure proper containment on mobile */
+@media (max-width: 767px) {
+  .entry-content blockquote {
+    overflow: hidden;
+    padding: 1rem 1.5rem;
+    margin: 1.75rem 0;
+  }
+  
+  .single .entry-content blockquote {
+    padding: 1rem 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+  
+  .entry-content blockquote::before {
+    font-size: 2rem;
+  }
+  
+  .entry-content blockquote::after {
+    font-size: 2rem;
+  }
+}
+
+/* Enhanced spacing for headings */
+.entry-content h2 {
+  margin-top: 3rem;
+  margin-bottom: 1.5rem;
+}
+
+.entry-content h3 {
+  margin-top: 2.5rem;
+  margin-bottom: 1.25rem;
+}
+
+/* Enhanced spacing for lists */
+.entry-content ul,
+.entry-content ol {
+  margin: 2.5rem 0;
+  list-style-position: outside;
+}
+
+/* Add blue bullet points to unordered lists */
+.entry-content ul {
+  list-style: none;
+  padding-left: 1rem;
+}
+
+.entry-content ul li {
+  position: relative;
+  padding-left: 2.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.entry-content ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0.75rem;
+  top: 0;
+  color: rgba(0, 133, 255, 1); /* Blue bullet */
+  font-size: 1.2em;
+  line-height: 1.6;
+}
+
+/* Custom counters for ordered lists with blue numbers */
+.entry-content ol {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 2.5rem; /* Increased padding for custom numbers */
+}
+
+.entry-content ol li {
+  counter-increment: item;
+  position: relative;
+  padding-left: 0.5rem;
+  margin-bottom: 0.75rem;
+}
+
+.entry-content ol li::before {
+  content: counter(item) ".";
+  position: absolute;
+  left: -2rem; /* Position number to the left of text */
+  color: rgba(0, 133, 255, 1); /* Blue numbers */
+  font-weight: 600;
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .entry-content ol {
+    padding-left: 2rem; /* Slightly reduced padding for mobile */
+  }
+}
+
+/* Enhanced spacing for code blocks */
+.entry-content pre {
+  margin: 2.5rem 0;
+  padding: 1.75rem;
+}
+
+/* ============================================
+   RESPONSIVE TABLES
+   ============================================ */
+
+/* Make tables responsive */
+.entry-content table {
+  display: block;
+  width: 100%;
+  overflow-x: auto;
+  margin: 2.5rem 0;
+}
+
+/* ============================================
+   EMBEDS AND MEDIA
+   ============================================ */
+
+/* Better spacing for iframes and embeds */
+.entry-content iframe,
+.entry-content .wp-block-embed {
+  margin: 2.5rem 0;
+}
+
+/* Video embeds */
+.entry-content .wp-block-video video {
+  max-width: 100%;
+  margin: 2.5rem auto;
+}
+
+/* Audio embeds */
+.entry-content .wp-block-audio {
+  margin: 2.5rem 0;
+}
+
+/* ============================================
+   FIGURE CAPTIONS
+   ============================================ */
+
+/* Better styling for figure captions */
+.entry-content figcaption {
+  margin-top: 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* ============================================
+   GALLERY LAYOUTS
+   ============================================ */
+
+/* Gallery spacing */
+.entry-content .wp-block-gallery {
+  margin: 2.5rem 0;
+}
+
+/* ============================================
+   BUTTONS AND INTERACTIVE ELEMENTS
+   ============================================ */
+
+/* Button elements */
+.entry-content .wp-block-button {
+  margin: 2.5rem 0;
+}
+
+.entry-content .wp-block-button__link {
+  transition: all 0.2s ease;
+}
+
+/* ============================================
+   COLUMNS AND LAYOUT BLOCKS
+   ============================================ */
+
+/* Columns layout */
+.entry-content .wp-block-columns {
+  margin: 3rem 0;
+  gap: 2rem;
+}
+
+@media (max-width: 768px) {
+  .entry-content .wp-block-columns {
+    gap: 1.5rem;
+  }
+}
+
+/* ============================================
+   SEPARATOR BLOCKS
+   ============================================ */
+
+/* Horizontal separators */
+.entry-content .wp-block-separator,
+.entry-content hr {
+  margin: 3.5rem 0;
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+/* ============================================
+   OPTIMIZING SIDEBAR INTERACTIONS
+   ============================================ */
+
+/* When both sidebar and widgets are displayed */
+.has-sidebar .entry-content {
+  max-width: 100%;
+}
+
+/* ============================================
+   MOBILE OPTIMIZATIONS
+   ============================================ */
+
+@media (max-width: 767px) {
+  /* Reduce spacing on mobile for better flow */
+  .entry-content img,
+  .entry-content blockquote,
+  .entry-content .wp-block-gallery,
+  .entry-content .wp-block-embed,
+  .entry-content pre {
+    margin: 1.75rem 0;
+  }
+  
+  /* Smaller heading top margins on mobile */
+  .entry-content h2 {
+    margin-top: 2.25rem;
+  }
+  
+  .entry-content h3 {
+    margin-top: 2rem;
+  }
+  
+  /* Adjust font size on mobile */
+  .entry-content {
+    font-size: 1.0625rem;
+  }
+  
+  /* Reduce heading sizes on mobile */
+  .entry-content h1 {
+    font-size: 1.875rem;
+  }
+  
+  .entry-content h2 {
+    font-size: 1.625rem;
+  }
+  
+  .entry-content h3 {
+    font-size: 1.375rem;
+  }
+}
+
+/* ============================================
+   EMPTY PARAGRAPH SUPPORT
+   ============================================ */
+
+/* Support for empty paragraphs in the editor */
+.entry-content p:empty {
+  margin: 1rem 0;
+  min-height: 1rem;
+  display: block !important;
+}
+
+/* ============================================
+   CRITICAL FIXES FOR NARROW COLUMNS
+   ============================================ */
+
+/* Fix for the specific narrow columns observed (160px, 224px, 264px) */
+@media (min-width: 768px) {
+  .no-toc.no-sidebar.no-share .flex-1 {
+    max-width: 85% !important; /* Use max-width instead of min-width */
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  /* Add padding to the entry content as well */
+  .no-toc.no-sidebar.no-share .entry-content {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .no-toc.no-sidebar.no-share .flex-1 {
+    max-width: 80% !important; /* Use max-width instead of min-width */
+  }
+}
+
+@media (min-width: 1200px) {
+  .no-toc.no-sidebar.no-share .flex-1 {
+    max-width: 70% !important; /* Use max-width instead of min-width */
+  }
+}
+
+/* Apply padding only to blog posts without buttons, not pages */
+.single .no-toc.no-sidebar.no-share .entry-content {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+}
+
+/* Force content width for flex containers when all elements are hidden */
+.no-toc.no-sidebar.no-share .flex-col.md\:flex-row {
+  display: block !important; /* Override flex to ensure full width */
+}
+
+/* When all elements are hidden, make content take full available width */
+.no-toc.no-sidebar.no-share .entry-content {
+  width: auto !important;
+  max-width: 100% !important;
+}
+
+/* ============================================
+   CONTENT CONTAINER STYLES
+   ============================================ */
+
+/* Consistent container styling with padding - only for blog posts without buttons */
+.single .no-toc.no-sidebar.no-share .content-container {
+  padding-left: 15px !important;
+  padding-right: 15px !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+/* Consistent container styling with padding */
+.content-container {
+  padding-left: 20px !important;
+  padding-right: 20px !important;
+  box-sizing: border-box !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media (min-width: 768px) {
+  .content-container {
+    max-width: 90% !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .content-container {
+    max-width: 85% !important;
+  }
+}
+
+@media (min-width: 1200px) {
+  .content-container {
+    max-width: 80% !important;
+  }
+}
+
+/* Adjust for no-sidebar and other scenarios */
+.no-sidebar .content-container {
+  max-width: 90% !important;
+}
+
+.no-toc.no-sidebar .content-container,
+.no-share.no-sidebar .content-container {
+  max-width: 85% !important;
+}
+
+.no-toc.no-sidebar.no-share .content-container {
+  max-width: 80% !important;
+}
+
+/* ============================================
+   RESPONSIVE VIDEO EMBEDS
+   ============================================ */
+
+/* Make all embedded videos responsive */
+.entry-content iframe,
+.entry-content video,
+.entry-content .wp-block-embed,
+.entry-content .wp-block-video,
+.entry-content .wp-block-embed__wrapper {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  margin: 1.5rem auto; /* Reduced from 3rem to 1.5rem */
+}
+
+/* Fix for WordPress container issues with embeds */
+.wp-block-embed,
+.wp-block-video {
+  position: relative;
+  overflow: hidden;
+  max-width: 100%;
+  width: 100%;
+  margin: 1.5rem auto; /* Reduced from 3rem to 1.5rem */
+}
+
+/* Fix for WordPress embed wrappers */
+.wp-block-embed__wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 0.75rem auto; /* Reduced margin */
+}
+
+.wp-block-embed__wrapper iframe,
+.wp-block-embed__wrapper object,
+.wp-block-embed__wrapper embed {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* For standard YouTube, Vimeo, and other embeds */
+.entry-content .wp-block-embed iframe,
+.entry-content iframe.youtube-player,
+.entry-content iframe[src*="youtube.com"],
+.entry-content iframe[src*="youtu.be"],
+.entry-content iframe[src*="vimeo.com"],
+.entry-content iframe[src*="dailymotion.com"],
+.entry-content iframe[src*="videopress.com"] {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  aspect-ratio: 16/9;
+  margin: 0 auto;
+}
+
+/* Desktop/Large Screens */
+@media (min-width: 1024px) {
+  .entry-content iframe,
+  .entry-content video,
+  .entry-content .wp-block-embed,
+  .entry-content .wp-block-video,
+  .entry-content .wp-block-embed__wrapper {
+    max-width: 854px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2rem; /* Reduced margin */
+    margin-bottom: 2rem; /* Reduced margin */
+  }
+  
+  /* Keep aspect ratio but set max-width */
+  .wp-block-embed__wrapper {
+    max-width: 854px;
+    padding-bottom: calc(480px * 100% / 854px); /* Maintain 16:9 ratio with max height */
+  }
+  
+  /* For blog posts with sidebar, make videos a bit smaller */
+  .single:not(.no-sidebar) .entry-content iframe,
+  .single:not(.no-sidebar) .entry-content video,
+  .single:not(.no-sidebar) .entry-content .wp-block-embed,
+  .single:not(.no-sidebar) .entry-content .wp-block-video {
+    max-width: 560px;
+  }
+  
+  .single:not(.no-sidebar) .wp-block-embed__wrapper {
+    max-width: 560px;
+    padding-bottom: calc(315px * 100% / 560px); /* Maintain 16:9 ratio with smaller max height */
+  }
+}
+
+/* Tablets */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .entry-content iframe,
+  .entry-content video,
+  .entry-content .wp-block-embed,
+  .entry-content .wp-block-video {
+    width: 90%; /* Increased from 85% for more width */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .wp-block-embed__wrapper {
+    width: 90%; /* Increased from 85% */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Mobile Phones */
+@media (max-width: 767px) {
+  .entry-content iframe,
+  .entry-content video,
+  .entry-content .wp-block-embed,
+  .entry-content .wp-block-video {
+    width: 100%; /* Increased from 95% to 100% */
+    max-width: 450px; /* Increased from 360px */
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .wp-block-embed__wrapper {
+    width: 100%; /* Increased from 95% to 100% */
+    max-width: 450px; /* Increased from 360px */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ============================================
+   SPECIAL EMBED TYPES
+   ============================================ */
+
+/* Twitter/X embeds */
+.entry-content .twitter-tweet,
+.entry-content .twitter-timeline,
+.entry-content .twitter-follow-button,
+.entry-content iframe[src*="twitter.com"] {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 2rem auto !important;
+  display: block !important;
+}
+
+/* Instagram embeds */
+.entry-content iframe[src*="instagram.com"] {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 2rem auto !important;
+}
+
+/* SoundCloud embeds */
+.entry-content iframe[src*="soundcloud.com"] {
+  max-width: 100% !important;
+  width: 100% !important;
+}
+
+/* Facebook embeds */
+.entry-content .fb_iframe_widget,
+.entry-content .fb_iframe_widget span,
+.entry-content .fb_iframe_widget span iframe[style] {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 2rem auto !important;
+}
+
+/* Fix for TikTok embeds */
+.entry-content iframe[src*="tiktok.com"] {
+  margin: 2rem auto !important;
+  width: 100% !important;
+  max-width: 325px !important;
+}
+
+/* 21:9 videos (widescreen format) */
+.entry-content .wp-block-embed.is-type-video.is-ratio-21-9 .wp-block-embed__wrapper {
+  padding-bottom: 42.85%; /* 21:9 aspect ratio */
+}
+
+/* 4:3 videos (standard format) */
+.entry-content .wp-block-embed.is-type-video.is-ratio-4-3 .wp-block-embed__wrapper {
+  padding-bottom: 75%; /* 4:3 aspect ratio */
+}
+
+/* 1:1 videos (square format) */
+.entry-content .wp-block-embed.is-type-video.is-ratio-1-1 .wp-block-embed__wrapper {
+  padding-bottom: 100%; /* 1:1 aspect ratio */
+}
+
+/* 9:16 videos (vertical format - like TikTok, Instagram Reels) */
+.entry-content .wp-block-embed.is-type-video.is-ratio-9-16 .wp-block-embed__wrapper {
+  padding-bottom: 177.78%; /* 9:16 aspect ratio */
+  max-width: 325px;
+  margin: 0 auto;
+}
+
+/* ============================================
+   WORDPRESS VIDEO BLOCK SPECIFIC STYLES
+   ============================================ */
+
+/* WordPress Video Block */
+.wp-block-video {
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.wp-block-video video {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+
+/* Video with caption */
+.wp-block-video figcaption {
+  margin-top: 0.5rem;
+  text-align: center;
+  font-size: 0.875rem;
+  opacity: 0.8;
+}
+
+/* Fix for alignment classes */
+.wp-block-video.aligncenter,
+.wp-block-embed.aligncenter {
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.wp-block-video.alignleft,
+.wp-block-embed.alignleft {
+  float: left;
+  margin-right: 2rem;
+  margin-bottom: 1rem;
+}
+
+.wp-block-video.alignright,
+.wp-block-embed.alignright {
+  float: right;
+  margin-left: 2rem;
+  margin-bottom: 1rem;
+}
+
+/* Handle Gutenberg editor view for videos */
+.editor-styles-wrapper .wp-block-video,
+.editor-styles-wrapper .wp-block-embed {
+  max-width: 100%;
+}
+
+/* Make sure videos don't overflow in editor */
+.block-editor-block-list__block .wp-block-embed iframe {
+  max-width: 100%;
+}
+
+/* For Video player native controls */
+.wp-block-video video::-webkit-media-controls {
+  opacity: 0.8;
+}
+
+.wp-block-video video::-webkit-media-controls-panel {
+  background-color: rgba(0, 0, 0, 0.6);
+}
+
+/* Fix for WordPress's default video container */
+.entry-content div.wp-video,
+.entry-content .mejs-container {
+  width: 100% !important;
+  max-width: 854px;
+  margin: 2rem auto;
+}
+
+@media (max-width: 1023px) {
+  .entry-content div.wp-video,
+  .entry-content .mejs-container {
+    max-width: 600px;
+  }
+}
+
+@media (max-width: 767px) {
+  .entry-content div.wp-video,
+  .entry-content .mejs-container {
+    max-width: 360px;
+  }
+}
+
+/* ============================================
+   BLOG POST CONTENT OPTIMIZATIONS
+   ============================================ */
+
+/* Base content improvements for blog posts */
+.single .entry-content {
+  font-size: 1.25rem; /* Kept larger font size */
+  line-height: 1.6; /* Changed to 1.6 as requested */
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Optimize text container width for readability */
+.single .entry-content p,
+.single .entry-content ul,
+.single .entry-content ol,
+.single .entry-content h2,
+.single .entry-content h3,
+.single .entry-content h4,
+.single .entry-content h5,
+.single .entry-content h6,
+.single .entry-content blockquote {
+  max-width: 100%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Improve paragraph spacing */
+.single .entry-content p {
+  margin-bottom: 0.75rem; /* Changed to 0.75rem as requested */
+}
+
+/* Improved headings for better readability */
+.single .entry-content h2 {
+  font-size: 2.25rem; /* Kept larger size */
+  margin-top: 2rem; /* Reduced from 3.5rem */
+  margin-bottom: 0.75rem; /* Changed to 0.75rem */
+  line-height: 1.4;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.single .entry-content h3 {
+  font-size: 1.875rem; /* Kept larger size */
+  margin-top: 1.5rem; /* Reduced from 3rem */
+  margin-bottom: 0.75rem; /* Changed to 0.75rem */
+  line-height: 1.4;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.single .entry-content h4 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem; /* Reduced from 2.5rem */
+  margin-bottom: 0.75rem; /* Changed to 0.75rem */
+  line-height: 1.4;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Improve lists for better readability */
+.single .entry-content ul,
+.single .entry-content ol {
+  padding-left: 1rem; /* Reduced padding since we're using custom bullets/numbers */
+  margin-bottom: 0.75rem;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+.single .entry-content li {
+  margin-bottom: 0.5rem; /* Reduced for tighter lists */
+}
+
+.single .entry-content ol li {
+  padding-left: 1.5rem;
+}
+
+/* Blockquote improvements */
+.single .entry-content blockquote {
+  border-left: 4px solid rgba(0, 133, 255, 0.6);
+  padding: 0.75rem 0 0.75rem 1.5rem; /* Reduced padding */
+  margin: 1.5rem 0; /* Reduced from 2.5rem */
+  font-style: italic;
+  font-size: 1.25rem;
+  line-height: 1.6; /* Changed to 1.6 */
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* ============================================
+   RESPONSIVE VIDEO FIXES SPECIFICALLY FOR BLOG POSTS
+   ============================================ */
+
+/* Blog post video container fixes */
+.single .entry-content .wp-block-embed,
+.single .entry-content .wp-block-video {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 2.5rem auto;
+  clear: both;
+}
+
+/* Fix WordPress figure width issues */
+.single .entry-content figure,
+.single .entry-content .wp-block-image {
+  max-width: 100%;
+  width: 100%;
+  margin: 2.5rem auto;
+}
+
+/* Ensure videos are full width in blog posts and handle various WP video containers */
+.single .entry-content .wp-block-embed__wrapper,
+.single .entry-content .wp-video,
+.single .entry-content .mejs-container,
+.single .entry-content video,
+.single .entry-content iframe {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto;
+}
+
+/* Responsive video sizing for different screen sizes */
+@media (min-width: 1024px) {
+  /* Desktop - No sidebar */
+  .single.no-sidebar .entry-content .wp-block-embed__wrapper,
+  .single.no-sidebar .entry-content .wp-video,
+  .single.no-sidebar .entry-content video,
+  .single.no-sidebar .entry-content iframe {
+    max-width: 854px !important;
+    margin: 0 auto;
+  }
+  
+  /* Desktop - With sidebar */
+  .single:not(.no-sidebar) .entry-content .wp-block-embed__wrapper,
+  .single:not(.no-sidebar) .entry-content .wp-video,
+  .single:not(.no-sidebar) .entry-content video,
+  .single:not(.no-sidebar) .entry-content iframe {
+    max-width: 560px !important;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  /* Tablet - optimize for readability */
+  .single .entry-content {
+    font-size: 1.2rem;
+    line-height: 1.6; /* Changed to 1.6 */
+  }
+  
+  .single .entry-content h2 {
+    font-size: 2rem;
+    margin-top: 1.5rem; /* Reduced */
+    margin-bottom: 0.75rem; /* Changed to 0.75rem */
+  }
+  
+  .single .entry-content h3 {
+    font-size: 1.75rem;
+    margin-top: 1.5rem; /* Reduced */
+    margin-bottom: 0.75rem; /* Changed to 0.75rem */
+  }
+  
+  .single .entry-content .wp-block-embed__wrapper,
+  .single .entry-content .wp-video,
+  .single .entry-content video,
+  .single .entry-content iframe {
+    max-width: 600px !important;
+    width: 95% !important; /* Increased from 85% */
+    margin: 1.5rem auto; /* Reduced margin */
+  }
+}
+
+@media (max-width: 767px) {
+  /* Mobile - optimize for readability */
+  .single .entry-content {
+    font-size: 1.125rem;
+    line-height: 1.6; /* Changed to 1.6 */
+  }
+  
+  .single .entry-content h2 {
+    font-size: 1.75rem;
+    margin-top: 1.5rem; /* Reduced */
+    margin-bottom: 0.75rem; /* Changed to 0.75rem */
+  }
+  
+  .single .entry-content h3 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem; /* Reduced */
+    margin-bottom: 0.75rem; /* Changed to 0.75rem */
+  }
+  
+  .single .entry-content ul,
+  .single .entry-content ol {
+    padding-left: 1rem;
+    margin-bottom: 0.75rem; /* Changed to 0.75rem */
+    font-size: 1.125rem;
+    line-height: 1.6; /* Changed to 1.6 */
+  }
+  
+  .single .entry-content p {
+    margin-bottom: 0.75rem; /* Changed to 0.75rem */
+  }
+  
+  .single .entry-content .wp-block-embed__wrapper,
+  .single .entry-content .wp-video,
+  .single .entry-content video,
+  .single .entry-content iframe {
+    max-width: 450px !important; /* Increased from 360px */
+    width: 100% !important;
+    margin: 1rem auto; /* Reduced margin */
+  }
+  
+  .responsive-video-wrapper {
+    margin: 1rem auto; /* Reduced margin */
+  }
+}
+
+/* ============================================
+   BLOG POST RESPONSIVE LAYOUT OPTIMIZATIONS
+   ============================================ */
+
+/* When all elements (TOC, widgets, share) are hidden */
+.single.no-toc.no-sidebar.no-share .entry-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* When TOC is hidden but sidebar is present */
+.single.no-toc:not(.no-sidebar) .entry-content {
+  max-width: 95%;
+}
+
+/* When sidebar is hidden but TOC is present */
+.single.no-sidebar:not(.no-toc) .entry-content {
+  max-width: 90%;
+}
+
+/* Different screen sizes for blog posts */
+@media (min-width: 1200px) {
+  .single .entry-content {
+    font-size: 1.125rem;
+  }
+  
+  .single.no-toc.no-sidebar.no-share .entry-content {
+    max-width: 850px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .single.no-toc.no-sidebar.no-share .entry-content {
+    max-width: 900px;
+  }
+}
+
+/* ============================================
+   RESPONSIVE VIDEO WRAPPER
+   ============================================ */
+
+/* Custom responsive video wrapper */
+.responsive-video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  max-width: 100%;
+  margin: 1.5rem auto; /* Reduced from 3.5rem */
+}
+
+.responsive-video-wrapper iframe,
+.responsive-video-wrapper object,
+.responsive-video-wrapper embed,
+.responsive-video-wrapper video {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* Desktop sizes */
+@media (min-width: 1024px) {
+  .single.no-sidebar .responsive-video-wrapper {
+    max-width: 854px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .single:not(.no-sidebar) .responsive-video-wrapper {
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Tablet sizes */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .responsive-video-wrapper {
+    max-width: 600px;
+    width: 95%; /* Increased from 85% */
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Mobile sizes */
+@media (max-width: 767px) {
+  .responsive-video-wrapper {
+    max-width: 450px; /* Increased from 360px */
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* ============================================
+   BLOG POST CONTENT CONTAINER FIXES
+   ============================================ */
+
+/* Main container for blog posts without sidebar, TOC, or share buttons */
+.single.no-toc.no-sidebar.no-share .entry-content {
+  max-width: 800px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+  box-sizing: border-box;
+}
+
+/* Main container for blog posts - basic styling */
+.single .flex-1 {
+  width: 100%;
+  max-width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Ensure optimal reading width when elements are hidden */
+@media (min-width: 768px) {
+  .single.no-toc.no-sidebar.no-share .flex-1 {
+    width: 100%;
+    max-width: 800px;
+  }
+  
+  .single.no-toc.no-sidebar.no-share {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
+/* Larger screens get slightly wider content */
+@media (min-width: 1280px) {
+  .single.no-toc.no-sidebar.no-share .entry-content {
+    max-width: 850px;
+  }
+  
+  .single.no-toc.no-sidebar.no-share .flex-1 {
+    max-width: 850px;
+  }
+}
+
+/* ============================================
+   TYPOGRAPHY & READABILITY IMPROVEMENTS
+   ============================================ */
+
+/* Optimize typography for reading */
+.single .entry-content {
+  color: rgba(255, 255, 255, 0.9);
+  letter-spacing: 0.01em;
+  word-spacing: 0.05em;
+  font-kerning: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Paragraph typography improvements */
+.single .entry-content p {
+  margin-bottom: 1.75em;
+  font-weight: 400;
+}
+
+/* Link styling */
+.single .entry-content a:not(.wp-block-button__link) {
+  color: rgba(0, 133, 255, 0.9);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(0, 133, 255, 0.3);
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.single .entry-content a:not(.wp-block-button__link):hover {
+  color: rgba(0, 133, 255, 1);
+  border-bottom-color: rgba(0, 133, 255, 0.7);
+}
+
+/* Code blocks and inline code */
+.single .entry-content pre,
+.single .entry-content code {
+  background-color: rgba(12, 12, 14, 0.8);
+  border-radius: 4px;
+  font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace;
+  font-size: 0.9em;
+}
+
+.single .entry-content pre {
+  padding: 1.5rem;
+  overflow-x: auto;
+  margin: 2rem 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.single .entry-content code {
+  padding: 0.2em 0.4em;
+}
+
+/* Improve list readability */
+.single .entry-content ul li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.single .entry-content ol {
+  counter-reset: item;
+}
+
+.single .entry-content ol li {
+  counter-increment: item;
+}
+
+/* Tables */
+.single .entry-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 2rem 0;
+  overflow-x: auto;
+  display: block;
+}
+
+.single .entry-content table th,
+.single .entry-content table td {
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 0.75rem;
+  text-align: left;
+}
+
+.single .entry-content table th {
+  background-color: rgba(26, 26, 28, 0.8);
+  font-weight: 600;
+}
+
+.single .entry-content table tr:nth-child(even) {
+  background-color: rgba(26, 26, 28, 0.4);
+}
+
+/* Images */
+.single .entry-content img {
+  max-width: 100%;
+  height: auto;
+  margin: 2rem auto;
+  display: block;
+  border-radius: 4px;
+}
+
+.single .entry-content figure {
+  margin: 2.5rem 0;
+}
+
+.single .entry-content figcaption {
+  font-size: 0.875rem;
+  text-align: center;
+  margin-top: 0.75rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-style: italic;
+}
+
+/* Optimize line length for readability */
+@media (min-width: 768px) {
+  .single.no-sidebar .entry-content p,
+  .single.no-sidebar .entry-content ul,
+  .single.no-sidebar .entry-content ol,
+  .single.no-sidebar .entry-content blockquote {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+/* Add breadcrumbs to page template */
+.page-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.page-breadcrumbs a {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.page-breadcrumbs a:hover {
+  color: rgba(0, 133, 255, 1);
+}
+
+.page-breadcrumbs .separator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Standardize share buttons between page and post templates */
+.page .share-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.page .share-buttons .share-title {
+  font-size: 1.125rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.75rem;
+}
+
+.page .share-buttons .share-links {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.page .share-buttons a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.page .share-buttons a:hover {
+  color: rgba(0, 133, 255, 1);
+}
+
+.page .share-buttons svg {
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+/* Fix for duplicate button widget in page template */
+.page-content .widget:has(button:empty),
+.page-content .widget:has(button:contains("?>")),
+.page-content .button-wrapper:has(button:empty),
+.page-content .button-wrapper:has(button:contains("?>")) {
+  display: none !important;
+}
+
+/* Mobile responsive adjustments */
+@media (max-width: 767px) {
+  .page .entry-content ul,
+  .page .entry-content ol,
+  .single .entry-content ul,
+  .single .entry-content ol {
+    padding-left: 0.5rem;
+    font-size: 1.125rem;
+  }
+  
+  .page .share-buttons .share-links {
+    gap: 0.75rem;
+  }
+  
+  .page .share-buttons svg {
+    width: 1.125rem;
+    height: 1.125rem;
+  }
+} 

@@ -1,0 +1,348 @@
+/* Video embed styling for pages, matching blog post styling */
+.entry-content video,
+.entry-content iframe,
+.entry-content .wp-block-video,
+.entry-content .responsive-video-wrapper {
+  margin: 1rem auto !important;
+  border-radius: 0.75rem !important; /* Rounded corners */
+  overflow: hidden !important; /* Ensure content respects border radius */
+  border: none !important; /* Remove border completely */
+  background: transparent !important; /* Remove background - no lines */
+  box-shadow: none !important; /* Remove shadow for cleaner look */
+}
+
+.entry-content .wp-block-embed {
+  margin: 1rem 0 !important; /* Reduced from 2.5rem */
+  border-radius: 0.75rem !important; /* Rounded corners */
+  overflow: hidden !important; /* Ensure content respects border radius */
+  border: none !important; /* Remove border completely */
+  background: transparent !important; /* Remove background - no lines */
+  box-shadow: none !important; /* Remove shadow for cleaner look */
+}
+
+/* Page Template Styles */
+
+/* Make page content match blog post styling */
+.page .entry-content {
+  font-size: 1.25rem;
+  line-height: 1.6;
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+/* Optimize text container width for readability */
+.page .entry-content p,
+.page .entry-content ul,
+.page .entry-content ol,
+.page .entry-content h2,
+.page .entry-content h3,
+.page .entry-content h4,
+.page .entry-content h5,
+.page .entry-content h6,
+.page .entry-content blockquote {
+  max-width: 100%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Improve paragraph spacing */
+.page .entry-content p {
+  margin-bottom: 0.75rem;
+}
+
+/* Improved headings for better readability */
+.page .entry-content h2 {
+  font-size: 2.25rem;
+  margin-top: 2rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.95);
+}
+
+.page .entry-content h3 {
+  font-size: 1.875rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.page .entry-content h4 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* Use the blue bullet points and numbers from common-content.css */
+.page .entry-content ul,
+.page .entry-content ol {
+  padding-left: 1rem;
+  margin: 2.5rem 0;
+  font-size: 1.25rem;
+  line-height: 1.6;
+}
+
+/* Override padding for ordered lists */
+.page .entry-content ol {
+  list-style: none;
+  counter-reset: item;
+  padding-left: 2.5rem !important; /* Increased padding for custom numbers */
+}
+
+.page .entry-content li {
+  margin-bottom: 0.75rem;
+}
+
+/* Ensure page lists match blog post lists */
+.page .entry-content ul li {
+  position: relative;
+  padding-left: 2.5rem;
+}
+
+.page .entry-content ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0.75rem;
+  top: 0;
+  color: rgba(0, 133, 255, 1); /* Blue bullet */
+  font-size: 1.2em;
+  line-height: 1.6;
+}
+
+/* Style for ordered list items */
+.page .entry-content ol li {
+  counter-increment: item;
+  position: relative;
+  padding-left: 0.5rem;
+}
+
+.page .entry-content ol li::before {
+  content: counter(item) ".";
+  position: absolute;
+  left: -2rem; /* Position number to the left of text */
+  color: rgba(0, 133, 255, 1); /* Blue numbers */
+  font-weight: 600;
+}
+
+/* Style blockquotes the same as blog posts */
+.page .entry-content blockquote {
+  border-left: 4px solid rgba(0, 133, 255, 0.6);
+  padding: 1.75rem 2.25rem;
+  margin: 2rem 0;
+  font-style: italic;
+  font-size: 1.35rem;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(99, 102, 241, 0.05));
+  border-radius: 0.5rem;
+  position: relative;
+  /* Add overflow handling */
+  overflow: hidden;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  contain: layout style;
+  box-sizing: border-box;
+}
+
+/* Keep quotation marks inside container */
+.page .entry-content blockquote::before,
+.page .entry-content blockquote::after {
+  position: absolute;
+  z-index: 1;
+  font-size: 3rem;
+  color: rgba(0, 133, 255, 0.3);
+  font-family: Georgia, serif;
+}
+
+.page .entry-content blockquote::before {
+  content: '"';
+  left: 0.5rem;
+  top: 0.5rem;
+}
+
+.page .entry-content blockquote::after {
+  content: '"';
+  right: 0.5rem;
+  bottom: 0.5rem;
+}
+
+/* Responsive adjustments for blockquotes */
+@media (max-width: 767px) {
+  .page .entry-content blockquote {
+    padding: 1rem 1.5rem;
+    margin: 1.75rem 0;
+    font-size: 1.125rem;
+    line-height: 1.7;
+  }
+  
+  .page .entry-content blockquote::before,
+  .page .entry-content blockquote::after {
+    font-size: 2rem;
+  }
+}
+
+/* Video styling for pages */
+.page .entry-content .wp-block-embed,
+.page .entry-content .wp-block-video {
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 2.5rem auto;
+  clear: both;
+}
+
+/* Fix WordPress figure width issues */
+.page .entry-content figure,
+.page .entry-content .wp-block-image {
+  max-width: 100%;
+  width: 100%;
+  margin: 2.5rem auto;
+}
+
+/* Breadcrumbs styling */
+.page-breadcrumbs {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  margin-bottom: 1.5rem;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.page-breadcrumbs a {
+  color: rgba(255, 255, 255, 0.7);
+  transition: color 0.2s ease;
+}
+
+.page-breadcrumbs a:hover {
+  color: rgba(0, 133, 255, 1);
+}
+
+.page-breadcrumbs .separator {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Responsive styles for different screen sizes */
+@media (min-width: 1024px) {
+  .page.no-sidebar .entry-content .wp-block-embed__wrapper,
+  .page.no-sidebar .entry-content .wp-video,
+  .page.no-sidebar .entry-content video,
+  .page.no-sidebar .entry-content iframe {
+    max-width: 854px !important;
+    margin: 0 auto;
+  }
+  
+  .page:not(.no-sidebar) .entry-content .wp-block-embed__wrapper,
+  .page:not(.no-sidebar) .entry-content .wp-video,
+  .page:not(.no-sidebar) .entry-content video,
+  .page:not(.no-sidebar) .entry-content iframe {
+    max-width: 560px !important;
+    margin: 0 auto;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .page .entry-content {
+    font-size: 1.2rem;
+    line-height: 1.6;
+  }
+  
+  .page .entry-content h2 {
+    font-size: 2rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .page .entry-content h3 {
+    font-size: 1.75rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .page .entry-content .wp-block-embed__wrapper,
+  .page .entry-content .wp-video,
+  .page .entry-content video,
+  .page .entry-content iframe {
+    max-width: 600px !important;
+    width: 95% !important;
+    margin: 1.5rem auto;
+  }
+}
+
+@media (max-width: 767px) {
+  .page .entry-content {
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  
+  .page .entry-content h2 {
+    font-size: 1.75rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .page .entry-content h3 {
+    font-size: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
+  
+  .page .entry-content ul,
+  .page .entry-content ol {
+    padding-left: 1rem;
+    margin-bottom: 0.75rem;
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  
+  .page .entry-content p {
+    margin-bottom: 0.75rem;
+  }
+  
+  .page .entry-content .wp-block-embed__wrapper,
+  .page .entry-content .wp-video,
+  .page .entry-content video,
+  .page .entry-content iframe {
+    max-width: 450px !important;
+    width: 100% !important;
+    margin: 1rem auto;
+  }
+  
+  .page .entry-content ol {
+    padding-left: 2rem !important; /* Slightly reduced padding for mobile */
+  }
+}
+
+/* Fix for duplicate widget areas */
+.page-content .widget-area + .widget-area {
+  display: none !important; /* Hide any additional widget areas after the first one */
+}
+
+/* Hide widgets with PHP code that appears as "?>" */
+.page-content .widget:has(button:contains("?>")),
+.page-content .widget:has(.wp-block-button__link:contains("?>")),
+.page-content .widget:empty,
+.page-content .widget .wp-block-button:empty {
+  display: none !important;
+}
+
+/* Specifically target the PHP error widget */
+.page-content #secondary + #secondary {
+  display: none !important;
+}
+
+/* Target the exact syntax error widget with "?>" */
+.page-content .widget-area .wp-block-buttons:has(a.wp-block-button__link:only-child:contains("Button")),
+.page-content .widget-area .wp-block-button:has(a.wp-block-button__link:contains("Button")) {
+  display: none !important;
+}
+
+/* For browsers that don't support :has() */
+.page-content #secondary:nth-child(2) {
+  display: none !important;
+} 
