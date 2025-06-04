@@ -898,36 +898,137 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
 <?php get_footer(); ?>
 
 <script>
+// Enhanced Share Dropdown Functionality with Positioning Fix
 document.addEventListener('DOMContentLoaded', function() {
-    // Desktop share button functionality
     const shareBtn = document.getElementById('share-btn');
     const shareDropdown = document.getElementById('share-dropdown');
+    const shareContainer = document.getElementById('share-container');
     
     if (shareBtn && shareDropdown) {
+        
+        // Function to position dropdown correctly
+        function positionDropdown() {
+            const btnRect = shareBtn.getBoundingClientRect();
+            const viewportWidth = window.innerWidth;
+            const viewportHeight = window.innerHeight;
+            const dropdownWidth = 220;
+            const dropdownHeight = 200; // Estimated dropdown height
+            
+            // For very small screens, use fixed positioning at bottom
+            if (viewportWidth <= 480) {
+                shareDropdown.style.position = 'fixed';
+                shareDropdown.style.top = 'auto';
+                shareDropdown.style.bottom = '20px';
+                shareDropdown.style.left = '50%';
+                shareDropdown.style.right = 'auto';
+                shareDropdown.style.transform = 'translateX(-50%)';
+                shareDropdown.style.zIndex = '99999';
+                return;
+            }
+            
+            // Reset to absolute positioning for larger screens
+            shareDropdown.style.position = 'absolute';
+            shareDropdown.style.top = 'calc(100% + 4px)';
+            shareDropdown.style.bottom = 'auto';
+            shareDropdown.style.transform = 'none';
+            
+            // Check if dropdown would go off-screen horizontally
+            const spaceOnRight = viewportWidth - btnRect.right;
+            const spaceOnLeft = btnRect.left;
+            
+            if (spaceOnRight < dropdownWidth && spaceOnLeft > dropdownWidth) {
+                // Position to the left
+                shareDropdown.style.right = 'auto';
+                shareDropdown.style.left = '0';
+            } else {
+                // Default position to the right
+                shareDropdown.style.left = 'auto';
+                shareDropdown.style.right = '0';
+            }
+            
+            // Check if dropdown would go off-screen vertically
+            const spaceBelow = viewportHeight - btnRect.bottom;
+            if (spaceBelow < dropdownHeight && btnRect.top > dropdownHeight) {
+                // Position above the button
+                shareDropdown.style.top = 'auto';
+                shareDropdown.style.bottom = 'calc(100% + 4px)';
+            }
+            
+            // Ensure proper z-index
+            shareDropdown.style.zIndex = '99999';
+        }
+        
+        // Show/hide dropdown with enhanced positioning
         shareBtn.addEventListener('click', function(e) {
+            e.preventDefault();
             e.stopPropagation();
             
-            if (shareDropdown.classList.contains('hidden')) {
+            const isHidden = shareDropdown.classList.contains('hidden');
+            
+            if (isHidden) {
+                // Position dropdown before showing
+                positionDropdown();
+                
+                // Show dropdown
                 shareDropdown.classList.remove('hidden');
-                console.log('Desktop share shown');
+                shareDropdown.style.display = 'block';
+                
+                // Add active state to button
+                shareBtn.classList.add('active');
+                
+                console.log('Desktop share dropdown shown');
             } else {
+                // Hide dropdown
                 shareDropdown.classList.add('hidden');
-                console.log('Desktop share hidden');
+                shareDropdown.style.display = 'none';
+                
+                // Remove active state from button
+                shareBtn.classList.remove('active');
+                
+                console.log('Desktop share dropdown hidden');
             }
         });
         
-        // Close dropdown after clicking a share link
-        const shareLinks = shareDropdown.querySelectorAll('a[target="_blank"]');
+        // Close dropdown when clicking share links
+        const shareLinks = shareDropdown.querySelectorAll('a[target="_blank"], button');
         shareLinks.forEach(function(link) {
-            link.addEventListener('click', function() {
+            link.addEventListener('click', function(e) {
+                // Don't prevent default for external links
+                if (this.tagName === 'A' && this.hasAttribute('target')) {
+                    // Let the link open normally
+                } else {
+                    e.preventDefault();
+                }
+                
+                // Close dropdown after a short delay
                 setTimeout(function() {
                     shareDropdown.classList.add('hidden');
+                    shareDropdown.style.display = 'none';
+                    shareBtn.classList.remove('active');
                 }, 100);
             });
         });
+        
+        // Reposition dropdown on window resize
+        window.addEventListener('resize', function() {
+            if (!shareDropdown.classList.contains('hidden')) {
+                positionDropdown();
+            }
+        });
+        
+        // Reposition dropdown on scroll (for sticky elements)
+        let scrollTimeout;
+        window.addEventListener('scroll', function() {
+            if (!shareDropdown.classList.contains('hidden')) {
+                clearTimeout(scrollTimeout);
+                scrollTimeout = setTimeout(function() {
+                    positionDropdown();
+                }, 10);
+            }
+        });
     }
     
-    // Mobile share toggle (using direct style manipulation)
+    // Mobile share functionality (keeping existing code)
     const shareToggle = document.querySelector('.mobile-share-toggle');
     const mobileShareDropdown = document.querySelector('.mobile-share-dropdown');
     
@@ -936,18 +1037,25 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             
-            if (mobileShareDropdown.style.display === 'none' || mobileShareDropdown.style.display === '') {
+            const isHidden = mobileShareDropdown.style.display === 'none' || 
+                           mobileShareDropdown.style.display === '';
+            
+            if (isHidden) {
                 mobileShareDropdown.style.display = 'block';
-                console.log('Mobile share shown via style');
+                shareToggle.classList.add('active');
+                console.log('Mobile share shown');
                 
                 // Close mobile TOC if open
                 const mobileTocDropdown = document.querySelector('.mobile-toc-dropdown');
                 if (mobileTocDropdown) {
                     mobileTocDropdown.style.display = 'none';
+                    const tocToggle = document.querySelector('.mobile-toc-toggle');
+                    if (tocToggle) tocToggle.classList.remove('active');
                 }
             } else {
                 mobileShareDropdown.style.display = 'none';
-                console.log('Mobile share hidden via style');
+                shareToggle.classList.remove('active');
+                console.log('Mobile share hidden');
             }
         });
         
@@ -957,12 +1065,13 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', function() {
                 setTimeout(function() {
                     mobileShareDropdown.style.display = 'none';
+                    shareToggle.classList.remove('active');
                 }, 100);
             });
         });
     }
     
-    // Mobile TOC toggle (using direct style manipulation)
+    // Mobile TOC functionality (keeping existing code)
     const tocToggle = document.querySelector('.mobile-toc-toggle');
     const mobileTocDropdown = document.querySelector('.mobile-toc-dropdown');
     
@@ -971,17 +1080,23 @@ document.addEventListener('DOMContentLoaded', function() {
             e.preventDefault();
             e.stopPropagation();
             
-            if (mobileTocDropdown.style.display === 'none' || mobileTocDropdown.style.display === '') {
+            const isHidden = mobileTocDropdown.style.display === 'none' || 
+                           mobileTocDropdown.style.display === '';
+            
+            if (isHidden) {
                 mobileTocDropdown.style.display = 'block';
-                console.log('Mobile TOC shown via style');
+                tocToggle.classList.add('active');
+                console.log('Mobile TOC shown');
                 
                 // Close mobile share if open
                 if (mobileShareDropdown) {
                     mobileShareDropdown.style.display = 'none';
+                    if (shareToggle) shareToggle.classList.remove('active');
                 }
             } else {
                 mobileTocDropdown.style.display = 'none';
-                console.log('Mobile TOC hidden via style');
+                tocToggle.classList.remove('active');
+                console.log('Mobile TOC hidden');
             }
         });
         
@@ -991,41 +1106,81 @@ document.addEventListener('DOMContentLoaded', function() {
             link.addEventListener('click', function() {
                 setTimeout(function() {
                     mobileTocDropdown.style.display = 'none';
+                    tocToggle.classList.remove('active');
                 }, 100);
             });
         });
     }
     
-    // Close dropdowns when clicking outside
+    // Enhanced outside click detection
     document.addEventListener('click', function(e) {
         // Desktop share dropdown
-        if (shareBtn && shareDropdown && !shareBtn.contains(e.target) && !shareDropdown.contains(e.target)) {
+        if (shareBtn && shareDropdown && 
+            !shareBtn.contains(e.target) && 
+            !shareDropdown.contains(e.target) &&
+            !shareContainer.contains(e.target)) {
             shareDropdown.classList.add('hidden');
+            shareDropdown.style.display = 'none';
+            shareBtn.classList.remove('active');
         }
         
         // Mobile dropdowns
         if (mobileShareDropdown && shareToggle && 
-            !shareToggle.contains(e.target) && !mobileShareDropdown.contains(e.target)) {
+            !shareToggle.contains(e.target) && 
+            !mobileShareDropdown.contains(e.target)) {
             mobileShareDropdown.style.display = 'none';
+            shareToggle.classList.remove('active');
         }
         
         if (mobileTocDropdown && tocToggle && 
-            !tocToggle.contains(e.target) && !mobileTocDropdown.contains(e.target)) {
+            !tocToggle.contains(e.target) && 
+            !mobileTocDropdown.contains(e.target)) {
             mobileTocDropdown.style.display = 'none';
+            tocToggle.classList.remove('active');
         }
     });
     
-    // Close dropdowns when pressing Escape key
+    // Enhanced keyboard navigation
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            if (shareDropdown) shareDropdown.classList.add('hidden');
-            if (mobileShareDropdown) mobileShareDropdown.style.display = 'none';
-            if (mobileTocDropdown) mobileTocDropdown.style.display = 'none';
+            // Close all dropdowns
+            if (shareDropdown) {
+                shareDropdown.classList.add('hidden');
+                shareDropdown.style.display = 'none';
+                if (shareBtn) shareBtn.classList.remove('active');
+            }
+            if (mobileShareDropdown) {
+                mobileShareDropdown.style.display = 'none';
+                if (shareToggle) shareToggle.classList.remove('active');
+            }
+            if (mobileTocDropdown) {
+                mobileTocDropdown.style.display = 'none';
+                if (tocToggle) tocToggle.classList.remove('active');
+            }
         }
     });
+    
+    // Debug function to check dropdown positioning
+    function debugDropdownPosition() {
+        if (shareDropdown && !shareDropdown.classList.contains('hidden')) {
+            const rect = shareDropdown.getBoundingClientRect();
+            console.log('Dropdown position:', {
+                top: rect.top,
+                left: rect.left,
+                right: rect.right,
+                bottom: rect.bottom,
+                width: rect.width,
+                height: rect.height,
+                zIndex: window.getComputedStyle(shareDropdown).zIndex
+            });
+        }
+    }
+    
+    // Uncomment for debugging
+    // window.debugDropdown = debugDropdownPosition;
 });
 
-// Copy to clipboard function (keep existing)
+// Copy to clipboard functionality (enhanced)
 function copyToClipboard(url) {
     if (navigator.clipboard && window.isSecureContext) {
         navigator.clipboard.writeText(url).then(function() {
@@ -1038,22 +1193,34 @@ function copyToClipboard(url) {
         fallbackCopyTextToClipboard(url);
     }
     
-    // Close all dropdowns
-    const shareDropdown = document.getElementById('share-dropdown');
-    const mobileShareDropdown = document.querySelector('.mobile-share-dropdown');
-    
-    if (shareDropdown) shareDropdown.classList.add('hidden');
-    if (mobileShareDropdown) mobileShareDropdown.style.display = 'none';
+    // Close all dropdowns after copying
+    setTimeout(function() {
+        const shareDropdown = document.getElementById('share-dropdown');
+        const mobileShareDropdown = document.querySelector('.mobile-share-dropdown');
+        const shareBtn = document.getElementById('share-btn');
+        const shareToggle = document.querySelector('.mobile-share-toggle');
+        
+        if (shareDropdown) {
+            shareDropdown.classList.add('hidden');
+            shareDropdown.style.display = 'none';
+        }
+        if (shareBtn) shareBtn.classList.remove('active');
+        
+        if (mobileShareDropdown) mobileShareDropdown.style.display = 'none';
+        if (shareToggle) shareToggle.classList.remove('active');
+    }, 100);
 }
 
-// Keep existing fallback and feedback functions
+// Fallback copy function
 function fallbackCopyTextToClipboard(text) {
     const textArea = document.createElement("textarea");
     textArea.value = text;
+    textArea.style.position = "fixed";
     textArea.style.top = "0";
     textArea.style.left = "0";
-    textArea.style.position = "fixed";
     textArea.style.opacity = "0";
+    textArea.style.width = "1px";
+    textArea.style.height = "1px";
     
     document.body.appendChild(textArea);
     textArea.focus();
@@ -1070,49 +1237,57 @@ function fallbackCopyTextToClipboard(text) {
     document.body.removeChild(textArea);
 }
 
+// Enhanced copy feedback with better positioning
 function showCopyFeedback(message) {
-    let feedback = document.getElementById('copy-feedback');
-    if (!feedback) {
-        feedback = document.createElement('div');
-        feedback.id = 'copy-feedback';
-        feedback.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #10B981;
-            color: white;
-            padding: 12px 20px;
-            border-radius: 8px;
-            font-size: 14px;
-            font-weight: 500;
-            z-index: 10000;
-            transform: translateY(-100px);
-            opacity: 0;
-            transition: all 0.3s ease;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        `;
-        document.body.appendChild(feedback);
+    // Remove any existing feedback
+    const existingFeedback = document.getElementById('copy-feedback');
+    if (existingFeedback) {
+        existingFeedback.remove();
     }
     
+    const feedback = document.createElement('div');
+    feedback.id = 'copy-feedback';
     feedback.textContent = message;
     
+    // Enhanced styling
+    feedback.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #10B981, #059669);
+        color: white;
+        padding: 16px 24px;
+        border-radius: 12px;
+        font-size: 14px;
+        font-weight: 600;
+        z-index: 999999;
+        transform: translateY(-100px) scale(0.9);
+        opacity: 0;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        backdrop-filter: blur(10px);
+    `;
+    
+    document.body.appendChild(feedback);
+    
     // Animate in
-    setTimeout(() => {
-        feedback.style.transform = 'translateY(0)';
+    requestAnimationFrame(() => {
+        feedback.style.transform = 'translateY(0) scale(1)';
         feedback.style.opacity = '1';
-    }, 10);
+    });
     
     // Animate out
     setTimeout(() => {
-        feedback.style.transform = 'translateY(-100px)';
+        feedback.style.transform = 'translateY(-100px) scale(0.9)';
         feedback.style.opacity = '0';
-    }, 2000);
+    }, 2500);
     
     // Remove element
     setTimeout(() => {
         if (feedback && feedback.parentNode) {
-            feedback.parentNode.removeChild(feedback);
+            feedback.remove();
         }
-    }, 2300);
+    }, 2800);
 }
 </script>
