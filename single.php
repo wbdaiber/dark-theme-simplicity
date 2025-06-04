@@ -898,194 +898,136 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
 <?php get_footer(); ?>
 
 <script>
-// Enhanced share button functionality with copy to clipboard
 document.addEventListener('DOMContentLoaded', function() {
+    // Desktop share button functionality
     const shareBtn = document.getElementById('share-btn');
     const shareDropdown = document.getElementById('share-dropdown');
-    const shareBtnMobile = document.getElementById('share-btn-mobile');
-    const shareTextBtnMobile = document.getElementById('share-text-btn-mobile');
-    const shareDropdownMobile = document.getElementById('share-dropdown-mobile');
     
-    // FIXED: Collapsible TOC for mobile - Updated selectors to match HTML
-    const tocMobileToggle = document.querySelector('.mobile-toc-toggle');
-    const tocMobileContent = document.querySelector('.mobile-toc-dropdown');
-    const tocMobileCaret = document.querySelector('.mobile-toc-toggle svg');
-    
-    if (tocMobileToggle && tocMobileContent && tocMobileCaret) {
-        // Check if user preference for TOC state exists
-        const tocExpandedState = localStorage.getItem('tocMobileExpanded');
-        
-        // Apply stored state if it exists
-        if (tocExpandedState === 'true') {
-            tocMobileContent.classList.remove('hidden');
-            tocMobileCaret.style.transform = 'rotate(180deg)';
-        }
-        
-        tocMobileToggle.addEventListener('click', function(e) {
-            e.preventDefault();
+    if (shareBtn && shareDropdown) {
+        shareBtn.addEventListener('click', function(e) {
             e.stopPropagation();
             
-            tocMobileContent.classList.toggle('hidden');
-            
-            // Toggle caret rotation
-            if (tocMobileContent.classList.contains('hidden')) {
-                tocMobileCaret.style.transform = 'rotate(0deg)';
-                localStorage.setItem('tocMobileExpanded', 'false');
-                console.log('📕 Mobile TOC closed');
+            if (shareDropdown.classList.contains('hidden')) {
+                shareDropdown.classList.remove('hidden');
+                console.log('Desktop share shown');
             } else {
-                tocMobileCaret.style.transform = 'rotate(180deg)';
-                localStorage.setItem('tocMobileExpanded', 'true');
-                console.log('📖 Mobile TOC opened');
-            }
-        });
-        
-        // Close TOC when clicking a link
-        const tocLinks = tocMobileContent.querySelectorAll('a');
-        tocLinks.forEach(function(link) {
-            link.addEventListener('click', function() {
-                // Small delay to allow the browser to navigate to the anchor first
-                setTimeout(function() {
-                    tocMobileContent.classList.add('hidden');
-                    tocMobileCaret.style.transform = 'rotate(0deg)';
-                    localStorage.setItem('tocMobileExpanded', 'false');
-                    console.log('📕 Mobile TOC closed via link click');
-                }, 100);
-            });
-        });
-        
-        console.log('✅ Mobile TOC accordion initialized');
-    } else {
-        console.log('⚠️ Mobile TOC elements not found');
-        console.log('Toggle:', tocMobileToggle);
-        console.log('Content:', tocMobileContent);
-        console.log('Caret:', tocMobileCaret);
-    }
-    
-    // FIXED: Mobile share toggle functionality
-    const mobileShareToggle = document.querySelector('.mobile-share-toggle');
-    const mobileShareDropdown = document.querySelector('.mobile-share-dropdown');
-    
-    if (mobileShareToggle && mobileShareDropdown) {
-        mobileShareToggle.addEventListener('click', function(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            
-            mobileShareDropdown.classList.toggle('hidden');
-            
-            if (mobileShareDropdown.classList.contains('hidden')) {
-                console.log('📕 Mobile share closed');
-            } else {
-                console.log('📖 Mobile share opened');
-            }
-        });
-        
-        // Close when clicking outside
-        document.addEventListener('click', function(e) {
-            if (!mobileShareToggle.contains(e.target) && !mobileShareDropdown.contains(e.target)) {
-                mobileShareDropdown.classList.add('hidden');
-            }
-        });
-        
-        console.log('✅ Mobile share toggle initialized');
-    }
-    
-    // Helper function to handle share dropdown
-    function handleShareDropdown(btn, dropdown) {
-        if (!btn || !dropdown) return;
-        
-        btn.addEventListener('click', function(e) {
-            e.stopPropagation();
-            
-            if (dropdown.classList.contains('hidden')) {
-                // Always show dropdown below the button
-                dropdown.classList.remove('hidden');
-                dropdown.classList.remove('dropdown-up'); // Always remove the up class
-            } else {
-                // Hide dropdown
-                dropdown.classList.add('hidden');
-                dropdown.classList.remove('dropdown-up');
+                shareDropdown.classList.add('hidden');
+                console.log('Desktop share hidden');
             }
         });
         
         // Close dropdown after clicking a share link
-        const shareLinks = dropdown.querySelectorAll('a[target="_blank"]');
+        const shareLinks = shareDropdown.querySelectorAll('a[target="_blank"]');
         shareLinks.forEach(function(link) {
             link.addEventListener('click', function() {
                 setTimeout(function() {
-                    dropdown.classList.add('hidden');
-                    dropdown.classList.remove('dropdown-up');
+                    shareDropdown.classList.add('hidden');
                 }, 100);
             });
         });
     }
     
-    // Only initialize desktop share button if it exists
-    if (shareBtn && shareDropdown) {
-        handleShareDropdown(shareBtn, shareDropdown);
-    }
+    // Mobile share toggle (using direct style manipulation)
+    const shareToggle = document.querySelector('.mobile-share-toggle');
+    const mobileShareDropdown = document.querySelector('.mobile-share-dropdown');
     
-    // Only initialize mobile share button if it exists
-    if (shareBtnMobile && shareDropdownMobile) {
-        handleShareDropdown(shareBtnMobile, shareDropdownMobile);
-        
-        // Also make the "Share this" text clickable on mobile
-        if (shareTextBtnMobile) {
-            shareTextBtnMobile.addEventListener('click', function(e) {
-                e.stopPropagation();
+    if (shareToggle && mobileShareDropdown) {
+        shareToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (mobileShareDropdown.style.display === 'none' || mobileShareDropdown.style.display === '') {
+                mobileShareDropdown.style.display = 'block';
+                console.log('Mobile share shown via style');
                 
-                if (shareDropdownMobile.classList.contains('hidden')) {
-                    shareDropdownMobile.classList.remove('hidden');
-                    shareDropdownMobile.classList.remove('dropdown-up');
-                } else {
-                    shareDropdownMobile.classList.add('hidden');
-                    shareDropdownMobile.classList.remove('dropdown-up');
+                // Close mobile TOC if open
+                const mobileTocDropdown = document.querySelector('.mobile-toc-dropdown');
+                if (mobileTocDropdown) {
+                    mobileTocDropdown.style.display = 'none';
                 }
+            } else {
+                mobileShareDropdown.style.display = 'none';
+                console.log('Mobile share hidden via style');
+            }
+        });
+        
+        // Close mobile share when clicking a link
+        const mobileShareLinks = mobileShareDropdown.querySelectorAll('a, button');
+        mobileShareLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                setTimeout(function() {
+                    mobileShareDropdown.style.display = 'none';
+                }, 100);
             });
-        }
+        });
     }
     
-    // Close dropdown when clicking outside
+    // Mobile TOC toggle (using direct style manipulation)
+    const tocToggle = document.querySelector('.mobile-toc-toggle');
+    const mobileTocDropdown = document.querySelector('.mobile-toc-dropdown');
+    
+    if (tocToggle && mobileTocDropdown) {
+        tocToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            if (mobileTocDropdown.style.display === 'none' || mobileTocDropdown.style.display === '') {
+                mobileTocDropdown.style.display = 'block';
+                console.log('Mobile TOC shown via style');
+                
+                // Close mobile share if open
+                if (mobileShareDropdown) {
+                    mobileShareDropdown.style.display = 'none';
+                }
+            } else {
+                mobileTocDropdown.style.display = 'none';
+                console.log('Mobile TOC hidden via style');
+            }
+        });
+        
+        // Close TOC when clicking a link
+        const tocLinks = mobileTocDropdown.querySelectorAll('a');
+        tocLinks.forEach(function(link) {
+            link.addEventListener('click', function() {
+                setTimeout(function() {
+                    mobileTocDropdown.style.display = 'none';
+                }, 100);
+            });
+        });
+    }
+    
+    // Close dropdowns when clicking outside
     document.addEventListener('click', function(e) {
+        // Desktop share dropdown
         if (shareBtn && shareDropdown && !shareBtn.contains(e.target) && !shareDropdown.contains(e.target)) {
             shareDropdown.classList.add('hidden');
-            shareDropdown.classList.remove('dropdown-up');
         }
-        if ((shareBtnMobile || shareTextBtnMobile) && shareDropdownMobile && 
-            !shareBtnMobile.contains(e.target) && 
-            (shareTextBtnMobile ? !shareTextBtnMobile.contains(e.target) : true) && 
-            !shareDropdownMobile.contains(e.target)) {
-            shareDropdownMobile.classList.add('hidden');
-            shareDropdownMobile.classList.remove('dropdown-up');
+        
+        // Mobile dropdowns
+        if (mobileShareDropdown && shareToggle && 
+            !shareToggle.contains(e.target) && !mobileShareDropdown.contains(e.target)) {
+            mobileShareDropdown.style.display = 'none';
+        }
+        
+        if (mobileTocDropdown && tocToggle && 
+            !tocToggle.contains(e.target) && !mobileTocDropdown.contains(e.target)) {
+            mobileTocDropdown.style.display = 'none';
         }
     });
     
-    // Close dropdown when pressing Escape key
+    // Close dropdowns when pressing Escape key
     document.addEventListener('keydown', function(e) {
         if (e.key === 'Escape') {
-            if (shareDropdown) {
-                shareDropdown.classList.add('hidden');
-                shareDropdown.classList.remove('dropdown-up');
-            }
-            if (shareDropdownMobile) {
-                shareDropdownMobile.classList.add('hidden');
-                shareDropdownMobile.classList.remove('dropdown-up');
-            }
-            if (tocMobileContent && !tocMobileContent.classList.contains('hidden')) {
-                tocMobileContent.classList.add('hidden');
-                if (tocMobileCaret) {
-                    tocMobileCaret.style.transform = 'rotate(0deg)';
-                }
-                localStorage.setItem('tocMobileExpanded', 'false');
-                console.log('📕 Mobile TOC closed via escape key');
-            }
+            if (shareDropdown) shareDropdown.classList.add('hidden');
+            if (mobileShareDropdown) mobileShareDropdown.style.display = 'none';
+            if (mobileTocDropdown) mobileTocDropdown.style.display = 'none';
         }
     });
 });
 
-// Copy to clipboard function
+// Copy to clipboard function (keep existing)
 function copyToClipboard(url) {
     if (navigator.clipboard && window.isSecureContext) {
-        // Use modern clipboard API
         navigator.clipboard.writeText(url).then(function() {
             showCopyFeedback('Link copied to clipboard!');
         }).catch(function(err) {
@@ -1093,29 +1035,18 @@ function copyToClipboard(url) {
             fallbackCopyTextToClipboard(url);
         });
     } else {
-        // Fallback for older browsers
         fallbackCopyTextToClipboard(url);
     }
     
-    // Close the dropdowns
+    // Close all dropdowns
     const shareDropdown = document.getElementById('share-dropdown');
-    const shareDropdownMobile = document.getElementById('share-dropdown-mobile');
     const mobileShareDropdown = document.querySelector('.mobile-share-dropdown');
     
-    if (shareDropdown) {
-        shareDropdown.classList.add('hidden');
-        shareDropdown.classList.remove('dropdown-up');
-    }
-    if (shareDropdownMobile) {
-        shareDropdownMobile.classList.add('hidden');
-        shareDropdownMobile.classList.remove('dropdown-up');
-    }
-    if (mobileShareDropdown) {
-        mobileShareDropdown.classList.add('hidden');
-    }
+    if (shareDropdown) shareDropdown.classList.add('hidden');
+    if (mobileShareDropdown) mobileShareDropdown.style.display = 'none';
 }
 
-// Fallback copy function for older browsers
+// Keep existing fallback and feedback functions
 function fallbackCopyTextToClipboard(text) {
     const textArea = document.createElement("textarea");
     textArea.value = text;
@@ -1139,9 +1070,7 @@ function fallbackCopyTextToClipboard(text) {
     document.body.removeChild(textArea);
 }
 
-// Show copy feedback
 function showCopyFeedback(message) {
-    // Create or update feedback element
     let feedback = document.getElementById('copy-feedback');
     if (!feedback) {
         feedback = document.createElement('div');
