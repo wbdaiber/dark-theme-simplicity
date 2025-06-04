@@ -906,10 +906,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const shareTextBtnMobile = document.getElementById('share-text-btn-mobile');
     const shareDropdownMobile = document.getElementById('share-dropdown-mobile');
     
-    // Collapsible TOC for mobile
-    const tocMobileToggle = document.querySelector('.toc-mobile-toggle');
-    const tocMobileContent = document.querySelector('.toc-mobile-content');
-    const tocMobileCaret = document.querySelector('.toc-mobile-caret');
+    // FIXED: Collapsible TOC for mobile - Updated selectors to match HTML
+    const tocMobileToggle = document.querySelector('.mobile-toc-toggle');
+    const tocMobileContent = document.querySelector('.mobile-toc-dropdown');
+    const tocMobileCaret = document.querySelector('.mobile-toc-toggle svg');
     
     if (tocMobileToggle && tocMobileContent && tocMobileCaret) {
         // Check if user preference for TOC state exists
@@ -921,16 +921,21 @@ document.addEventListener('DOMContentLoaded', function() {
             tocMobileCaret.style.transform = 'rotate(180deg)';
         }
         
-        tocMobileToggle.addEventListener('click', function() {
+        tocMobileToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
             tocMobileContent.classList.toggle('hidden');
             
             // Toggle caret rotation
             if (tocMobileContent.classList.contains('hidden')) {
                 tocMobileCaret.style.transform = 'rotate(0deg)';
                 localStorage.setItem('tocMobileExpanded', 'false');
+                console.log('📕 Mobile TOC closed');
             } else {
                 tocMobileCaret.style.transform = 'rotate(180deg)';
                 localStorage.setItem('tocMobileExpanded', 'true');
+                console.log('📖 Mobile TOC opened');
             }
         });
         
@@ -943,9 +948,45 @@ document.addEventListener('DOMContentLoaded', function() {
                     tocMobileContent.classList.add('hidden');
                     tocMobileCaret.style.transform = 'rotate(0deg)';
                     localStorage.setItem('tocMobileExpanded', 'false');
+                    console.log('📕 Mobile TOC closed via link click');
                 }, 100);
             });
         });
+        
+        console.log('✅ Mobile TOC accordion initialized');
+    } else {
+        console.log('⚠️ Mobile TOC elements not found');
+        console.log('Toggle:', tocMobileToggle);
+        console.log('Content:', tocMobileContent);
+        console.log('Caret:', tocMobileCaret);
+    }
+    
+    // FIXED: Mobile share toggle functionality
+    const mobileShareToggle = document.querySelector('.mobile-share-toggle');
+    const mobileShareDropdown = document.querySelector('.mobile-share-dropdown');
+    
+    if (mobileShareToggle && mobileShareDropdown) {
+        mobileShareToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            mobileShareDropdown.classList.toggle('hidden');
+            
+            if (mobileShareDropdown.classList.contains('hidden')) {
+                console.log('📕 Mobile share closed');
+            } else {
+                console.log('📖 Mobile share opened');
+            }
+        });
+        
+        // Close when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!mobileShareToggle.contains(e.target) && !mobileShareDropdown.contains(e.target)) {
+                mobileShareDropdown.classList.add('hidden');
+            }
+        });
+        
+        console.log('✅ Mobile share toggle initialized');
     }
     
     // Helper function to handle share dropdown
@@ -1029,6 +1070,14 @@ document.addEventListener('DOMContentLoaded', function() {
                 shareDropdownMobile.classList.add('hidden');
                 shareDropdownMobile.classList.remove('dropdown-up');
             }
+            if (tocMobileContent && !tocMobileContent.classList.contains('hidden')) {
+                tocMobileContent.classList.add('hidden');
+                if (tocMobileCaret) {
+                    tocMobileCaret.style.transform = 'rotate(0deg)';
+                }
+                localStorage.setItem('tocMobileExpanded', 'false');
+                console.log('📕 Mobile TOC closed via escape key');
+            }
         }
     });
 });
@@ -1051,6 +1100,8 @@ function copyToClipboard(url) {
     // Close the dropdowns
     const shareDropdown = document.getElementById('share-dropdown');
     const shareDropdownMobile = document.getElementById('share-dropdown-mobile');
+    const mobileShareDropdown = document.querySelector('.mobile-share-dropdown');
+    
     if (shareDropdown) {
         shareDropdown.classList.add('hidden');
         shareDropdown.classList.remove('dropdown-up');
@@ -1058,6 +1109,9 @@ function copyToClipboard(url) {
     if (shareDropdownMobile) {
         shareDropdownMobile.classList.add('hidden');
         shareDropdownMobile.classList.remove('dropdown-up');
+    }
+    if (mobileShareDropdown) {
+        mobileShareDropdown.classList.add('hidden');
     }
 }
 
