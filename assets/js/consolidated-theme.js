@@ -1,7 +1,7 @@
 /**
  * Dark Theme Simplicity - Final Consolidated Theme JavaScript
- * Includes: Mobile Menu + Responsive Videos + Theme Functions
- * Version: 1.2.0 - All conflicts resolved
+ * Includes: Mobile Menu + Responsive Videos + Theme Functions + Sticky Header
+ * Version: 1.2.0 - All conflicts resolved + Mobile Menu Enhancement
  */
 (function($) {
     'use strict';
@@ -29,12 +29,15 @@
             if (isHidden) {
                 $menu.removeClass('hidden');
                 $overlay.removeClass('hidden');
-                $body.css('overflow', 'hidden');
+                // ENHANCEMENT: Add body class for future styling
+                $body.addClass('mobile-menu-open');
                 console.log('📖 Mobile menu opened');
             } else {
                 $menu.addClass('hidden');
                 $overlay.addClass('hidden');
                 $body.css('overflow', '');
+                // ENHANCEMENT: Remove body class
+                $body.removeClass('mobile-menu-open');
                 console.log('📕 Mobile menu closed');
             }
         });
@@ -44,6 +47,8 @@
             $menu.addClass('hidden');
             $overlay.addClass('hidden');
             $body.css('overflow', '');
+            // ENHANCEMENT: Remove body class
+            $body.removeClass('mobile-menu-open');
             console.log('📕 Mobile menu closed via overlay');
         });
 
@@ -53,11 +58,75 @@
                 $menu.addClass('hidden');
                 $overlay.addClass('hidden');
                 $body.css('overflow', '');
+                // ENHANCEMENT: Remove body class
+                $body.removeClass('mobile-menu-open');
                 console.log('📕 Mobile menu closed via escape');
             }
         });
 
+        // Close menu when clicking on menu links
+        $menu.find('a').on('click', function() {
+            $menu.addClass('hidden');
+            $overlay.addClass('hidden');
+            $body.css('overflow', '');
+            // ENHANCEMENT: Remove body class
+            $body.removeClass('mobile-menu-open');
+            console.log('📕 Mobile menu closed via menu link click');
+        });
+
+        // Add touch/scroll support for mobile menu
+        $menu.on('touchstart touchmove', function(e) {
+            e.stopPropagation();
+        });
+
         console.log('✅ Mobile menu initialized successfully');
+    }
+
+    // === STICKY HEADER ENHANCEMENT ===
+    function initializeStickyHeader() {
+        console.log('📌 Initializing sticky header enhancement...');
+        
+        const $header = $('.site-header');
+        let lastScrollTop = 0;
+        let scrollTimer;
+
+        if (!$header.length) {
+            console.log('⚠️ Header element not found');
+            return;
+        }
+
+        function updateHeaderOnScroll() {
+            const scrollTop = $(window).scrollTop();
+            
+            // Add scrolled class for enhanced backdrop effect
+            if (scrollTop > 50) {
+                $header.addClass('scrolled');
+            } else {
+                $header.removeClass('scrolled');
+            }
+
+            // Optional: Add slight header animation on scroll direction change
+            if (scrollTop > lastScrollTop && scrollTop > 100) {
+                // Scrolling down
+                $header.css('transform', 'translateY(-2px)');
+            } else {
+                // Scrolling up
+                $header.css('transform', 'translateY(0)');
+            }
+            
+            lastScrollTop = scrollTop;
+        }
+
+        // Throttled scroll event for better performance
+        $(window).on('scroll', function() {
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(updateHeaderOnScroll, 10);
+        });
+
+        // Initial check
+        updateHeaderOnScroll();
+        
+        console.log('✅ Sticky header enhancement initialized');
     }
 
     // === RESPONSIVE VIDEOS FUNCTIONALITY ===
@@ -256,7 +325,8 @@
         console.log('🚀 Dark Theme Simplicity - Final Consolidated Script Loading...');
         
         // Initialize all functionality
-        initializeMobileMenu();
+        initializeMobileMenu(); // ✅ Added mobile menu with enhancement
+        initializeStickyHeader(); // ✅ Added sticky header
         initializeResponsiveVideos();
         handleWindowResize();
         initializeSmoothScrolling();
