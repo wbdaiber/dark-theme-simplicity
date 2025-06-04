@@ -373,58 +373,58 @@ button:focus,
 /* Mobile-specific enhancements */
 @media (max-width: 768px) {
   .entry-content.prose {
-    font-size: 1.125rem; /* Slightly larger on mobile */
-    line-height: 1.75;
+	font-size: 1.125rem; /* Slightly larger on mobile */
+	line-height: 1.75;
   }
-  
+ 
   .entry-content.prose h1 {
-    font-size: 2rem;
+	font-size: 2rem;
   }
-  
+ 
   .entry-content.prose h2 {
-    font-size: 1.75rem;
+	font-size: 1.75rem;
   }
-  
+ 
   .entry-content.prose h3 {
-    font-size: 1.5rem;
+	font-size: 1.5rem;
   }
-  
+ 
   /* Enhanced spacing on mobile */
   .entry-content.prose p {
-    margin-bottom: 1.5em;
+	margin-bottom: 1.5em;
   }
-  
+ 
   .entry-content.prose img,
   .entry-content.prose figure {
-    margin: 1.5rem 0;
+	margin: 1.5rem 0;
   }
-  
+ 
   /* Better table handling on mobile */
   .entry-content.prose table {
-    font-size: 0.875rem;
-    margin: 1.5rem 0;
+	font-size: 0.875rem;
+	margin: 1.5rem 0;
   }
-  
+ 
   /* Touch-friendly TOC on mobile */
   .table-of-contents a {
-    min-height: 48px; /* Larger touch targets on mobile */
-    padding: 0.75rem 1rem;
-    font-size: 1rem; /* Updated to match new size */
+	min-height: 48px; /* Larger touch targets on mobile */
+	padding: 0.75rem 1rem;
+	font-size: 1rem; /* Updated to match new size */
   }
 }
 
 /* Tablet-specific adjustments */
 @media (min-width: 769px) and (max-width: 1024px) {
   .entry-content.prose {
-    font-size: 1.125rem;
+	font-size: 1.125rem;
   }
-  
+ 
   .entry-content.prose h1 {
-    font-size: 2.25rem;
+	font-size: 2.25rem;
   }
-  
+ 
   .entry-content.prose h2 {
-    font-size: 1.875rem;
+	font-size: 1.875rem;
   }
 }
 
@@ -435,27 +435,27 @@ button:focus,
 /* Enhanced support for high contrast mode */
 @media (prefers-contrast: high) {
   .entry-content.prose {
-    color: #ffffff;
+	color: #ffffff;
   }
-  
+ 
   .entry-content.prose h1,
   .entry-content.prose h2,
   .entry-content.prose h3,
   .entry-content.prose h4,
   .entry-content.prose h5,
   .entry-content.prose h6 {
-    color: #ffffff;
+	color: #ffffff;
   }
-  
+ 
   .entry-content.prose a {
-    color: #60a5fa;
-    text-decoration: underline;
+	color: #60a5fa;
+	text-decoration: underline;
   }
-  
+ 
   .entry-content.prose code {
-    background-color: #000000;
-    color: #ffffff;
-    border: 1px solid #ffffff;
+	background-color: #000000;
+	color: #ffffff;
+	border: 1px solid #ffffff;
   }
 }
 
@@ -466,9 +466,9 @@ button:focus,
 /* Respect reduced motion preferences */
 @media (prefers-reduced-motion: reduce) {
   * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
+	animation-duration: 0.01ms !important;
+	animation-iteration-count: 1 !important;
+	transition-duration: 0.01ms !important;
   }
 }
 
@@ -479,32 +479,32 @@ button:focus,
 /* Enhanced print styles for better readability */
 @media print {
   .entry-content.prose {
-    font-size: 12pt;
-    line-height: 1.5;
-    color: #000000;
+	font-size: 12pt;
+	line-height: 1.5;
+	color: #000000;
   }
-  
+ 
   .entry-content.prose h1,
   .entry-content.prose h2,
   .entry-content.prose h3,
   .entry-content.prose h4,
   .entry-content.prose h5,
   .entry-content.prose h6 {
-    color: #000000;
-    page-break-after: avoid;
+	color: #000000;
+	page-break-after: avoid;
   }
-  
+ 
   .entry-content.prose img {
-    max-width: 100%;
-    page-break-inside: avoid;
+	max-width: 100%;
+	page-break-inside: avoid;
   }
-  
+ 
   .entry-content.prose table {
-    page-break-inside: avoid;
+	page-break-inside: avoid;
   }
-  
+ 
   .table-of-contents {
-    page-break-after: always;
+	page-break-after: always;
   }
 }
 
@@ -533,7 +533,7 @@ button:focus,
   outline: none;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 }
-*/ 
+*/
 
 /* ============================================
    EMERGENCY FIXES FOR BLOG LAYOUT
@@ -607,17 +607,17 @@ button:focus,
 @media (max-width: 767px) {
   /* Make sticky container actually sticky */
   .sticky.top-\[70px\] {
-    position: sticky !important;
-    top: 70px !important;
-    z-index: 40 !important;
-    margin-bottom: 1.5rem !important;
-    width: 100% !important;
+	position: sticky !important;
+	top: 70px !important;
+	z-index: 40 !important;
+	margin-bottom: 1.5rem !important;
+	width: 100% !important;
   }
-  
+ 
   /* Enhanced visual effects when scrolled */
   .scrolled .mobile-sticky-nav {
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
-    border-color: rgba(96, 165, 250, 0.3) !important;
+	box-shadow: 0 15px 35px rgba(0, 0, 0, 0.25) !important;
+	border-color: rgba(96, 165, 250, 0.3) !important;
   }
 }
 
@@ -625,23 +625,23 @@ button:focus,
 @media (min-width: 768px) {
   /* Make main content column wider */
   .flex-col.md\:flex-row > div:first-child {
-    width: 75% !important;
-    flex: 0 0 75% !important;
+	width: 75% !important;
+	flex: 0 0 75% !important;
   }
-  
+ 
   /* Make TOC/sidebar column narrower */
   .flex-col.md\:flex-row > div:last-child {
-    width: 25% !important;
-    flex: 0 0 25% !important;
+	width: 25% !important;
+	flex: 0 0 25% !important;
   }
-  
+ 
   /* Ensure sticky behavior works correctly */
   .sticky.top-24 {
-    position: sticky !important;
-    top: 5rem !important;
-    max-height: calc(100vh - 8rem) !important;
-    overflow-y: auto !important;
-    padding-right: 0.5rem !important;
+	position: sticky !important;
+	top: 5rem !important;
+	max-height: calc(100vh - 8rem) !important;
+	overflow-y: auto !important;
+	padding-right: 0.5rem !important;
   }
 }
 
@@ -658,7 +658,7 @@ button:focus,
 /* Fix hero image duplication issue */
 @media (min-width: 768px) {
   .absolute.inset-0.md\:hidden {
-    display: none !important; /* Hide background image on desktop */
+	display: none !important; /* Hide background image on desktop */
   }
 }
 
@@ -718,8 +718,8 @@ button:focus,
   .entry-content.prose .responsive-video-wrapper,
   .wp-block-embed,
   .wp-block-video {
-    max-width: 854px;
-    margin: 1rem auto !important; /* Reduced spacing */
+	max-width: 854px;
+	margin: 1rem auto !important; /* Reduced spacing */
   }
 }
 
@@ -729,9 +729,9 @@ button:focus,
   .entry-content.prose .responsive-video-wrapper,
   .wp-block-embed,
   .wp-block-video {
-    max-width: 600px;
-    width: 95%;
-    margin: 1rem auto !important; /* Reduced spacing */
+	max-width: 600px;
+	width: 95%;
+	margin: 1rem auto !important; /* Reduced spacing */
   }
 }
 
@@ -741,9 +741,9 @@ button:focus,
   .entry-content.prose .responsive-video-wrapper,
   .wp-block-embed,
   .wp-block-video {
-    max-width: 450px;
-    width: 100%;
-    margin: 1rem auto !important; /* Reduced spacing */
+	max-width: 450px;
+	width: 100%;
+	margin: 1rem auto !important; /* Reduced spacing */
   }
 }
 
@@ -843,15 +843,15 @@ button:focus,
 @media (max-width: 768px) {
   .entry-content table,
   .entry-content.prose table {
-    font-size: 0.875rem !important;
+	font-size: 0.875rem !important;
   }
-  
+ 
   .entry-content th,
   .entry-content td,
   .entry-content.prose th,
   .entry-content.prose td {
-    padding: 0.625rem 0.75rem !important;
-    min-width: 80px !important;
+	padding: 0.625rem 0.75rem !important;
+	min-width: 80px !important;
   }
 }
 
@@ -1067,18 +1067,18 @@ button:focus,
 @media (max-width: 768px) {
   .single .entry-content,
   .single .entry-content.prose {
-    font-size: 1.35rem; /* Increased from 1.25rem */
+	font-size: 1.35rem; /* Increased from 1.25rem */
   }
-  
+ 
   .single .entry-content p,
   .single .entry-content.prose p {
-    font-size: 1.35rem; /* Increased from 1.25rem */
-    margin-bottom: 0.5em;
+	font-size: 1.35rem; /* Increased from 1.25rem */
+	margin-bottom: 0.5em;
   }
-  
+ 
   .single .entry-content li,
   .single .entry-content.prose li {
-    font-size: 1.35rem; /* Increased from 1.25rem */
+	font-size: 1.35rem; /* Increased from 1.25rem */
   }
 }
 
@@ -1198,7 +1198,7 @@ button:focus,
 }
 
 /* Make sure "Share This" has consistent styling with TOC */
-.toc-text, 
+.toc-text,
 .share-text {
   font-size: 1.4rem !important; /* Reduced to 1.4rem to match TOC header size */
   font-weight: 600;
@@ -1234,11 +1234,11 @@ button:focus,
 /* Responsive adjustments for Related Articles */
 @media (max-width: 768px) {
   .single .bg-dark-300 h2 {
-    font-size: 1.8rem !important;
+	font-size: 1.8rem !important;
   }
-  
+ 
   .single .bg-dark-300 .grid h3 {
-    font-size: 1.2rem !important;
+	font-size: 1.2rem !important;
   }
 }
 
@@ -1407,9 +1407,762 @@ div[class*="Button"] video {
 }
 
 /* Make sure "Share This" has consistent styling with TOC */
-.toc-text, 
+.toc-text,
 .share-text {
   font-size: 1.4rem !important; /* Reduced to 1.4rem to match TOC header size */
   font-weight: 600;
   color: #ffffff;
-} 
+}
+
+/* ============================================
+   FIX FOR MOBILE SPACING ISSUES
+   ============================================ */
+
+/* Reset the problematic mobile spacing */
+@media (max-width: 767px) {
+    /* Fix the large gap between header and hero section */
+    .site-main .container {
+        margin-top: 1rem !important; /* Reduced from 2rem */
+        padding-top: 0 !important;
+    }
+    
+    /* Reset hero section spacing */
+    .max-w-6xl.mx-auto.mb-8 {
+        margin-bottom: 1rem !important; /* Reduced from 2rem */
+        margin-top: 0 !important;
+    }
+    
+    /* Fix mobile sticky nav spacing */
+    .md\:hidden.sticky.top-\[70px\] {
+        margin-bottom: 0.75rem !important; /* Reduced from 1.5rem */
+        position: sticky !important;
+        top: 70px !important;
+        z-index: 40 !important;
+    }
+    
+    /* Reset article container spacing */
+    article.max-w-6xl.mx-auto.bg-dark-300.rounded-xl.shadow-xl {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Fix content section padding that's pushing content down */
+    .p-8.md\:p-12 {
+        padding-top: 1rem !important; /* Reduced from 2rem */
+        padding-bottom: 1rem !important;
+    }
+    
+    /* Fix flex container spacing */
+    .flex.flex-col.md\:flex-row.gap-4 {
+        gap: 0.75rem !important; /* Reduced from 1rem */
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Reset entry content spacing */
+    .entry-content,
+    .entry-content.prose {
+        margin-top: 0 !important;
+        padding-top: 0 !important;
+    }
+    
+    /* Fix mobile dropdown spacing to content */
+    .mobile-toc-dropdown,
+    .mobile-share-dropdown {
+        margin-bottom: 0.5rem !important; /* Reduced spacing */
+    }
+    
+    /* Ensure no extra spacing from container elements */
+    .container.mx-auto.px-4 {
+        padding-top: 0 !important;
+        margin-top: 1rem !important; /* Consistent with site-main */
+    }
+}
+
+/* ============================================
+   FIX DESKTOP SHARE DROPDOWN Z-INDEX ONLY
+   ============================================ */
+
+/* Minimal fix for share dropdown overlap - desktop only */
+@media (min-width: 768px) {
+    #share-dropdown {
+        z-index: 99999 !important;
+        position: absolute !important;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5) !important;
+    }
+    
+    #share-container {
+        position: relative !important;
+        z-index: 9999 !important;
+    }
+    
+    /* Only fix overflow for desktop sidebar */
+    .sticky.top-24 {
+        overflow: visible !important;
+        z-index: 60 !important;
+    }
+    
+    .hidden.md\:block {
+        overflow: visible !important;
+    }
+}
+
+/* ============================================
+   RESET PROBLEMATIC STYLES FROM EXISTING CSS
+   ============================================ */
+
+/* Override any margin/padding that might be causing issues */
+.site-main {
+    padding-top: 0 !important;
+}
+
+/* Ensure consistent spacing across all screen sizes */
+.page-header {
+    margin-bottom: 0 !important;
+}
+
+/* Reset any gap properties that might be adding extra space */
+.space-y-2 > * + * {
+    margin-top: 0.5rem !important; /* Reduced from potentially larger values */
+}
+
+/* Fix any grid gaps that might be too large on mobile */
+@media (max-width: 767px) {
+    .grid {
+        gap: 0.75rem !important;
+    }
+    
+    .space-y-4 > * + * {
+        margin-top: 0.75rem !important;
+    }
+    
+    .space-y-8 > * + * {
+        margin-top: 1rem !important;
+    }
+}
+/* ============================================
+   MOBILE SPACING AND CONTAINER FIXES
+   Add this to: assets/css/blog-accessibility.css
+   ============================================ */
+
+/* Fix the large gap between navigation and content on mobile */
+@media (max-width: 767px) {
+    /* Reset the main container margin that's causing the large gap */
+    .site-main .container {
+        margin-top: 0 !important; /* Remove the 2rem margin */
+        padding-top: 0.5rem !important; /* Add minimal padding instead */
+    }
+    
+    /* Fix the hero section spacing */
+    .max-w-6xl.mx-auto.mb-8 {
+        margin-bottom: 0.5rem !important; /* Reduce gap after hero */
+        margin-top: 0 !important; /* Remove top margin */
+    }
+    
+    /* Fix the article container to fill screen width */
+    article.max-w-6xl.mx-auto.bg-dark-300.rounded-xl.shadow-xl {
+        margin-left: 0.5rem !important; /* Add small margin instead of auto */
+        margin-right: 0.5rem !important; /* Add small margin instead of auto */
+        max-width: calc(100vw - 1rem) !important; /* Ensure it fits within viewport */
+        width: calc(100vw - 1rem) !important; /* Force full width minus small margins */
+    }
+    
+    /* Fix the page header container to fill width */
+    .page-header.bg-dark-300.rounded-xl.shadow-xl {
+        margin-left: 0.5rem !important;
+        margin-right: 0.5rem !important;
+        max-width: calc(100vw - 1rem) !important;
+        width: calc(100vw - 1rem) !important;
+    }
+    
+    /* Ensure the main container uses full width */
+    .container.mx-auto.px-4 {
+        padding-left: 0 !important; /* Remove default padding */
+        padding-right: 0 !important; /* Remove default padding */
+        margin-left: 0 !important; /* Remove auto margin */
+        margin-right: 0 !important; /* Remove auto margin */
+        max-width: 100vw !important; /* Use full viewport width */
+        width: 100vw !important; /* Force full width */
+    }
+    
+    /* Fix the content padding inside the containers */
+    .p-8.md\:p-12 {
+        padding: 1rem !important; /* Reduce padding to prevent black borders */
+    }
+    
+    /* Fix the hero section grid padding */
+    .grid.grid-cols-1.md\:grid-cols-3.lg\:grid-cols-5 > div {
+        padding: 1rem !important; /* Reduce padding in grid items */
+    }
+    
+    /* Ensure mobile sticky nav doesn't add extra spacing */
+    .md\:hidden.sticky.top-\[70px\] {
+        margin-bottom: 0.5rem !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Fix the flex container spacing */
+    .flex.flex-col.md\:flex-row.gap-4 {
+        gap: 0.5rem !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Remove any rounded corners that might be showing black borders */
+    .rounded-xl {
+        border-radius: 0.5rem !important; /* Reduce border radius */
+    }
+    
+    /* Ensure the site-main container fills the width */
+    .site-main {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+        overflow-x: hidden !important; /* Prevent horizontal scroll */
+    }
+    
+    /* Fix any max-width constraints that might be causing issues */
+    .max-w-6xl {
+        max-width: calc(100vw - 1rem) !important;
+    }
+    
+    /* Ensure entry content doesn't have extra margins */
+    .entry-content,
+    .entry-content.prose {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Fix the content container width */
+    .content-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+}
+
+/* ============================================
+   ADDITIONAL CONTAINER FIXES
+   ============================================ */
+
+/* Fix for the black border issue - ensure backgrounds fill properly */
+@media (max-width: 767px) {
+    /* Make sure the dark background extends to edges */
+    .bg-dark-300 {
+        background-color: rgb(55 65 81) !important; /* Ensure solid background */
+        border: none !important; /* Remove any borders */
+    }
+    
+    /* Fix the page background to prevent black showing through */
+    body {
+        background-color: rgb(17 24 39) !important; /* Match your dark theme */
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Ensure the main content area has proper background */
+    .site-main {
+        background-color: rgb(17 24 39) !important;
+    }
+    
+    /* Fix any shadow that might be creating a border effect */
+    .shadow-xl {
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1) !important; /* Reduce shadow */
+    }
+    
+    /* Make sure the article background fills completely */
+    article {
+        background-color: rgb(55 65 81) !important;
+        border: none !important;
+        box-shadow: none !important; /* Remove shadow that might look like border */
+    }
+    
+    /* Fix the page header background */
+    .page-header {
+        background-color: rgb(55 65 81) !important;
+        border: none !important;
+    }
+}
+
+/* ============================================
+   VIEWPORT OVERFLOW FIXES
+   ============================================ */
+
+/* Prevent any horizontal scrolling issues */
+@media (max-width: 767px) {
+    html, body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+    
+    /* Fix any elements that might be causing overflow */
+    * {
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+    }
+    
+    /* Specific fix for containers that might overflow */
+    .container,
+    .max-w-6xl,
+    article,
+    .page-header {
+        box-sizing: border-box !important;
+        overflow-x: hidden !important;
+    }
+}
+
+/* ============================================
+   COMPLETE MOBILE LAYOUT FIX - HIGHEST PRIORITY
+   Add to the very end of: assets/css/blog-accessibility.css
+   ============================================ */
+
+/* NUCLEAR OPTION - Override everything on mobile */
+@media (max-width: 767px) {
+    /* Fix the header padding that's pushing content down */
+    body:not(.home):not(.front-page) main > :first-child,
+    body:not(.home):not(.front-page) main .container > :first-child,
+    body:not(.home):not(.front-page) .entry-content,
+    body:not(.home):not(.front-page) .page-content {
+        padding-top: 0 !important;
+    }
+    
+    /* Override the inline margin-top: 2rem with maximum specificity */
+    main#content.site-main.pt-0.pb-16 > div.container.mx-auto.px-4[style*="margin-top"],
+    .site-main > .container[style*="margin-top"],
+    .site-main .container[style] {
+        margin-top: 0.25rem !important;
+    }
+    
+    /* Force full-width containers - no auto margins */
+    .container.mx-auto.px-4,
+    .container.mx-auto {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+    }
+    
+    /* Force hero section to fill width */
+    .max-w-6xl.mx-auto.mb-8,
+    .page-header.bg-dark-300.rounded-xl.shadow-xl {
+        margin-left: 0.5rem !important;
+        margin-right: 0.5rem !important;
+        margin-top: 0 !important;
+        margin-bottom: 0.5rem !important;
+        max-width: calc(100vw - 1rem) !important;
+        width: calc(100vw - 1rem) !important;
+    }
+    
+    /* Force article container to fill width */
+    article.max-w-6xl.mx-auto.bg-dark-300.rounded-xl.shadow-xl {
+        margin-left: 0.5rem !important;
+        margin-right: 0.5rem !important;
+        margin-top: 0 !important;
+        max-width: calc(100vw - 1rem) !important;
+        width: calc(100vw - 1rem) !important;
+    }
+    
+    /* Reduce all internal padding that creates visual gaps */
+    .p-8.md\:p-12,
+    .p-8,
+    .md\:p-12 {
+        padding: 1rem !important;
+    }
+    
+    /* Fix mobile sticky nav spacing */
+    .md\:hidden.sticky.top-\[70px\],
+    .sticky.top-\[70px\] {
+        margin-bottom: 0.5rem !important;
+        top: 64px !important;
+    }
+    
+    /* Reduce spacing in all hero elements */
+    nav.flex.items-center.gap-2.text-sm.mb-6,
+    .inline-flex.items-center.rounded-full.border.px-3.py-1.text-sm.font-semibold.mb-6,
+    h1.text-3xl.md\:text-4xl.lg\:text-5xl.font-bold.mb-6,
+    .text-lg.text-light-100\/90.mb-6 {
+        margin-bottom: 0.75rem !important;
+    }
+    
+    /* Fix grid and flex containers */
+    .flex.flex-col.md\:flex-row.gap-4,
+    .grid.grid-cols-1.md\:grid-cols-3.lg\:grid-cols-5 {
+        gap: 0.5rem !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Ensure proper background coverage */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: rgb(18 18 20) !important;
+        overflow-x: hidden !important;
+    }
+    
+    /* Prevent any horizontal overflow */
+    .site-main,
+    main {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Remove shadows that appear as borders */
+    .shadow-xl {
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1) !important;
+    }
+    
+    /* Fix any remaining max-width issues */
+    .max-w-6xl,
+    .max-w-5xl,
+    .max-w-4xl {
+        max-width: calc(100vw - 1rem) !important;
+    }
+}
+
+/* Fix for very small screens */
+@media (max-width: 380px) {
+    .container.mx-auto.px-4,
+    .max-w-6xl.mx-auto.mb-8,
+    .page-header.bg-dark-300.rounded-xl.shadow-xl,
+    article.max-w-6xl.mx-auto.bg-dark-300.rounded-xl.shadow-xl {
+        margin-left: 0.25rem !important;
+        margin-right: 0.25rem !important;
+        width: calc(100vw - 0.5rem) !important;
+        max-width: calc(100vw - 0.5rem) !important;
+    }
+    
+    .container.mx-auto.px-4 {
+        padding-left: 0.25rem !important;
+        padding-right: 0.25rem !important;
+    }
+}
+
+/* Ensure this CSS loads last by making it more specific */
+body.single main#content.site-main.pt-0.pb-16 > div.container.mx-auto.px-4[style*="margin-top"] {
+    margin-top: 0.25rem !important;
+}
+
+body.single .max-w-6xl.mx-auto.mb-8 {
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+    margin-top: 0 !important;
+    margin-bottom: 0.5rem !important;
+    max-width: calc(100vw - 1rem) !important;
+    width: calc(100vw - 1rem) !important;
+}
+
+body.single article.max-w-6xl.mx-auto.bg-dark-300.rounded-xl.shadow-xl {
+    margin-left: 0.5rem !important;
+    margin-right: 0.5rem !important;
+    margin-top: 0 !important;
+    max-width: calc(100vw - 1rem) !important;
+    width: calc(100vw - 1rem) !important;
+}
+/* ============================================
+   MOBILE SINGLE POST OPTIMIZATION FIXES
+   Add these styles to fix spacing and container issues
+   ============================================ */
+
+/* Fix the large gap between header and content on mobile */
+@media (max-width: 767px) {
+    /* Remove the inline margin-top style that's causing the large gap */
+    main#content.site-main.pt-0.pb-16 > div.container.mx-auto.px-4[style*="margin-top"],
+    .site-main > .container[style*="margin-top"],
+    .site-main .container[style] {
+        margin-top: 0.75rem !important; /* Reduced from 2rem to 0.75rem */
+    }
+    
+    /* Make containers full-width on mobile to eliminate dark borders */
+    .container.mx-auto.px-4,
+    .container.mx-auto {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding-left: 1rem !important;
+        padding-right: 1rem !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+    }
+    
+    /* Fix hero section to fill width */
+    .max-w-6xl.mx-auto.mb-8,
+    .page-header.bg-dark-300.rounded-xl.shadow-xl {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0.75rem !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+        border-radius: 0 !important; /* Remove rounded corners that show dark borders */
+    }
+    
+    /* Fix article container to fill width */
+    article.max-w-6xl.mx-auto.bg-dark-300.rounded-xl.shadow-xl {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 0 !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+        border-radius: 0 !important; /* Remove rounded corners */
+        box-shadow: none !important; /* Remove shadow that appears as border */
+    }
+    
+    /* Reduce internal padding that creates visual gaps */
+    .p-8.md\:p-12,
+    .p-8,
+    .md\:p-12 {
+        padding: 1.25rem !important; /* Reasonable padding without gaps */
+    }
+    
+    /* Fix mobile sticky nav spacing */
+    .md\:hidden.sticky.top-\[70px\],
+    .sticky.top-\[70px\] {
+        margin-bottom: 0.75rem !important;
+        top: 64px !important; /* Match header height */
+    }
+    
+    /* Reduce spacing in hero elements */
+    nav.flex.items-center.gap-2.text-sm.mb-6 {
+        margin-bottom: 1rem !important;
+    }
+    
+    .inline-flex.items-center.rounded-full.border.px-3.py-1.text-sm.font-semibold.mb-6 {
+        margin-bottom: 1rem !important;
+    }
+    
+    h1.text-3xl.md\:text-4xl.lg\:text-5xl.font-bold.mb-6 {
+        margin-bottom: 1rem !important;
+        font-size: 2rem !important; /* Responsive text size */
+    }
+    
+    .text-lg.text-light-100\/90.mb-6 {
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Fix grid and flex containers */
+    .flex.flex-col.md\:flex-row.gap-4,
+    .grid.grid-cols-1.md\:grid-cols-3.lg\:grid-cols-5 {
+        gap: 0.75rem !important;
+        margin-top: 0 !important;
+    }
+    
+    /* Ensure proper background coverage - no dark borders */
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        background-color: rgb(55 65 81) !important; /* Match article background */
+        overflow-x: hidden !important;
+    }
+    
+    /* Prevent horizontal overflow */
+    .site-main,
+    main {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Remove shadows and borders that create visual gaps */
+    .shadow-xl {
+        box-shadow: none !important;
+    }
+    
+    .rounded-xl {
+        border-radius: 0 !important;
+    }
+    
+    /* Fix content area to use full width */
+    .content-container {
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Fix entry content spacing */
+    .entry-content,
+    .entry-content.prose {
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+    
+    /* Fix mobile dropdowns spacing */
+    .mobile-toc-dropdown,
+    .mobile-share-dropdown {
+        margin-bottom: 0.75rem !important;
+    }
+}
+
+/* Fix for very small screens (phones) */
+@media (max-width: 480px) {
+    .container.mx-auto.px-4 {
+        padding-left: 0.75rem !important;
+        padding-right: 0.75rem !important;
+    }
+    
+    .p-8.md\:p-12 {
+        padding: 1rem !important;
+    }
+    
+    /* Smaller text on very small screens */
+    h1.text-3xl.md\:text-4xl.lg\:text-5xl.font-bold.mb-6 {
+        font-size: 1.75rem !important;
+    }
+}
+
+/* ============================================
+   OVERRIDE HEADER PADDING ISSUES
+   ============================================ */
+
+/* Fix header padding that pushes content down on mobile */
+@media (max-width: 767px) {
+    /* Reset problematic padding from header.php */
+    body:not(.home):not(.front-page) main > :first-child,
+    body:not(.home):not(.front-page) main .container > :first-child,
+    body:not(.home):not(.front-page) .entry-content,
+    body:not(.home):not(.front-page) .page-content {
+        padding-top: 0 !important; /* Remove the 38px padding */
+    }
+    
+    /* Add minimal spacing only where needed */
+    .site-main {
+        margin-top: 64px !important; /* Header height */
+        padding-top: 0.5rem !important; /* Small breathing room */
+    }
+}
+
+/* ============================================
+   ENSURE CONSISTENT DARK BACKGROUND
+   ============================================ */
+
+/* Make sure all elements use consistent dark background */
+@media (max-width: 767px) {
+    .bg-dark-300 {
+        background-color: rgb(55 65 81) !important;
+        border: none !important;
+    }
+    
+    .bg-dark-200 {
+        background-color: rgb(31 41 55) !important;
+        border: none !important;
+    }
+    
+    /* Ensure page background matches content */
+    html,
+    body {
+        background-color: rgb(55 65 81) !important;
+    }
+    
+    .page-header {
+        background-color: rgb(55 65 81) !important;
+        border: none !important;
+    }
+    
+    article {
+        background-color: rgb(55 65 81) !important;
+        border: none !important;
+    }
+}
+
+/* ============================================
+   RESPONSIVE TYPOGRAPHY FOR MOBILE
+   ============================================ */
+
+@media (max-width: 767px) {
+    /* Optimize text sizes for mobile reading */
+    .entry-content.prose,
+    .entry-content.prose p {
+        font-size: 1.125rem !important; /* 18px - good for mobile */
+        line-height: 1.7 !important;
+    }
+    
+    .entry-content.prose h2 {
+        font-size: 1.5rem !important;
+        margin-top: 1.5rem !important;
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .entry-content.prose h3 {
+        font-size: 1.25rem !important;
+        margin-top: 1.25rem !important;
+        margin-bottom: 0.5rem !important;
+    }
+    
+    /* Table of contents mobile optimization */
+    .table-of-contents {
+        margin: 1rem 0 !important;
+        padding: 1rem !important;
+        border-radius: 0.5rem !important;
+    }
+    
+    .mobile-toc-list,
+    .mobile-toc-dropdown {
+        font-size: 0.9rem !important;
+        max-height: 50vh !important;
+    }
+    
+    .mobile-share-toggle,
+    .mobile-toc-toggle {
+        font-size: 0.875rem !important;
+        padding: 0.5rem 0.75rem !important;
+    }
+}
+
+/* ============================================
+   FORCE FULL WIDTH ON MOBILE - NUCLEAR OPTION
+   ============================================ */
+
+/* High specificity overrides to ensure full-width display */
+@media (max-width: 767px) {
+    body.single main#content.site-main.pt-0.pb-16 > div.container.mx-auto.px-4[style*="margin-top"] {
+        margin-top: 0.75rem !important;
+    }
+    
+    body.single .max-w-6xl.mx-auto.mb-8 {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 0 !important;
+        margin-bottom: 0.75rem !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+        border-radius: 0 !important;
+    }
+    
+    body.single article.max-w-6xl.mx-auto.bg-dark-300.rounded-xl.shadow-xl {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        margin-top: 0 !important;
+        max-width: 100vw !important;
+        width: 100vw !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+    
+    /* Override any conflicting max-width constraints */
+    .max-w-6xl,
+    .max-w-5xl,
+    .max-w-4xl {
+        max-width: 100vw !important;
+    }
+    
+    /* Force containers to use full viewport width */
+    * {
+        box-sizing: border-box !important;
+    }
+    
+    /* Prevent any horizontal scroll */
+    html,
+    body {
+        overflow-x: hidden !important;
+        max-width: 100vw !important;
+    }
+}
+
