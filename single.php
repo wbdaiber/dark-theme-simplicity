@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying all single posts - Mobile Optimized
+ * The template for displaying all single posts - Mobile Optimized with Fixed Hero Section
  */
 
 get_header();
@@ -78,8 +78,8 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
 ?>
 
 <main id="content" class="site-main pt-0 pb-16">
-	<!-- MOBILE OPTIMIZED: Remove inline margin-top and add mobile-optimized-container class -->
-	<div class="container mx-auto px-4 mobile-optimized-container">
+	<!-- IMPROVED: Container with proper desktop spacing and mobile-optimized padding -->
+	<div class="container mx-auto px-2 sm:px-4 lg:px-6 mobile-optimized-container">
 	<?php while (have_posts()) : the_post();
     	// Get post display options
     	$show_toc = get_post_meta(get_the_ID(), '_show_table_of_contents', true);
@@ -93,114 +93,113 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
     	if ($show_toc === '') $show_toc = $default_show_toc;
     	if ($show_share === '') $show_share = $default_show_share;
 	?>
-        	<!-- MOBILE OPTIMIZED: Hero Section Card with mobile classes -->
-        	<div class="max-w-6xl mx-auto mb-8 hero-container">
-            	<div class="page-header bg-dark-300 mobile-hero-card">
-                	<!-- Mobile Background Image ONLY -->
-            	<?php if (has_post_thumbnail()) : ?>
-                    	<div class="absolute inset-0 md:hidden z-0">
-                        	<?php the_post_thumbnail('large', ['class' => 'w-full h-full object-cover']); ?>
-                        	<div class="absolute inset-0 bg-black opacity-75"></div>
-                	</div>
-            	<?php endif; ?>
 
-                	<!-- Content Grid -->
-                	<div class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 min-h-[400px] relative z-10">
-                    	<!-- Background Image Layer for Medium Screens (860px or less) -->
-                    	<?php if (has_post_thumbnail()) : ?>
-                        	<div class="absolute inset-0 hidden small-medium:block md:hidden z-0">
-                            	<?php the_post_thumbnail('large', ['class' => 'w-full h-full object-contain']); ?>
-                            	<div class="absolute inset-0 bg-black opacity-75"></div>
-                        	</div>
-                    	<?php endif; ?>
-                   	 
-                    	<!-- MOBILE OPTIMIZED: Content Column with reduced mobile padding -->
-                    	<div class="md:col-span-2 lg:col-span-3 p-4 md:p-10 flex flex-col justify-center relative z-20">
-                        	<div class="relative z-10 bg-black/60 small-medium:bg-black/60 md:bg-transparent p-3 small-medium:p-4 md:p-0 rounded-lg small-medium:rounded-lg md:rounded-none">
-                            	<!-- MOBILE OPTIMIZED: Breadcrumbs with reduced mobile margin -->
-                            	<nav class="flex items-center gap-2 text-sm mb-4 md:mb-6 text-light-100/70">
-                                	<a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-blue-400 transition-colors">Home</a>
-                                	<span class="text-light-100/50">›</span>
-                                	<?php
-                                	// Get the page ID that's set as the "Posts page" in Settings > Reading
-                                	$posts_page_id = get_option('page_for_posts');
-                               	 
-                                	if ($posts_page_id) {
-                                    	// If a static page is set as the posts page
-                                    	$posts_page_title = get_the_title($posts_page_id);
-                                    	$posts_page_url = get_permalink($posts_page_id);
-                                    	?>
-                                    	<a href="<?php echo esc_url($posts_page_url); ?>" class="hover:text-blue-400 transition-colors"><?php echo esc_html($posts_page_title); ?></a>
+        	<!-- IMPROVED HERO SECTION - Fixed container, z-index, and mobile spacing -->
+        	<div class="hero-main-container">
+            	<div class="hero-wrapper max-w-7xl mx-auto mb-6 md:mb-8 px-2 sm:px-4">
+                	<div class="hero-card bg-dark-300 rounded-xl overflow-hidden shadow-xl">
+                    	<!-- Content Grid with proper constraints and flexible height -->
+                    	<div class="hero-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 min-h-[400px] auto-rows-max">
+                        	
+                        	<!-- Content Column - Left Side -->
+                        	<div class="hero-content md:col-span-2 lg:col-span-3 p-4 sm:p-6 md:p-8 lg:p-10 flex flex-col justify-center relative z-10">
+                            	<div class="content-overlay bg-black/70 p-4 sm:p-6 rounded-lg backdrop-blur-sm">
+                                	
+                                	<!-- Breadcrumbs -->
+                                	<nav class="breadcrumbs flex items-center gap-2 text-sm mb-4 text-light-100/70">
+                                    	<a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-blue-400 transition-colors">Home</a>
+                                    	<span class="text-light-100/50">›</span>
                                     	<?php
-                                	} else {
-                                    	// If no static page is set (default behavior)
-                                    	?>
-                                    	<a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-blue-400 transition-colors">Blog</a>
-                                    	<?php
-                                	}
-                                	?>
-                            	</nav>
-                           	 
-                            	<!-- MOBILE OPTIMIZED: Category Badge with reduced mobile margin -->
-                            	<?php
-                            	$categories = get_the_category();
-                            	if (!empty($categories)) {
-                                	$first_category = $categories[0];
-                                	echo '<a href="' . esc_url(get_category_link($first_category->term_id)) . '" class="inline-flex items-center rounded-full border px-3 py-1 text-sm font-semibold mb-4 md:mb-6 bg-blue-300/10 text-blue-300 hover:bg-blue-300/20 border-blue-300/20">' . esc_html($first_category->name) . '</a>';
-                            	}
-                            	?>
-                           	 
-                            	<!-- MOBILE OPTIMIZED: Title with responsive sizing and reduced margin -->
-                            	<h1 class="text-2xl md:text-4xl lg:text-5xl font-bold mb-4 md:mb-6 text-white leading-tight drop-shadow-lg">
-                	<?php the_title(); ?>
-            	</h1>
-
-                            	<!-- MOBILE OPTIMIZED: Excerpt with reduced margin -->
-                            	<?php if (has_excerpt() || get_the_content()) : ?>
-                                	<div class="text-lg text-light-100/90 mb-4 md:mb-6 leading-relaxed drop-shadow-md">
-                    	<?php
-                                    	if (has_excerpt()) {
-                                        	the_excerpt();
+                                    	$posts_page_id = get_option('page_for_posts');
+                                    	if ($posts_page_id) {
+                                        	$posts_page_title = get_the_title($posts_page_id);
+                                        	$posts_page_url = get_permalink($posts_page_id);
+                                        	?>
+                                        	<a href="<?php echo esc_url($posts_page_url); ?>" class="hover:text-blue-400 transition-colors"><?php echo esc_html($posts_page_title); ?></a>
+                                        	<?php
                                     	} else {
-                                        	echo wp_trim_words(get_the_content(), 25, '...');
+                                        	?>
+                                        	<a href="<?php echo esc_url(home_url('/')); ?>" class="hover:text-blue-400 transition-colors">Blog</a>
+                                        	<?php
                                     	}
                                     	?>
-                                	</div>
-                	<?php endif; ?>
+                                	</nav>
+                                	
+                                	<!-- Category Badge -->
+                                	<?php
+                                	$categories = get_the_category();
+                                	if (!empty($categories)) {
+                                    	$first_category = $categories[0];
+                                    	echo '<a href="' . esc_url(get_category_link($first_category->term_id)) . '" class="category-badge inline-flex items-center rounded-full border px-3 py-1 text-sm font-semibold mb-4 bg-blue-300/20 text-blue-300 hover:bg-blue-300/30 border-blue-300/40 backdrop-blur-sm">' . esc_html($first_category->name) . '</a>';
+                                	}
+                                	?>
+                                	
+                                	<!-- Title -->
+                                	<h1 class="hero-title text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-bold mb-4 text-white leading-tight">
+                                    	<?php the_title(); ?>
+                                	</h1>
 
-                            	<!-- Meta Information -->
-                            	<div class="flex flex-wrap items-center gap-4 text-sm text-light-100/80 drop-shadow-md">
-                                	<time datetime="<?php echo esc_attr(get_the_modified_date('c')); ?>" class="flex items-center gap-2">
-                                    	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-300">
-                                        	<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                                        	<line x1="16" y1="2" x2="16" y2="6"></line>
-                                        	<line x1="8" y1="2" x2="8" y2="6"></line>
-                                        	<line x1="3" y1="10" x2="21" y2="10"></line>
-                                    	</svg>
-                                    	<span>Last Updated: <?php echo esc_html(get_the_modified_date()); ?></span>
-                                	</time>
-                            	</div>
-                        	</div>
-                    	</div>
-                   	 
-                    	<!-- Featured Image Column - Takes up 1/3 on medium screens, 2/5 on large screens -->
-                    	<?php if (has_post_thumbnail()) : ?>
-                        	<div class="hidden md:flex md:col-span-1 lg:col-span-2 p-4 md:p-5 items-center justify-center">
-                            	<div class="w-full h-full flex items-center justify-center">
-                                	<div class="w-full h-full relative bg-gradient-to-tr from-blue-300/20 to-purple-300/20 rounded-lg overflow-hidden shadow-lg">
-                                    	<?php the_post_thumbnail('large', ['class' => 'w-full h-full object-contain opacity-90 hover:opacity-100 transition-all duration-300']); ?>
+                                	<!-- Excerpt -->
+                                	<?php if (has_excerpt() || get_the_content()) : ?>
+                                    	<div class="hero-excerpt text-base sm:text-lg text-light-100/90 mb-6 leading-relaxed">
+                                        	<?php
+                                        	if (has_excerpt()) {
+                                            	the_excerpt();
+                                        	} else {
+                                            	echo wp_trim_words(get_the_content(), 25, '...');
+                                        	}
+                                        	?>
+                                    	</div>
+                                	<?php endif; ?>
+
+                                	<!-- Meta Information -->
+                                	<div class="hero-meta flex flex-wrap items-center gap-4 text-sm text-light-100/80 pt-4 border-t border-white/10">
+                                    	<time datetime="<?php echo esc_attr(get_the_modified_date('c')); ?>" class="flex items-center gap-2">
+                                        	<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="text-blue-300 flex-shrink-0">
+                                            	<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                                            	<line x1="16" y1="2" x2="16" y2="6"></line>
+                                            	<line x1="8" y1="2" x2="8" y2="6"></line>
+                                            	<line x1="3" y1="10" x2="21" y2="10"></line>
+                                        	</svg>
+                                        	<span>Last Updated: <?php echo esc_html(get_the_modified_date()); ?></span>
+                                    	</time>
                                 	</div>
                             	</div>
                         	</div>
-                    	<?php endif; ?>
+                        	
+                        	<!-- Featured Image Column - Right Side -->
+                        	<?php if (has_post_thumbnail()) : ?>
+                            	<div class="hero-image hidden md:flex md:col-span-1 lg:col-span-2 p-4 md:p-6 items-center justify-center">
+                                	<div class="image-container w-full h-full flex items-center justify-center">
+                                    	<div class="image-wrapper w-full h-full relative bg-gradient-to-tr from-blue-300/20 to-purple-300/20 rounded-lg overflow-hidden min-h-[300px]">
+                                        	<?php 
+                                        	the_post_thumbnail('large', [
+                                            	'class' => 'hero-featured-image w-full h-full object-cover opacity-90 hover:opacity-100 transition-all duration-300',
+                                            	'loading' => 'eager' // Since this is above the fold
+                                        	]); 
+                                        	?>
+                                    	</div>
+                                	</div>
+                            	</div>
+                        	<?php endif; ?>
+                        	
+                        	<!-- Mobile Background Image (hidden on desktop) -->
+                        	<?php if (has_post_thumbnail()) : ?>
+                            	<div class="mobile-bg absolute inset-0 md:hidden z-0" style="max-height: 60vh;">
+                                	<?php the_post_thumbnail('large', ['class' => 'w-full h-full object-cover']); ?>
+                                	<div class="absolute inset-0 bg-black opacity-75"></div>
+                            	</div>
+                        	<?php endif; ?>
+                        	
+                    	</div>
                 	</div>
             	</div>
         	</div>
 
-        	<!-- MOBILE OPTIMIZED: Content Section Card with mobile classes -->
-        	<article class="max-w-6xl mx-auto bg-dark-300 mobile-article-container <?php echo $visibility_classes . ' ' . $centered_layout . ' ' . $responsive_class; ?>">
-            	<!-- MOBILE OPTIMIZED: Reduced padding on mobile -->
-            	<div class="p-4 md:p-12 mobile-content-padding">
+        	<!-- MOBILE OPTIMIZED: Content Section Card with improved mobile width -->
+        	<article class="max-w-7xl mx-auto bg-dark-300 mobile-article-container px-2 sm:px-4 <?php echo $visibility_classes . ' ' . $centered_layout . ' ' . $responsive_class; ?>">
+            	<!-- MOBILE OPTIMIZED: Better responsive padding -->
+            	<div class="p-3 sm:p-6 md:p-8 lg:p-12 mobile-content-padding">
             	<?php
                 	// Extract headings for table of contents - improved version
                 	$content = get_the_content();
@@ -235,9 +234,9 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                 	}
                 	?>
 
-                	<!-- MOBILE OPTIMIZED: Mobile TOC with mobile-toc-container class -->
+                	<!-- MOBILE OPTIMIZED: Mobile TOC with improved positioning and z-index -->
                 	<?php if ($has_toc) : ?>
-                	<div class="md:hidden sticky top-[70px] z-40 mb-3 mobile-toc-container">
+                	<div class="md:hidden sticky top-[70px] z-30 mb-3 mobile-toc-container">
                     	<!-- Mobile Sticky Navigation Bar -->
                     	<div class="mobile-sticky-nav bg-dark-200/95 backdrop-blur-md shadow-lg rounded-lg p-1.5 flex items-center justify-between">
                         	<?php if ($show_share === 'yes') : ?>
@@ -289,7 +288,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                                	rel="noopener noreferrer"
                                	class="flex items-center gap-1.5 p-1.5 hover:bg-dark-300/80 text-white text-xs transition-colors rounded-md">
                                 	<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-white flex-shrink-0">
-                                    	<path d="M18.244 2.25h3.308l-7.227 8.259 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                    	<path d="M18.244 2.25h3.308l-7.227 8.259 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.080l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                                 	</svg>
                                 	<span>X</span>
                             	</a>
@@ -359,7 +358,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                     	<!-- Desktop TOC, Sharing, and Widgets - Using dynamic width class -->
                     	<?php if ($show_toc === 'yes' || $show_share === 'yes' || $show_widgets === 'yes') : ?>
                     	<div class="hidden md:block sidebar-container <?php echo $sidebar_width_class; ?> flex-shrink-0">
-                        	<div class="sticky top-24 space-y-2">
+                        	<div class="sticky top-24 space-y-2 z-20">
                             	<!-- Desktop Sharing Buttons -->
                             	<?php if ($show_share === 'yes') : ?>
                             	<div class="p-1.5 bg-dark-400 rounded-lg">
@@ -379,7 +378,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                                         	</button>
                                        	 
                                         	<!-- Desktop Share Dropdown -->
-                                        	<div class="hidden absolute top-full mt-2 right-0 bg-dark-400 rounded-lg shadow-2xl py-2 min-w-[180px] z-[9999] max-h-[400px] overflow-y-auto" id="share-dropdown">
+                                        	<div class="hidden absolute top-full mt-2 right-0 bg-dark-400 rounded-lg shadow-2xl py-2 min-w-[180px] z-[100] max-h-[400px] overflow-y-auto" id="share-dropdown">
                                             	<div class="flex flex-col">
                                                 	<!-- Facebook Share -->
                                                 	<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo urlencode(get_permalink()); ?>"
@@ -398,7 +397,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
                                                    	rel="noopener noreferrer"
                                                    	class="flex items-center gap-2 px-3 py-2 hover:bg-dark-300/80 text-white text-xs transition-colors">
                                                     	<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" class="text-white flex-shrink-0">
-                                                        	<path d="M18.244 2.25h3.308l-7.227 8.259 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                                                        	<path d="M18.244 2.25h3.308l-7.227 8.259 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.80l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
                                                     	</svg>
                                                     	<span>X</span>
                                                 	</a>
@@ -485,10 +484,10 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
 
         	<!-- MOBILE OPTIMIZED: Related Posts Section with mobile classes -->
         	<section class="bg-dark-300 py-8 md:py-16 mt-8 md:mt-16 mobile-section">
-            	<div class="container mx-auto px-4 sm:px-6 lg:px-8">
+            	<div class="container mx-auto px-2 sm:px-4 lg:px-6">
                 	<h2 class="text-xl md:text-3xl font-medium mb-6 md:mb-8 text-center text-white">Related Articles</h2>
                	 
-                	<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-6xl mx-auto">
+                	<div class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto">
                     	<?php
                     	$current_post_id = get_the_ID();
                    	 
@@ -615,7 +614,7 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
         	</section>
 
         	<!-- MOBILE OPTIMIZED: Contact Section with mobile classes -->
-        	<section class="py-8 md:py-16 px-4 sm:px-6 lg:px-8 bg-dark-200 contact-section mt-8 md:mt-16 relative mobile-section">
+        	<section class="py-8 md:py-16 px-2 sm:px-4 lg:px-6 bg-dark-200 contact-section mt-8 md:mt-16 relative mobile-section">
             	<div class="absolute top-0 left-0 w-full h-4 bg-gradient-to-r from-blue-500/0 via-blue-500/20 to-blue-500/0"></div>
             	<div class="container mx-auto max-w-5xl">
                 	<div class="text-center mb-8 md:mb-16">
@@ -664,12 +663,317 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
 
 <?php get_footer(); ?>
 
-
-<!-- Keep your existing JavaScript for share functionality -->
+<!-- Add hero-specific styles -->
 <style>
-/* Z-INDEX FIX FOR SHARE DROPDOWN - Add this to your existing inline <style> block */
+/* Hero Section Specific Styles - Fixed desktop layout and z-index issues */
+.hero-main-container {
+    margin-top: 60px; /* Reduced space from header on mobile */
+    margin-bottom: 1.5rem; /* Reduced mobile spacing */
+    position: relative;
+    z-index: 5; /* Lower than header */
+}
 
-/* Ensure share dropdown appears above everything */
+@media (min-width: 768px) {
+    .hero-main-container {
+        margin-top: 80px; /* Normal desktop spacing */
+        margin-bottom: 2rem;
+        z-index: 5; /* Still lower than header */
+    }
+}
+
+.hero-wrapper {
+    max-width: 1400px; /* Increased max width */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+@media (min-width: 640px) {
+    .hero-wrapper {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+}
+
+.hero-card {
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.75rem;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+    background-color: rgb(55 65 81); /* bg-dark-300 */
+    z-index: 5; /* Lower than header */
+}
+
+.hero-grid {
+    position: relative;
+    min-height: 400px; /* Keep original desktop height */
+    overflow: visible; /* Changed from hidden to visible */
+    display: grid;
+    align-items: stretch; /* Ensure columns stretch to match content */
+}
+
+/* Mobile: Limit hero height to prevent image from being too tall */
+@media (max-width: 767px) {
+    .hero-grid {
+        min-height: 300px; /* Reduced mobile height */
+        max-height: 60vh; /* Limit maximum height on mobile */
+    }
+}
+
+.hero-content {
+    position: relative;
+    z-index: 10;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 1rem;
+    min-height: 400px; /* Keep original desktop height */
+}
+
+/* Mobile: Adjust content height to match grid */
+@media (max-width: 767px) {
+    .hero-content {
+        min-height: 300px; /* Match mobile grid height */
+        max-height: 60vh; /* Match mobile grid max height */
+    }
+}
+
+@media (min-width: 640px) {
+    .hero-content {
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .hero-content {
+        padding: 2rem;
+    }
+}
+
+@media (min-width: 1024px) {
+    .hero-content {
+        padding: 2.5rem;
+    }
+}
+
+.content-overlay {
+    background: rgba(0, 0, 0, 0.7);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+}
+
+@media (min-width: 640px) {
+    .content-overlay {
+        padding: 1.5rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .content-overlay {
+        padding: 2rem;
+    }
+}
+
+.hero-image {
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    min-height: 250px; /* Reduced mobile minimum height */
+}
+
+/* Desktop minimum height for image */
+@media (min-width: 768px) {
+    .hero-image {
+        min-height: 400px; /* Normal desktop height */
+        padding: 1.5rem;
+    }
+}
+
+.image-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    border-radius: 0.5rem;
+}
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    border-radius: 0.5rem;
+    background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(139, 92, 246, 0.2));
+    min-height: 200px; /* Reduced mobile minimum height */
+}
+
+/* Desktop minimum height for image wrapper */
+@media (min-width: 768px) {
+    .image-wrapper {
+        min-height: 300px; /* Normal desktop height */
+    }
+}
+
+.hero-featured-image {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+    transition: all 0.3s ease;
+    opacity: 0.9;
+}
+
+.hero-featured-image:hover {
+    opacity: 1;
+    transform: scale(1.02);
+}
+
+.mobile-bg {
+    display: none;
+}
+
+/* Mobile styles - Focus on limiting image height */
+@media (max-width: 767px) {
+    .hero-main-container {
+        margin-top: 50px; /* Keep original mobile spacing */
+    }
+    
+    .hero-content {
+        padding: 1rem; /* Keep original mobile padding */
+    }
+    
+    .content-overlay {
+        background: rgba(0, 0, 0, 0.8);
+        padding: 1rem; /* Keep original mobile padding */
+    }
+    
+    .mobile-bg {
+        display: block;
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 0;
+        max-height: 60vh; /* Limit background image height */
+        overflow: hidden;
+    }
+    
+    .mobile-bg img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center top; /* Focus on top of image when cropping */
+    }
+    
+    .mobile-bg .absolute.inset-0.bg-black {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.75);
+    }
+}
+
+/* Typography improvements */
+.hero-title {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    line-height: 1.2;
+}
+
+.hero-excerpt {
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    line-height: 1.6;
+}
+
+.category-badge {
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.breadcrumbs a:hover {
+    color: rgb(96 165 250); /* blue-400 */
+}
+
+.hero-meta svg {
+    color: rgb(96 165 250); /* blue-300 */
+}
+
+/* Z-index hierarchy - Header gets priority */
+.site-header,
+.main-navigation,
+.header-container {
+    z-index: 1000 !important;
+}
+
+.hero-main-container,
+.hero-card,
+.hero-grid {
+    z-index: 5 !important;
+}
+
+/* Mobile width improvements */
+.mobile-optimized-container {
+    width: 95vw; /* More viewport width on mobile */
+    max-width: none;
+}
+
+@media (min-width: 640px) {
+    .mobile-optimized-container {
+        width: 90vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-optimized-container {
+        width: auto;
+        max-width: 1400px;
+    }
+}
+
+.mobile-article-container {
+    width: 95vw; /* More viewport width on mobile */
+    max-width: none;
+}
+
+@media (min-width: 640px) {
+    .mobile-article-container {
+        width: 90vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-article-container {
+        width: auto;
+        max-width: 1400px;
+    }
+}
+
+/* Ensure containers align properly with improved responsive widths */
+@media (min-width: 768px) {
+    .container.mx-auto.px-2 {
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .max-w-7xl.mx-auto {
+        max-width: 1400px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+/* Z-INDEX FIX FOR SHARE DROPDOWN - Ensure proper hierarchy */
 #share-dropdown {
     background: rgba(31, 41, 55, 0.98) !important;
     backdrop-filter: blur(16px) !important;
@@ -680,20 +984,18 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
     border-radius: 0.75rem !important;
     padding: 0.75rem !important;
     min-width: 200px !important;
-    z-index: 999999 !important; /* Increased from 99999 */
-    position: fixed !important; /* Changed from absolute to fixed */
-    /* Position will be set by JavaScript */
+    z-index: 500 !important; /* Lower than header but higher than content */
+    position: fixed !important;
 }
 
-/* Ensure share container and button have proper stacking context */
 #share-container {
     position: relative !important;
-    z-index: 100000 !important; /* Higher than other sidebar elements */
+    z-index: 25 !important;
 }
 
 #share-btn {
     position: relative !important;
-    z-index: 100001 !important; /* Slightly higher than container */
+    z-index: 26 !important;
     background: rgba(55, 65, 81, 0.8) !important;
     border: 1px solid rgba(255, 255, 255, 0.1) !important;
     backdrop-filter: blur(4px) !important;
@@ -705,20 +1007,18 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
     font-weight: 500 !important;
 }
 
-/* Ensure sidebar container doesn't interfere */
+/* Ensure sidebar container doesn't interfere but stays below header */
 .sidebar-container {
     overflow: visible !important;
-    padding-left: 4px !important;
-    z-index: 50 !important; /* Lower than share elements */
+    z-index: 20 !important; /* Lower than dropdown */
 }
 
 .sticky.top-24 {
     overflow: visible !important;
-    padding-left: 4px !important;
-    z-index: 50 !important; /* Lower than share elements */
+    z-index: 20 !important;
 }
 
-/* Ensure main content and hero sections don't block dropdown */
+/* Ensure main content sections have appropriate z-index */
 .mobile-hero-card,
 .hero-container,
 .mobile-article-container,
@@ -726,30 +1026,366 @@ if ($show_widgets !== 'yes' && $show_toc !== 'yes' && $show_share !== 'yes') {
 .entry-content,
 .table-of-contents,
 .toc-desktop {
-    z-index: 1 !important; /* Much lower than dropdown */
+    z-index: 1 !important;
 }
 
-/* Ensure Contents/TOC section doesn't interfere */
-.toc-desktop,
-.table-of-contents {
-    z-index: 2 !important; /* Lower than share dropdown */
-    position: relative !important;
+/* Mobile TOC improvements with proper z-index */
+.mobile-toc-container {
+    z-index: 30 !important; /* Below header but above content */
 }
 
-/* Make sure the entire sidebar has lower z-index than dropdown */
+.mobile-sticky-nav {
+    z-index: 30 !important;
+}
+
+.mobile-share-dropdown,
+.mobile-toc-dropdown {
+    z-index: 35 !important;
+}
+
+/* Ensure the entire sidebar has appropriate z-index hierarchy */
 .hidden.md\:block {
-    z-index: 40 !important;
+    z-index: 20 !important;
 }
 
-/* Ensure any backdrop or overlay elements don't interfere */
+/* Ensure any backdrop or overlay elements don't interfere with header */
 .backdrop-blur-md,
 .bg-dark-300,
 .bg-dark-400 {
     z-index: auto !important;
 }
+
+/* Mobile responsive improvements - Keep original content sizing */
+@media (max-width: 767px) {
+    .hero-wrapper {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+    
+    .mobile-content-padding {
+        padding: 0.75rem;
+    }
+    
+    /* Keep original mobile title sizing */
+    .hero-title {
+        font-size: 1.25rem;
+        line-height: 1.3;
+    }
+    
+    .hero-excerpt {
+        font-size: 0.875rem;
+        line-height: 1.5;
+    }
+}
+
+@media (min-width: 480px) and (max-width: 767px) {
+    .hero-title {
+        font-size: 1.5rem;
+    }
+    
+    .hero-excerpt {
+        font-size: 1rem;
+    }
+}
+
+/* Enhanced content width on mobile */
+.mobile-main-content {
+    width: 100% !important;
+}
+
+@media (max-width: 767px) {
+    .mobile-content-layout {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    
+    .flex-1.content-container {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+}
+
+/* Ensure related posts and contact sections use full mobile width */
+.mobile-section .container {
+    width: 95vw;
+    max-width: none;
+}
+
+@media (min-width: 640px) {
+    .mobile-section .container {
+        width: 90vw;
+    }
+}
+
+@media (min-width: 768px) {
+    .mobile-section .container {
+        width: auto;
+        max-width: 1400px;
+    }
+}
+/* ==========================================================================
+   HEADER Z-INDEX AND MOBILE SPACING FIXES
+   ========================================================================== */
+
+/* 1. HEADER PRIORITY - Highest z-index hierarchy */
+.site-header,
+.main-navigation,
+.header-container {
+    z-index: 1000 !important;
+}
+
+/* Mobile menu and dropdowns - Second highest priority */
+#mobile-menu,
+#mobile-menu-overlay,
+.mobile-menu,
+.mobile-navigation {
+    z-index: 999 !important;
+}
+
+/* Mobile menu toggle button */
+#mobile-menu-toggle {
+    z-index: 1001 !important; /* Above header for proper interaction */
+}
+
+/* 2. POST CONTENT ELEMENTS - Lower priority than header/mobile menu */
+/* Share dropdowns - Below mobile menu but above content */
+#share-dropdown,
+.mobile-share-dropdown,
+.mobile-toc-dropdown {
+    z-index: 950 !important; /* Below mobile menu */
+}
+
+/* Fix for desktop share dropdown positioning */
+#share-dropdown {
+    position: fixed !important;
+    background: rgba(31, 41, 55, 0.98) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.15) !important;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6), 
+                0 10px 20px -5px rgba(0, 0, 0, 0.4) !important;
+    border-radius: 0.75rem !important;
+    padding: 0.75rem !important;
+    min-width: 200px !important;
+    z-index: 950 !important;
+}
+
+.mobile-toc-container,
+.mobile-sticky-nav {
+    z-index: 940 !important;
+}
+
+/* Desktop share container and button */
+#share-container,
+#share-btn {
+    z-index: 935 !important;
+}
+
+/* Sidebar elements */
+.sidebar-container,
+.sticky.top-24,
+.toc-desktop {
+    z-index: 920 !important;
+}
+
+/* Hero section - Lower than all interactive elements */
+.hero-main-container,
+.hero-card,
+.hero-grid,
+.hero-wrapper {
+    z-index: 10 !important; /* Much lower than header */
+}
+
+/* Main content areas */
+.mobile-article-container,
+.mobile-content-layout,
+.entry-content,
+.table-of-contents {
+    z-index: 5 !important;
+}
+
+/* Background elements */
+.mobile-bg,
+.backdrop-blur-md,
+.bg-dark-300,
+.bg-dark-400 {
+    z-index: 1 !important;
+}
+
+/* 3. MOBILE SPACING FIXES - Hero content FUCKING CLOSE to header */
+@media (max-width: 767px) {
+    /* MINIMAL gap - hero practically touching header */
+    .hero-main-container {
+        margin-top: 5px !important; /* TINY 5px gap - practically touching */
+        margin-bottom: 1rem !important;
+    }
+    
+    /* Ensure hero wrapper has minimal padding */
+    .hero-wrapper {
+        margin-bottom: 1rem !important;
+        padding-left: 0.5rem !important;
+        padding-right: 0.5rem !important;
+    }
+    
+    /* Keep existing hero grid height */
+    .hero-grid {
+        min-height: 300px !important; /* Keep original mobile height */
+        max-height: 60vh !important; /* Keep original mobile max height */
+    }
+    
+    /* Keep existing hero content height */
+    .hero-content {
+        min-height: 300px !important;
+        max-height: 60vh !important;
+        padding: 1rem !important;
+    }
+    
+    /* Keep existing content overlay */
+    .content-overlay {
+        padding: 1rem !important;
+    }
+    
+    /* Keep existing mobile background image height */
+    .mobile-bg {
+        max-height: 60vh !important;
+    }
+}
+
+/* Small mobile devices - PRACTICALLY NO GAP */
+@media (max-width: 480px) {
+    .hero-main-container {
+        margin-top: 3px !important; /* PRACTICALLY NO GAP - 3px only */
+        margin-bottom: 0.75rem !important;
+    }
+    
+    .hero-wrapper {
+        margin-bottom: 0.75rem !important;
+        padding-left: 0.25rem !important;
+        padding-right: 0.25rem !important;
+    }
+}
+
+/* 4. ENHANCED MOBILE MENU Z-INDEX HANDLING */
+/* Ensure mobile menu appears above all post content */
+#mobile-menu {
+    position: fixed !important;
+    top: 64px !important; /* Header height */
+    right: 0 !important;
+    z-index: 999 !important; /* Below header but above all content */
+    background-color: rgba(17, 24, 39, 0.98) !important;
+    backdrop-filter: blur(16px) !important;
+    -webkit-backdrop-filter: blur(16px) !important;
+    box-shadow: -5px 5px 25px rgba(0, 0, 0, 0.5) !important; /* Stronger shadow */
+}
+
+#mobile-menu-overlay {
+    z-index: 998 !important; /* Just below mobile menu */
+    background-color: rgba(0, 0, 0, 0.4) !important;
+    backdrop-filter: blur(3px) !important;
+    -webkit-backdrop-filter: blur(3px) !important;
+}
+
+/* 5. DESKTOP SPACING - Keep existing spacing */
+@media (min-width: 768px) {
+    .hero-main-container {
+        margin-top: 80px !important; /* Normal desktop spacing */
+        margin-bottom: 2rem !important;
+    }
+    
+    .hero-wrapper {
+        margin-bottom: 2rem !important;
+    }
+    
+    .hero-grid {
+        min-height: 400px !important; /* Normal desktop height */
+        max-height: none !important;
+    }
+    
+    .hero-content {
+        min-height: 400px !important;
+        max-height: none !important;
+    }
+}
+
+/* 6. PREVENT CONTENT OVERLAP WITH ENHANCED SPECIFICITY */
+/* Ensure no post content can appear above header level */
+.entry-content *,
+.page-content *,
+.widget *,
+.sidebar *,
+article *,
+section *:not(.site-header):not(.site-header *) {
+    z-index: auto !important;
+    position: relative !important;
+}
+
+/* Exception for specifically positioned elements that need higher z-index */
+.sticky,
+.fixed,
+[class*="dropdown"]:not(.site-header [class*="dropdown"]),
+[class*="modal"]:not(.site-header [class*="modal"]),
+[class*="popup"]:not(.site-header [class*="popup"]) {
+    z-index: 500 !important; /* Still below header hierarchy */
+}
+
+/* 7. SMOOTH TRANSITIONS FOR MOBILE ELEMENTS */
+.hero-main-container,
+.hero-wrapper,
+.hero-grid {
+    transition: margin 0.3s ease, padding 0.3s ease !important;
+}
+
+/* 8. ACCESSIBILITY AND INTERACTION IMPROVEMENTS */
+/* Ensure mobile menu toggle is always accessible */
+#mobile-menu-toggle {
+    position: relative !important;
+    z-index: 1001 !important;
+    pointer-events: auto !important;
+}
+
+/* Ensure mobile menu links are accessible */
+#mobile-menu a {
+    position: relative !important;
+    z-index: 1000 !important;
+    pointer-events: auto !important;
+}
+
+/* 9. FAILSAFE FOR CONTENT STACKING */
+/* Force header to always be on top regardless of other styles */
+.site-header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    z-index: 1000 !important;
+    transform: translateZ(0) !important; /* Force hardware acceleration */
+}
+
+/* Force mobile menu to be just below header */
+#mobile-menu {
+    transform: translateZ(0) !important; /* Force hardware acceleration */
+}
+
+/* 10. CONTENT PADDING ADJUSTMENTS FOR BETTER MOBILE EXPERIENCE */
+@media (max-width: 767px) {
+    /* Reduce padding in main content areas to compensate for tighter hero spacing */
+    .mobile-article-container {
+        margin-top: 0.5rem !important; /* Reduced spacing after hero */
+    }
+    
+    .mobile-content-padding {
+        padding-top: 0.75rem !important; /* Reduced from default */
+        padding-bottom: 0.75rem !important;
+    }
+    
+    /* Ensure mobile TOC doesn't interfere with header */
+    .mobile-toc-container {
+        top: 70px !important; /* Adjusted to match new hero spacing */
+    }
+}
 </style>
 <script>
-// Enhanced Share Dropdown Functionality with Positioning Fix
+// Enhanced Share Dropdown Functionality with improved z-index handling
 document.addEventListener('DOMContentLoaded', function() {
     const shareBtn = document.getElementById('share-btn');
     const shareDropdown = document.getElementById('share-dropdown');
@@ -757,17 +1393,18 @@ document.addEventListener('DOMContentLoaded', function() {
     
     if (shareBtn && shareDropdown) {
         
-        // Function to position dropdown correctly
+        // Function to position dropdown correctly with header awareness
         function positionDropdown() {
             const btnRect = shareBtn.getBoundingClientRect();
             const viewportWidth = window.innerWidth;
             const viewportHeight = window.innerHeight;
             const dropdownWidth = 220;
-            const dropdownHeight = 200; // Estimated dropdown height
+            const dropdownHeight = 200;
+            const headerHeight = 80; // Account for header height
             
             // Since we're using position: fixed, we position relative to viewport
             shareDropdown.style.position = 'fixed';
-            shareDropdown.style.zIndex = '999999';
+            shareDropdown.style.zIndex = '500'; // Below header (1000) but above content
             
             // For very small screens, center at bottom
             if (viewportWidth <= 480) {
@@ -782,13 +1419,13 @@ document.addEventListener('DOMContentLoaded', function() {
             // Reset transform for larger screens
             shareDropdown.style.transform = 'none';
             
-            // Position dropdown below the button by default
-            let topPosition = btnRect.bottom + 8;
+            // Position dropdown below the button by default, but account for header
+            let topPosition = Math.max(btnRect.bottom + 8, headerHeight + 10);
             
             // Check if dropdown would go off-screen vertically
-            if (topPosition + dropdownHeight > viewportHeight && btnRect.top > dropdownHeight) {
-                // Position above the button
-                topPosition = btnRect.top - dropdownHeight - 8;
+            if (topPosition + dropdownHeight > viewportHeight && btnRect.top > dropdownHeight + headerHeight) {
+                // Position above the button if there's room
+                topPosition = Math.max(btnRect.top - dropdownHeight - 8, headerHeight + 10);
             }
             
             shareDropdown.style.top = topPosition + 'px';
@@ -1082,7 +1719,7 @@ function fallbackCopyTextToClipboard(text) {
     document.body.removeChild(textArea);
 }
 
-// Enhanced copy feedback with better positioning
+// Enhanced copy feedback with better positioning and z-index
 function showCopyFeedback(message) {
     // Remove any existing feedback
     const existingFeedback = document.getElementById('copy-feedback');
@@ -1094,7 +1731,7 @@ function showCopyFeedback(message) {
     feedback.id = 'copy-feedback';
     feedback.textContent = message;
     
-    // Enhanced styling
+    // Enhanced styling with proper z-index
     feedback.style.cssText = `
         position: fixed;
         top: 20px;
@@ -1105,7 +1742,7 @@ function showCopyFeedback(message) {
         border-radius: 12px;
         font-size: 14px;
         font-weight: 600;
-        z-index: 999999;
+        z-index: 10000;
         transform: translateY(-100px) scale(0.9);
         opacity: 0;
         transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
