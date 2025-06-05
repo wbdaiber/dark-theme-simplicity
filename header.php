@@ -124,6 +124,66 @@
         	font-size: 1.5rem !important;
         	line-height: 2rem !important;
     	}
+		/* Mobile menu styles - Updated z-index hierarchy */
+#mobile-menu {
+    position: fixed !important;
+    top: 64px;
+    right: 0;
+    width: 256px;
+    max-height: calc(100vh - 64px);
+    overflow-y: auto;
+    background-color: rgba(17, 24, 39, 0.98);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    box-shadow: -5px 5px 25px rgba(0, 0, 0, 0.5);
+    z-index: 999 !important; /* Below header but above all content */
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    border-bottom-left-radius: 8px;
+    transition: transform 0.3s ease-out, opacity 0.3s ease-out;
+    transform: translateX(0);
+    opacity: 1;
+}
+
+#mobile-menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(3px);
+    -webkit-backdrop-filter: blur(3px);
+    z-index: 998 !important; /* Just below mobile menu */
+    pointer-events: auto;
+    transition: opacity 0.3s ease-out;
+    opacity: 1;
+}
+
+/* Mobile menu toggle - Highest priority for interaction */
+#mobile-menu-toggle {
+    z-index: 1001 !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 6px;
+    padding: 8px;
+}
+
+/* Header gets absolute priority */
+.site-header {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 64px;
+    background-color: rgba(18, 18, 20, 0.95) !important;
+    backdrop-filter: blur(12px) !important;
+    -webkit-backdrop-filter: blur(12px) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    z-index: 1000 !important; /* Highest priority */
+    transition: all 0.3s ease;
+    transform: translateZ(0); /* Force hardware acceleration */
+}
 	</style>
 	<?php endif; ?>
 
